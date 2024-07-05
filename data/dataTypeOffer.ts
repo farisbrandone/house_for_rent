@@ -18,11 +18,16 @@ export const database: databaseProps[] = [
     devise: "FCFA/XAF",
     typeDeVente: "par mois en location",
     imageOffre: [
-      "https://pixabay.com/get/gd871ffc91963b3bda6c70ff356b57b843318a91f2674a874b0e915f6f41bbb18e2ffe3405b536bf5ea381021082f5f0e7f1e7313f290d72e78634f08897c86f6_640.jpg",
-      "https://pixabay.com/get/g0ea4073f1cb1687d9f855d9aee39d5ccd60c87e4198ac0b6218526f8e8b4e5c6919ec951b8724ff468ac04819dc20435353d739bec170f2861af037895edf402_640.jpg",
-      "https://pixabay.com/get/g1d8b2562932ce11fc362ac5979c2b774a4d80474f65aae5f0f0e68149b5213c2a2316dfe6055cc54bbb653b8b2ce3eedf2d2e1c0898b9f294f01213076c96068_640.jpg",
+      "https://pixabay.com/get/g2426b50220598f9f60673025f1745586f562456601dffa108343687a50652546bbe442d3c4c431614d0ba62e1480153792febe62f5bad48b801e92ade942c14d_640.jpg",
+      "https://pixabay.com/get/g3efb2093ec3e13b0e6a1ad40d6dfe20a13e858739cb969fd4768f1463bd1eb677187479d99ec85026d631afe302819aa71b8119e0e23679d1822712938fec2b1_640.jpg",
+      "https://pixabay.com/get/gd9ba76b26b2d7e2f29582cb968ecc5ded255de68614c0713cb54b47023720b911f0b42e05034e27d3859ae107af55cbaed7c1ca6c47b867a21fef756abae1cd6_640.jpg",
+      "https://pixabay.com/get/g3c765bd1a8e0951bf289f3b3bd8d52689f7ac51647e3e07a0415ce9f90a040a45f7677f3a2cbca5d957ad10471db24b6f0972bab61a4085fc0043e0816bc4769_640.jpg",
+      "https://pixabay.com/get/g331b6a1716ce72b948e1af4603ef33b631a8d9e2d7c0edce5927a9a6f8a759a1ce1b6ba51a98921657b4bb69d540e33b2fcc65ebb6e810c9990ea153ca86695b_640.png",
+      "https://pixabay.com/get/ga7f1be9d49fdfac99a22f84bfd88bcbffb4eb6ed3469db74f227d78d96cdcb87610a56b357a0235fb6ac7eb68807073577dc88c264e926b6daaf5f94998bab5f_640.jpg",
     ],
     tel: "+237655968956",
+    dateInset: "04/07/2021",
+    lastUpdate: "04/07/2021",
   },
   {
     id: 2,
@@ -46,6 +51,8 @@ export const database: databaseProps[] = [
       "https://pixabay.com/get/ge69cf30315bc575962d2f2702dff7aa3eccb7810ad90c6cd8facfd18f08c21256d9f20aa62d3057942bf94cf3cffd2b6973e3682a367862f543182fd53ab6710_640.jpg",
     ],
     tel: "+237655968956",
+    dateInset: "04/07/2021",
+    lastUpdate: "04/07/2021",
   },
   {
     id: 3,
@@ -70,6 +77,8 @@ export const database: databaseProps[] = [
       "https://pixabay.com/get/ga7f1be9d49fdfac99a22f84bfd88bcbffb4eb6ed3469db74f227d78d96cdcb87610a56b357a0235fb6ac7eb68807073577dc88c264e926b6daaf5f94998bab5f_640.jpg",
     ],
     tel: "+237655968956",
+    dateInset: "04/07/2021",
+    lastUpdate: "04/07/2021",
   },
   {
     id: 4,
@@ -93,6 +102,8 @@ export const database: databaseProps[] = [
       "https://pixabay.com/get/g29056786930e9d7771a29dafc832e79ea852378dc4c2e44081fd3b122b6e789f68bf17fb54d648cad1d317d262d14d106a0f801f9560a305296dfcc9f598a4f5_640.jpg",
     ],
     tel: "+237655968956",
+    dateInset: "04/07/2021",
+    lastUpdate: "04/07/2021",
   },
   {
     id: 5,
@@ -116,6 +127,8 @@ export const database: databaseProps[] = [
       "https://pixabay.com/get/g6121f0d7779608730d312d0c03a30138a5d9bf07b167d93a97d834d37cc99149c92463d788bd4d741d0a4bd3e112b5bbae4d0f972bba5cbd38ba55fc812a88b4_640.jpg",
     ],
     tel: "+237655968956",
+    dateInset: "04/07/2021",
+    lastUpdate: "04/07/2021",
   },
   {
     id: 6,
@@ -139,6 +152,8 @@ export const database: databaseProps[] = [
       "https://pixabay.com/get/gf0095ec652e93082633dc6a223f2010c10e18ba4b3a6dd3b0d81cfe5a6a5df3002737f36ea3c71d4d519da148e9e21aec3670e1b721984bf99322ca5cfb310e1_640.png",
     ],
     tel: "+237655968956",
+    dateInset: "04/07/2021",
+    lastUpdate: "04/07/2021",
   },
   {
     id: 7,
@@ -161,6 +176,8 @@ export const database: databaseProps[] = [
       "https://pixabay.com/get/g3efb2093ec3e13b0e6a1ad40d6dfe20a13e858739cb969fd4768f1463bd1eb677187479d99ec85026d631afe302819aa71b8119e0e23679d1822712938fec2b1_640.jpg",
     ],
     tel: "+237655968956",
+    dateInset: "04/07/2021",
+    lastUpdate: "04/07/2021",
   },
   {
     id: 8,
@@ -183,6 +200,8 @@ export const database: databaseProps[] = [
       "https://pixabay.com/get/g3efb2093ec3e13b0e6a1ad40d6dfe20a13e858739cb969fd4768f1463bd1eb677187479d99ec85026d631afe302819aa71b8119e0e23679d1822712938fec2b1_640.jpg",
     ],
     tel: "+237655968956",
+    dateInset: "04/07/2021",
+    lastUpdate: "04/07/2021",
   },
   {
     id: 9,
@@ -205,6 +224,8 @@ export const database: databaseProps[] = [
       "https://pixabay.com/get/g3efb2093ec3e13b0e6a1ad40d6dfe20a13e858739cb969fd4768f1463bd1eb677187479d99ec85026d631afe302819aa71b8119e0e23679d1822712938fec2b1_640.jpg",
     ],
     tel: "+237655968956",
+    dateInset: "04/07/2021",
+    lastUpdate: "04/07/2021",
   },
   {
     id: 10,
@@ -227,6 +248,8 @@ export const database: databaseProps[] = [
       "https://pixabay.com/get/g3efb2093ec3e13b0e6a1ad40d6dfe20a13e858739cb969fd4768f1463bd1eb677187479d99ec85026d631afe302819aa71b8119e0e23679d1822712938fec2b1_640.jpg",
     ],
     tel: "+237655968956",
+    dateInset: "04/07/2021",
+    lastUpdate: "04/07/2021",
   },
   {
     id: 11,
@@ -249,6 +272,8 @@ export const database: databaseProps[] = [
     prixDuBien: "100000",
     devise: "FCFA/XAF",
     typeDeVente: "par mois en location",
+    dateInset: "04/07/2021",
+    lastUpdate: "04/07/2021",
   },
   {
     id: 12,
@@ -271,6 +296,8 @@ export const database: databaseProps[] = [
       "https://pixabay.com/get/g3efb2093ec3e13b0e6a1ad40d6dfe20a13e858739cb969fd4768f1463bd1eb677187479d99ec85026d631afe302819aa71b8119e0e23679d1822712938fec2b1_640.jpg",
     ],
     tel: "+237655968956",
+    dateInset: "04/07/2021",
+    lastUpdate: "04/07/2021",
   },
 ];
 
