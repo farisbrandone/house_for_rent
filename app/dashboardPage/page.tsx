@@ -1,6 +1,5 @@
 import { CardsSkeleton } from "@/components/CardsSkeleton";
 import DashboardFormData from "@/components/DashboardFormData";
-import FormDataOffer from "@/components/FormDataOffer";
 import React, { Suspense } from "react";
 
 const DashBordPage = () => {
