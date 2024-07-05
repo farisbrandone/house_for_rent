@@ -11,7 +11,7 @@ import {
 import { MapPin } from "lucide-react";
 import { listOfSelectCountry } from "@/data/dataTypeOffer";
 import { useMobileStore } from "@/store/mobile-navbar";
-import { getQueryParams } from "@/lib/utils";
+import { GetQueryParams } from "@/lib/utils";
 
 interface selectMenuPaysProps {
   monPays: string;
@@ -35,7 +35,7 @@ const SelectMenuPays = () => {
     modifyPays(val);
     onChangePays(val);
   };
-  const { monPays } = getQueryParams();
+  const { monPays } = GetQueryParams();
   return (
     <Select onValueChange={onChangeValue} defaultValue={""}>
       <SelectTrigger className="md:w-[180px] w-full">

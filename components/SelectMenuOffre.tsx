@@ -12,7 +12,7 @@ import { MapPin, UserSearch } from "lucide-react";
 import { typeOffer } from "@/data/dataTypeOffer";
 import { useMobileStore } from "@/store/mobile-navbar";
 import { useSearchParams } from "next/navigation";
-import { getQueryParams } from "@/lib/utils";
+import { GetQueryParams } from "@/lib/utils";
 interface SelectMenuOffreProps {
   monOffre: string;
 }
@@ -34,7 +34,7 @@ const SelectMenuOffre = () => {
     modifyOffre(val);
   };
 
-  const { monOffre } = getQueryParams();
+  const { monOffre } = GetQueryParams();
 
   return (
     <Select onValueChange={onChangeValue} defaultValue={""}>

@@ -12,7 +12,7 @@ import {
 import { MapPinned } from "lucide-react";
 import { cityOfCountry } from "@/data/dataTypeOffer";
 import { useMobileStore } from "@/store/mobile-navbar";
-import { getQueryParams } from "@/lib/utils";
+import { GetQueryParams } from "@/lib/utils";
 
 interface SelectMenuVilleProps {
   pays: string;
@@ -36,7 +36,7 @@ const SelectMenuVille = ({ pays }: SelectMenuVilleProps) => {
   const onChangeValue = (val: string) => {
     modifyVille(val);
   };
-  const { maVille } = getQueryParams();
+  const { maVille } = GetQueryParams();
   return (
     <Select onValueChange={onChangeValue} defaultValue={""}>
       <SelectTrigger className="md:w-[180px] w-full">
