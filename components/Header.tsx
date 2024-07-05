@@ -10,14 +10,8 @@ import { useMobileStore } from "@/store/mobile-navbar";
 import { MobileMenu } from "./MobileMenu";
 import { useEffect } from "react";
 import { useMediaQuery } from "usehooks-ts";
-import Image from "next/image";
 import SelectMenuOffre from "./SelectMenuOffre";
-import {
-  usePathname,
-  useRouter,
-  useSearchParams,
-  redirect,
-} from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const Header = ({
   searchOrNot,
