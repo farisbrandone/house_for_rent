@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "MaMaisonALouer.com",
   description: "Le meilleur site pour la recherche de vos offres immobilières",
   icons: {
-    icon: "/icons/logo.svg",
+    icon: "/vercel.svg",
   },
 };
 

@@ -1,5 +1,14 @@
 import Header from "@/components/Header";
+import { Metadata } from "next";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "MaMaisonALouer.com",
+  description: "Le meilleur site pour la recherche de vos offres immobilières",
+  icons: {
+    icon: "/vercel.svg",
+  },
+};
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   return (

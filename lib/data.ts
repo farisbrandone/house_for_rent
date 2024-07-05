@@ -17,6 +17,8 @@ export interface databaseProps {
   typeDeVente: string;
   imageOffre: string[];
   tel: string;
+  dateInset: string;
+  lastUpdate: string;
 }
 
 export type totalDataProps = databaseProps[];
