@@ -1,5 +1,4 @@
 import { type ClassValue, clsx } from "clsx";
-import { useSearchParams } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { z } from "zod";
 
@@ -13,7 +12,8 @@ interface getQueryParamsReturnType {
   maVille: string | null;
 }
 
-export function GetQueryParams(): getQueryParamsReturnType {
+/*export function GetQueryParams(): getQueryParamsReturnType {
+ 
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
   const monOffre = params.get("type_offre");
@@ -22,7 +22,7 @@ export function GetQueryParams(): getQueryParamsReturnType {
   console.log({ monOffre, monPays, maVille });
 
   return { monOffre, monPays, maVille };
-}
+}*/
 
 export const formSchemaForSign = (choice: boolean) =>
   z.object({

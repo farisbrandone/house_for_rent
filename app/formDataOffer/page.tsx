@@ -1,10 +1,13 @@
+import { CardsSkeleton } from "@/components/CardsSkeleton";
 import FormDataOffer from "@/components/FormDataOffer";
-import React from "react";
+import React, { Suspense } from "react";
 
 const DataForOffer = () => {
   return (
     <div className="mt-20">
-      <FormDataOffer />
+      <Suspense fallback={<CardsSkeleton />}>
+        <FormDataOffer />
+      </Suspense>
     </div>
   );
 };

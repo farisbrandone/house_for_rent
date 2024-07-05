@@ -1,6 +1,7 @@
+import { CardsSkeleton } from "@/components/CardsSkeleton";
 import SearchComponent from "@/components/SearchComponent";
 import { getDataWithSearchParams } from "@/lib/data";
-import React from "react";
+import React, { Suspense } from "react";
 
 const SeachPage = async ({
   searchParams,
@@ -24,7 +25,9 @@ const SeachPage = async ({
   return (
     <div>
       <div>
-        <SearchComponent data={data} />
+        <Suspense fallback={<CardsSkeleton />}>
+          <SearchComponent data={data} />
+        </Suspense>
       </div>
     </div>
   );

@@ -1,10 +1,13 @@
 import BodyPage from "@/components/BodyPage";
-import React from "react";
+import { CardsSkeleton } from "@/components/CardsSkeleton";
+import React, { Suspense } from "react";
 
 const Home = () => {
   return (
     <div className="lg:w-[1024px] flex items-center justify-center ">
-      <BodyPage />
+      <Suspense fallback={<CardsSkeleton />}>
+        <BodyPage />
+      </Suspense>
     </div>
   );
 };

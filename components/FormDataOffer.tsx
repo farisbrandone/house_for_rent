@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -33,8 +33,6 @@ import {
 import { Input } from "./ui/input";
 import InputFile from "./ui/InputFile";
 import { compressImage, compressImageProps } from "@/lib/utils";
-import { CircleX, Loader2, Paperclip } from "lucide-react";
-import Image from "next/image";
 
 const FormSchema = z.object({
   typeOffre: z

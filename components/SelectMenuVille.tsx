@@ -12,7 +12,7 @@ import {
 import { MapPinned } from "lucide-react";
 import { cityOfCountry } from "@/data/dataTypeOffer";
 import { useMobileStore } from "@/store/mobile-navbar";
-import { GetQueryParams } from "@/lib/utils";
+import { useSearchParams } from "next/navigation";
 
 interface SelectMenuVilleProps {
   pays: string;
@@ -32,11 +32,15 @@ const SelectMenuVille = ({ pays }: SelectMenuVilleProps) => {
     onCollapse,
     onChangePays,
   } = useMobileStore((state) => state);
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
+
+  const maVille = params.get("ville");
 
   const onChangeValue = (val: string) => {
     modifyVille(val);
   };
-  const { maVille } = GetQueryParams();
+  /*const { maVille } = GetQueryParams();*/
   return (
     <Select onValueChange={onChangeValue} defaultValue={""}>
       <SelectTrigger className="md:w-[180px] w-full">

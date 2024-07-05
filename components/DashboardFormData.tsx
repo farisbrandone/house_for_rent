@@ -24,11 +24,9 @@ import {
 
 import { database } from "@/data/dataTypeOffer";
 import { RefreshCcw, Trash2 } from "lucide-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const DashboardFormData = () => {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
   const router = useRouter();
   return (
     <div>
