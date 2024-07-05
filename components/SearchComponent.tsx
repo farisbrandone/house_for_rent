@@ -1,5 +1,4 @@
-import { getDataWithSearchParams, totalDataProps } from "@/lib/data";
-import { usePathname, useSearchParams } from "next/navigation";
+import { totalDataProps } from "@/lib/data";
 import React, { Fragment } from "react";
 import Card from "./Card";
 
