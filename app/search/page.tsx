@@ -1,6 +1,11 @@
 import { CardsSkeleton } from "@/components/CardsSkeleton";
 import SearchComponent from "@/components/SearchComponent";
-import { getDataWithSearchParams } from "@/lib/data";
+import { getSearchOffer, getTotalSearchOffer } from "@/data/offer";
+import {
+  fetchFilterTotalData,
+  fetchFilteredDataOffer,
+  getDataWithSearchParams,
+} from "@/lib/data";
 import React, { Suspense } from "react";
 
 const SeachPage = async ({
@@ -16,17 +21,32 @@ const SeachPage = async ({
   const valueOfPays = searchParams?.pays;
   const valueOfVille = searchParams?.ville;
   const valueOfTypeOffre = searchParams?.type_offre;
+  const pageSearch = searchParams?.page;
 
-  const data = await getDataWithSearchParams(
-    valueOfPays,
-    valueOfVille,
-    valueOfTypeOffre
-  );
+  const dataset = await Promise.all([
+    getSearchOffer({
+      pays: valueOfPays,
+      ville: valueOfVille,
+      type_offre: valueOfTypeOffre,
+      page: pageSearch,
+    }),
+    getTotalSearchOffer({
+      pays: valueOfPays,
+      ville: valueOfVille,
+      type_offre: valueOfTypeOffre,
+      page: pageSearch,
+    }),
+  ]);
+
+  const data = dataset[0];
+  const currentPage = Number(searchParams?.page) || 1;
+  const totalPages = dataset[1];
+
   return (
     <div>
       <div>
         <Suspense fallback={<CardsSkeleton />}>
-          <SearchComponent data={data} />
+          <SearchComponent data={data} totalPages={totalPages} />
         </Suspense>
       </div>
     </div>

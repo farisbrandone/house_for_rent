@@ -31,37 +31,50 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useSearchParams } from "next/navigation";
+import { getOfferByUserId } from "@/data/offer";
+import { CardsSkeleton } from "./CardsSkeleton";
 
-const CardOneOffer = () => {
+const CardOneOffer = async () => {
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
+
+  const myId = params.get("id")!;
+
+  const dataForOneOffer = await getOfferByUserId(myId);
+  if (!dataForOneOffer) {
+    return <CardsSkeleton />;
+  }
+
   return (
     <div className="flex flex-col items-center gap-2 p-4 w-full">
       <div className="w-full">
         <h1 className="text-3xl font-extrabold text-wrap text-[#003ce4]">
-          {database[0].nomOffre}
+          {dataForOneOffer.nomOffre}
         </h1>
         <p className="text-xl text-wrap">
           {" "}
           <span></span>
-          <span>{database[0].villeOffre}</span>{" "}
-          <span> {database[0].paysOffre} </span>
+          <span>{dataForOneOffer.villeOffre}</span>{" "}
+          <span> {dataForOneOffer.paysOffre} </span>
         </p>
         <p className="text-xl ">
-          dernière mise a jour le : <span>{database[0].lastUpdate}</span>
+          dernière mise a jour le : <span>{dataForOneOffer.lastUpdate}</span>
         </p>
         <p className="text-xl">
-          <span>Valeur :</span> <span>{database[0].prixDuBien}</span>{" "}
-          <span>{database[0].devise}</span>{" "}
-          <span> {database[0].typeDeVente} </span>
+          <span>Valeur :</span> <span>{dataForOneOffer.prixDuBien}</span>{" "}
+          <span>{dataForOneOffer.devise}</span>{" "}
+          <span> {dataForOneOffer.typeDeVente} </span>
         </p>
       </div>
 
       <div className="flex flex-wrap items-center cursor-pointer mt-6 shadow-2xl">
         <Dialog>
           <DialogTrigger asChild={false} className="flex flex-wrap gap-4">
-            {database[0].imageOffre.map((url: string, index: number) => (
+            {dataForOneOffer.imageOffre.map((url: string, index: number) => (
               <Image
                 src={url}
-                alt={database[0].nomOffre}
+                alt={dataForOneOffer.nomOffre}
                 key={index}
                 width={250}
                 height={250}
@@ -75,26 +88,28 @@ const CardOneOffer = () => {
             <div>
               <Carousel className="w-[450px] max-[500px]:w-350px">
                 <CarouselContent>
-                  {database[0].imageOffre.map((url: string, index: number) => (
-                    <CarouselItem key={index} className=" ">
-                      <div className="p-1 flex items-center justify-center max-[500px]:justify-start">
-                        <Card className="flex items-center justify-center">
-                          <CardContent className="flex flex-col items-center justify-center p-0 ">
-                            {
-                              <Image
-                                src={url}
-                                alt={database[0].nomOffre}
-                                key={index}
-                                width={250}
-                                height={250}
-                                className="w-[250px] h-[250px] "
-                              />
-                            }
-                          </CardContent>
-                        </Card>
-                      </div>
-                    </CarouselItem>
-                  ))}
+                  {dataForOneOffer.imageOffre.map(
+                    (url: string, index: number) => (
+                      <CarouselItem key={index} className=" ">
+                        <div className="p-1 flex items-center justify-center max-[500px]:justify-start">
+                          <Card className="flex items-center justify-center">
+                            <CardContent className="flex flex-col items-center justify-center p-0 ">
+                              {
+                                <Image
+                                  src={url}
+                                  alt={dataForOneOffer.nomOffre}
+                                  key={index}
+                                  width={250}
+                                  height={250}
+                                  className="w-[250px] h-[250px] "
+                                />
+                              }
+                            </CardContent>
+                          </Card>
+                        </div>
+                      </CarouselItem>
+                    )
+                  )}
                 </CarouselContent>
                 <CarouselPrevious />
                 <CarouselNext />
@@ -117,29 +132,29 @@ const CardOneOffer = () => {
           <span className="mr-1">
             <Warehouse />
           </span>{" "}
-          <span>{database[0].typeOffre}</span>
+          <span>{dataForOneOffer.typeOffre}</span>
         </p>
         <p className="flex gap-1">
           {" "}
           <span className="mr-1">
             <Bed />
           </span>{" "}
-          <span>{database[0].nbreDeChambre}CH</span>{" "}
+          <span>{dataForOneOffer.nbreDeChambre}CH</span>{" "}
         </p>
         <p className="flex gap-1">
           <span className="mr-1">
             <CookingPot />
           </span>{" "}
-          <span>{database[0].nbreDeCuisine}CUI</span>
+          <span>{dataForOneOffer.nbreDeCuisine}CUI</span>
         </p>
         <p className="flex gap-1">
           <span className="mr-1">
             <Bath />
           </span>{" "}
-          <span>{database[0].nbreDeDouche}DCH</span>
+          <span>{dataForOneOffer.nbreDeDouche}DCH</span>
         </p>
 
-        {database[0].parking && (
+        {dataForOneOffer.parking && (
           <p className="flex gap-1">
             <span className="mr-2">
               <CarFront />
@@ -150,20 +165,20 @@ const CardOneOffer = () => {
       </div>
       <div className="flex flex-wrap gap-8 mt-5 w-full">
         <h2 className="text-xl font-bold">Nos contacts pour nous joindre :</h2>
-        {database[0].tel && (
+        {dataForOneOffer.tel && (
           <p className="flex">
             <span className="mr-2">
               <PhoneCall />
             </span>
-            {database[0].tel}
+            {dataForOneOffer.tel}
           </p>
         )}
-        {database[0].adresseEmail && (
+        {dataForOneOffer.adresseEmail && (
           <p className="flex">
             <span className="mr-2">
               <Mail />
             </span>
-            {database[0].adresseEmail}
+            {dataForOneOffer.adresseEmail}
           </p>
         )}
       </div>
@@ -171,7 +186,7 @@ const CardOneOffer = () => {
         <h1 className="text-2xl text-[#003ce4] font-bold">
           Detais sur l&apos;offre :
         </h1>
-        <div className="text-wrap">{database[0].descriptifOffre}</div>
+        <div className="text-wrap">{dataForOneOffer.descriptifOffre}</div>
       </div>
     </div>
   );

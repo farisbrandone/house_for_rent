@@ -12,11 +12,11 @@ export const metadata: Metadata = {
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div>
-      {/*<div className="w-full bg-[linear-gradient(40deg,#006ce4,#003b95)] flex items-center justify-center mt-0">
+    <div className="bg-white">
+      <div className="w-full bg-[linear-gradient(40deg,#006ce4,#003b95)] flex items-center justify-center top-0 fixed">
         <Header searchOrNot={false} headerForSign={true} />
-  </div>*/}
-      <div className="flex flex-col flex-1 items-center justify-center min-h-screen bg-hero-pattern">
+      </div>
+      <div className="flex flex-col flex-1 items-center  min-h-screen ">
         {children}
       </div>
     </div>

@@ -1,10 +1,11 @@
+import { offerDataParamsWithNull } from "@/actions/createOffer";
 import { databaseProps } from "@/lib/data";
 import { Heart } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
 interface cardProps {
-  mycarData: databaseProps;
+  mycarData: offerDataParamsWithNull;
 }
 
 const Card = ({ mycarData }: cardProps) => {

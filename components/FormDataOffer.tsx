@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -33,61 +33,21 @@ import {
 import { Input } from "./ui/input";
 import InputFile from "./ui/InputFile";
 import { compressImage, compressImageProps } from "@/lib/utils";
+import { User } from "@/types/next-auth";
+import { useIsClient } from "@/hooks/use-is-client";
+import { FormSchema } from "@/schemas";
+import { mydata } from "@/data/appartment";
+import { createOfferData } from "@/actions/createOffer";
+import Spinner from "./spinner";
+import FormError from "./form-error";
+import FormSuccess from "./form-success";
 
-const FormSchema = z.object({
-  typeOffre: z
-    .string({
-      required_error: "La selection d'un type d'offre est requis.",
-    })
-    .min(3),
-  nomOffre: z
-    .string({
-      required_error: "La Fourniture d'un nom a votre offre est requis.",
-    })
-    .min(5),
-  paysOffre: z
-    .string({
-      required_error: "La selection d'un pays est requis.",
-    })
-    .min(3),
-  villeOffre: z
-    .string({
-      required_error: "La selection d'une ville est requis.",
-    })
-    .min(3),
-  descriptifOffre: z
-    .string()
-    .min(100, {
-      message: "Le descriptif doit avoir au moins 100 charactères.",
-    })
-    .max(2000, {
-      message: "Le descriptif doit avoir au plus 2000 charactères.",
-    }),
-  nbreDeChambre: z.string().optional(),
-  nbreDeCuisine: z.string().optional(),
-  nbreDeDouche: z.string().optional(),
-  prixDuBien: z
-    .string({
-      required_error: "vous devez entrez un prix à votre bien",
-    })
-    .min(2),
-  devise: z
-    .string({
-      required_error: "vous devez selectionner une devise",
-    })
-    .min(2),
-  typeDeVente: z
-    .string({
-      required_error:
-        "Vous devez selectionner la formule associée à votre prix",
-    })
-    .min(5),
-  adresseEmail: z.string().email(),
-  tel: z.string().optional(),
-  imageOffre: z.any().array().optional(),
-});
+interface UserInfoProps {
+  user?: User;
+}
 
-function FormDataOffer() {
+function FormDataOffer({ user }: UserInfoProps) {
+  const userId = user?.id;
   const eltm: React.MutableRefObject<compressImageProps[] | undefined> =
     useRef();
   const eltm2: React.MutableRefObject<boolean | undefined> = useRef();
@@ -95,6 +55,12 @@ function FormDataOffer() {
   const [paysSelect, setPaysSelect] = useState("");
   const [stateUrlImage, setStateUrlImage] = useState<compressImageProps[]>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string>("");
+  const [success, setSuccess] = useState<string>("");
+
+  const [isPending, startTransition] = useTransition();
+
+  const isClient = useIsClient();
   const changeValuePays = (myValue: string) => {
     setPaysSelect(myValue);
   };
@@ -103,16 +69,33 @@ function FormDataOffer() {
     resolver: zodResolver(FormSchema),
   });
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log("deedede");
-    if (data.imageOffre) {
-      const dodo = await compressImage(data.imageOffre, 380, 260, 0.8);
-      console.log(dodo);
-    }
-    console.log(JSON.stringify(data, null, 2));
+  async function onSubmit(datas: z.infer<typeof FormSchema>) {
+    startTransition(async () => {
+      const date = new Date().toISOString().split("T")[0];
+      const myData = {
+        ...datas,
+        dateInset: date,
+        lastUpdate: date,
+        userId: user?.id ? user?.id : "",
+      };
+
+      const dodo = await compressImage(myData.imageOffre, 380, 260, 0.6);
+      const finalValues = {
+        ...myData,
+        imageOffre: dodo.tabImage,
+        nameImage: dodo.tabName,
+      };
+
+      const data = await createOfferData(finalValues);
+      if (data.success) setSuccess(data.success);
+      if (data?.error) setError(data.error);
+    });
+    form.reset();
+    setSuccess("");
+    setError("");
   }
 
-  const handleImage: React.ChangeEventHandler<HTMLInputElement> = async (e) => {
+  /*const handleImage: React.ChangeEventHandler<HTMLInputElement> = async (e) => {
     e.preventDefault();
     const filesResult: File[] = [];
     try {
@@ -141,8 +124,8 @@ function FormDataOffer() {
       console.log(error);
       setLoading((prev) => false);
     }
-  };
-
+  };*/
+  if (!isClient) return <Spinner />;
   useEffect(() => {}, []);
 
   return (
@@ -165,6 +148,7 @@ function FormDataOffer() {
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
+                    disabled={isPending}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -193,6 +177,7 @@ function FormDataOffer() {
                   </FormLabel>
                   <FormControl>
                     <Input
+                      disabled={isPending}
                       placeholder="exple:Appartement meublée - Douala cameroun quartier Bonamoussadi"
                       {...field}
                       className="w-full"
@@ -211,6 +196,7 @@ function FormDataOffer() {
                     Selectionner le pays ou se trouve l&apos;offre
                   </FormLabel>
                   <Select
+                    disabled={isPending}
                     onValueChange={
                       /*field.onChange*/ (value) => {
                         form.setValue("paysOffre", value);
@@ -251,6 +237,7 @@ function FormDataOffer() {
                     Selectionner la ville ou se trouve l&apos;offre
                   </FormLabel>
                   <Select
+                    disabled={isPending}
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
@@ -289,6 +276,7 @@ function FormDataOffer() {
                   </FormLabel>
                   <FormControl>
                     <Textarea
+                      disabled={isPending}
                       placeholder="Décrivez votre offre dans les détails et mettez en valeurs ces atouts."
                       className="resize-none"
                       {...field}
@@ -311,7 +299,12 @@ function FormDataOffer() {
                         Nombre de chambre
                       </FormLabel>
                       <FormControl>
-                        <Input placeholder="exple:2" {...field} className="" />
+                        <Input
+                          disabled={isPending}
+                          placeholder="exple:2"
+                          {...field}
+                          className=""
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -326,7 +319,12 @@ function FormDataOffer() {
                         Nombre de cuisine
                       </FormLabel>
                       <FormControl>
-                        <Input placeholder="exple:2" {...field} className="" />
+                        <Input
+                          disabled={isPending}
+                          placeholder="exple:2"
+                          {...field}
+                          className=""
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -341,7 +339,12 @@ function FormDataOffer() {
                         Nombre de douche
                       </FormLabel>
                       <FormControl>
-                        <Input placeholder="exple:2" {...field} className="" />
+                        <Input
+                          disabled={isPending}
+                          placeholder="exple:2"
+                          {...field}
+                          className=""
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -363,6 +366,7 @@ function FormDataOffer() {
                       </FormLabel>
                       <FormControl>
                         <Input
+                          disabled={isPending}
                           placeholder="exple: 10 000"
                           {...field}
                           className=""
@@ -380,6 +384,7 @@ function FormDataOffer() {
                     <FormItem>
                       <FormLabel>devise</FormLabel>
                       <Select
+                        disabled={isPending}
                         onValueChange={field.onChange}
                         defaultValue={field.value}
                       >
@@ -407,6 +412,7 @@ function FormDataOffer() {
                     <FormItem>
                       <FormLabel>Formule</FormLabel>
                       <Select
+                        disabled={isPending}
                         onValueChange={field.onChange}
                         defaultValue={field.value}
                       >
@@ -442,7 +448,12 @@ function FormDataOffer() {
                         {`numéro de telephone(optionnel)`}
                       </FormLabel>
                       <FormControl>
-                        <Input placeholder="" {...field} className="" />
+                        <Input
+                          disabled={isPending}
+                          placeholder=""
+                          {...field}
+                          className=""
+                        />
                       </FormControl>
 
                       <FormMessage />
@@ -457,6 +468,7 @@ function FormDataOffer() {
                       <FormLabel className="flex items-center">Email</FormLabel>
                       <FormControl>
                         <Input
+                          disabled={isPending}
                           placeholder="exple:lando@dco.com"
                           {...field}
                           className=""
@@ -488,9 +500,10 @@ function FormDataOffer() {
                 </FormItem>
               )}
             />
-
+            {error && <FormError message={error} />}
+            {success && <FormSuccess message={success} />}
             <div className="flex items-center justify-center w-full">
-              <Button type="submit" className=" w-[250px]">
+              <Button type="submit" disabled={isPending} className=" w-[250px]">
                 Envoyer
               </Button>
             </div>

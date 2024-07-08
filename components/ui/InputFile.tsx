@@ -22,14 +22,20 @@ type formProps = UseFormReturn<
     typeDeVente: string;
     adresseEmail: string;
     imageOffre?: any[] | undefined;
-    nbreDeChambre?: string | undefined;
-    nbreDeCuisine?: string | undefined;
-    nbreDeDouche?: string | undefined;
-    tel?: string | undefined;
+    nbreDeChambre: string;
+    nbreDeCuisine: string;
+    nbreDeDouche: string;
+    tel: string;
+    userId: string;
+    nameImage?: any[] | undefined;
+    dateInset: string;
+    lastUpdate: string;
+    parking: boolean;
   },
   any,
   undefined
 >;
+
 interface InputFileProps {
   accept: any;
   multiple: boolean;

@@ -71,7 +71,7 @@ const Header = ({
             <Button variant="button1" onClick={() => router.push("/sign_up")}>
               S&apos;inscrire
             </Button>
-            <Button variant="button2" onClick={() => router.push("/sign_in")}>
+            <Button variant="button2" onClick={() => router.push("auth/login")}>
               Se connecter
             </Button>
           </div>

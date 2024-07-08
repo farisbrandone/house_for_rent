@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -25,9 +25,34 @@ import {
 import { database } from "@/data/dataTypeOffer";
 import { RefreshCcw, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { databaseProps, deleteData } from "@/lib/data";
+import { useToast } from "@/components/ui/use-toast";
+import { User } from "@prisma/client";
+import { offerDataParams } from "@/actions/createOffer";
+import { CardsSkeleton } from "./CardsSkeleton";
+import { deleteOfferByUserId } from "@/data/offer";
 
-const DashboardFormData = () => {
+const DashboardFormData = ({
+  data,
+  id,
+}: {
+  data: offerDataParams[] | null;
+  id: string;
+}) => {
+  const { toast } = useToast();
   const router = useRouter();
+  const deleteElement = async (id: string) => {
+    const message = await deleteOfferByUserId(id);
+    if (!!message) {
+      router.push(`/dashboardPage`);
+    } else {
+      toast({
+        description:
+          "Une erreur est survenue pendant la suppression. réessayez SVP",
+      });
+    }
+  };
+
   return (
     <div>
       {" "}
@@ -49,52 +74,62 @@ const DashboardFormData = () => {
           </TableRow>
         </TableHeader>
         <TableBody className="max-[365px]:text-sm">
-          {database.map((elt) => (
-            <TableRow key={elt.id}>
-              <TableCell className="w-[120px] ">{elt.nomOffre}</TableCell>
-              <TableCell className="w-[80px] ">{elt.lastUpdate}</TableCell>
-              <TableCell
-                className="cursor-pointer hover:bg-green-400 h-full w-[80px] "
-                onClick={() => {
-                  router.push("/updateFormData");
-                }}
-              >
-                <RefreshCcw className="text-green-900 m-auto" />
-              </TableCell>
-              <TableCell className="hover:bg-red-400 cursor-pointer overflow-x-clip w-[80px] p-0">
-                <div className="">
-                  <Dialog>
-                    <DialogTrigger asChild className="p-0">
-                      <Button className="hover:bg-red-400 bg-white w-full">
-                        <Trash2 className="text-red-700 m-auto" />
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-md">
-                      <DialogHeader>
-                        <DialogTitle></DialogTitle>
-                        <DialogDescription>
-                          &Ecirc;tes-vous s&Ucirc;r de vouloir Supprimer cet
-                          &eacute;l&eacute;ment
-                        </DialogDescription>
-                      </DialogHeader>
-                      <div className="flex items-center space-x-2">
-                        <Button size="sm" className="px-0" onClick={() => {}}>
-                          OUI
+          {!!data ? (
+            data.map((elt) => (
+              <TableRow key={elt.id}>
+                <TableCell className="w-[120px] ">{elt.nomOffre}</TableCell>
+                <TableCell className="w-[80px] ">{elt.lastUpdate}</TableCell>
+                <TableCell
+                  className="cursor-pointer hover:bg-green-400 h-full w-[80px] "
+                  onClick={() => {
+                    router.push(`dashboardPage/${id}`);
+                  }}
+                >
+                  <RefreshCcw className="text-green-900 m-auto" />
+                </TableCell>
+                <TableCell className="hover:bg-red-400 cursor-pointer overflow-x-clip w-[80px] p-0">
+                  <div className="">
+                    <Dialog>
+                      <DialogTrigger asChild className="p-0">
+                        <Button className="hover:bg-red-400 bg-white w-full">
+                          <Trash2 className="text-red-700 m-auto" />
                         </Button>
-                      </div>
-                      <DialogFooter className="sm:justify-start">
-                        <DialogClose asChild>
-                          <Button type="button" variant="secondary">
-                            Fermer
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-md">
+                        <DialogHeader>
+                          <DialogTitle></DialogTitle>
+                          <DialogDescription>
+                            &Ecirc;tes-vous s&Ucirc;r de vouloir Supprimer cet
+                            &eacute;l&eacute;ment
+                          </DialogDescription>
+                        </DialogHeader>
+                        <div className="flex items-center space-x-2">
+                          <Button
+                            size="sm"
+                            className="px-0"
+                            onClick={() => {
+                              deleteElement(id);
+                            }}
+                          >
+                            OUI
                           </Button>
-                        </DialogClose>
-                      </DialogFooter>
-                    </DialogContent>
-                  </Dialog>
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
+                        </div>
+                        <DialogFooter className="sm:justify-start">
+                          <DialogClose asChild>
+                            <Button type="button" variant="secondary">
+                              Fermer
+                            </Button>
+                          </DialogClose>
+                        </DialogFooter>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <CardsSkeleton />
+          )}
         </TableBody>
         <TableFooter>
           <TableRow>

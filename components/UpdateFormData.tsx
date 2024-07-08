@@ -1,5 +1,12 @@
 "use client";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  startTransition,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useTransition,
+} from "react";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -36,64 +43,33 @@ import { compressImage, compressImageProps } from "@/lib/utils";
 import { CircleX, Loader2, Paperclip } from "lucide-react";
 import Image from "next/image";
 import { database } from "@/data/dataTypeOffer";
+import { databaseProps } from "@/lib/data";
+import {
+  offerDataParams,
+  offerDataParamsWithNull,
+  updateOfferData,
+} from "@/actions/createOffer";
+import { CardsSkeleton } from "./CardsSkeleton";
+import { FormSchema } from "@/schemas";
+import Spinner from "./spinner";
+import { createOfferData } from "@/lib/actions";
+import { useIsClient } from "@/hooks/use-is-client";
 
-const FormSchema = z.object({
-  typeOffre: z
-    .string({
-      required_error: "La selection d'un type d'offre est requis.",
-    })
-    .min(3),
-  nomOffre: z
-    .string({
-      required_error: "La Fourniture d'un nom a votre offre est requis.",
-    })
-    .min(5),
-  paysOffre: z
-    .string({
-      required_error: "La selection d'un pays est requis.",
-    })
-    .min(3),
-  villeOffre: z
-    .string({
-      required_error: "La selection d'une ville est requis.",
-    })
-    .min(3),
-  descriptifOffre: z
-    .string()
-    .min(100, {
-      message: "Le descriptif doit avoir au moins 100 charactères.",
-    })
-    .max(2000, {
-      message: "Le descriptif doit avoir au plus 2000 charactères.",
-    }),
-  nbreDeChambre: z.string().optional(),
-  nbreDeCuisine: z.string().optional(),
-  nbreDeDouche: z.string().optional(),
-  prixDuBien: z
-    .string({
-      required_error: "vous devez entrez un prix à votre bien",
-    })
-    .min(2),
-  devise: z
-    .string({
-      required_error: "vous devez selectionner une devise",
-    })
-    .min(2),
-  typeDeVente: z
-    .string({
-      required_error:
-        "Vous devez selectionner la formule associée à votre prix",
-    })
-    .min(5),
-  adresseEmail: z.string().email(),
-  tel: z.string().optional(),
-  imageOffre: z.any().array().optional(),
-});
-
-function UpdateFormData() {
+function UpdateFormData({
+  data,
+  userId,
+}: {
+  data: offerDataParamsWithNull | null;
+  userId: string;
+}) {
   const [paysSelect, setPaysSelect] = useState("");
-
+  const offerId = data?.id ? data?.id : "";
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string>("");
+  const [success, setSuccess] = useState<string>("");
+  const [isPending, startTransition] = useTransition();
+  const isClient = useIsClient();
+
   const changeValuePays = (myValue: string) => {
     setPaysSelect(myValue);
   };
@@ -102,16 +78,33 @@ function UpdateFormData() {
     resolver: zodResolver(FormSchema),
   });
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log("deedede");
-    if (data.imageOffre) {
-      const dodo = await compressImage(data.imageOffre, 380, 260, 0.8);
-      console.log(dodo);
-    }
-    console.log(JSON.stringify(data, null, 2));
+  async function onSubmit(datas: z.infer<typeof FormSchema>) {
+    startTransition(async () => {
+      const date = new Date().toISOString().split("T")[0];
+      const myData = {
+        ...datas,
+        dateInset: date,
+        lastUpdate: date,
+        userId: userId,
+      };
+
+      const dodo = await compressImage(myData.imageOffre, 380, 260, 0.6);
+      const finalValues = {
+        ...myData,
+        imageOffre: dodo.tabImage,
+        nameImage: dodo.tabName,
+      };
+
+      const data = await updateOfferData(finalValues, offerId);
+      if (data.success) setSuccess(data.success);
+      if (data?.error) setError(data.error);
+    });
+    form.reset();
+    setSuccess("");
+    setError("");
   }
 
-  const handleImage: React.ChangeEventHandler<HTMLInputElement> = async (e) => {
+  /*const handleImage: React.ChangeEventHandler<HTMLInputElement> = async (e) => {
     e.preventDefault();
     const filesResult: File[] = [];
     try {
@@ -133,16 +126,19 @@ function UpdateFormData() {
       const result = await compressImage(filesResult, 380, 260, 0.4);
 
       console.log({ result });
-
+      setStateUrlImage((prevState) => [...prevState, ...result]);
       console.log({ loading });
       setLoading(false);
     } catch (error) {
       console.log(error);
       setLoading((prev) => false);
     }
-  };
+  };*/
+  if (!isClient) return <Spinner />;
 
-  useEffect(() => {}, []);
+  if (!data) {
+    return <CardsSkeleton />;
+  }
 
   return (
     <div className="bg-white border-4 rounded-xl border-[#006ce4] p-5 flex flex-col items-center gap-4">
@@ -163,9 +159,7 @@ function UpdateFormData() {
                   <FormLabel>Selectionner un type d&apos;offre</FormLabel>
                   <Select
                     onValueChange={field.onChange}
-                    defaultValue={
-                      !!field.value ? field.value : database[0].typeOffre
-                    }
+                    defaultValue={!!field.value ? field.value : data.typeOffre}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -197,9 +191,7 @@ function UpdateFormData() {
                       placeholder="exple:Appartement meublée - Douala cameroun quartier Bonamoussadi"
                       {...field}
                       className="w-full"
-                      defaultValue={
-                        !!field.value ? field.value : database[0].nomOffre
-                      }
+                      defaultValue={!!field.value ? field.value : data.nomOffre}
                     />
                   </FormControl>
                   <FormMessage />
@@ -221,9 +213,7 @@ function UpdateFormData() {
                         changeValuePays(value);
                       }
                     }
-                    defaultValue={
-                      !!field.value ? field.value : database[0].paysOffre
-                    }
+                    defaultValue={!!field.value ? field.value : data.paysOffre}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -258,9 +248,7 @@ function UpdateFormData() {
                   </FormLabel>
                   <Select
                     onValueChange={field.onChange}
-                    defaultValue={
-                      !!field.value ? field.value : database[0].villeOffre
-                    }
+                    defaultValue={!!field.value ? field.value : data.villeOffre}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -301,9 +289,7 @@ function UpdateFormData() {
                       className="resize-none"
                       {...field}
                       defaultValue={
-                        !!field.value
-                          ? field.value
-                          : database[0].descriptifOffre
+                        !!field.value ? field.value : data.descriptifOffre
                       }
                     />
                   </FormControl>
@@ -312,83 +298,94 @@ function UpdateFormData() {
               )}
             />
 
-            <div className="flex flex-col items-center gap-3">
-              <p>{`Entrez les élements suivant(optionnel) :`}</p>
-              <div className="flex items-center gap-3">
-                <FormField
-                  control={form.control}
-                  name="nbreDeChambre"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-center">
-                        Nombre de chambre
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="exple:2"
-                          {...field}
-                          className=""
-                          defaultValue={
-                            !!field.value
-                              ? field.value
-                              : database[0].nbreDeChambre
-                          }
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="nbreDeCuisine"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-center">
-                        Nombre de cuisine
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="exple:2"
-                          {...field}
-                          className=""
-                          defaultValue={
-                            !!field.value
-                              ? field.value
-                              : database[0].nbreDeCuisine
-                          }
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="nbreDeDouche"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-center">
-                        Nombre de douche
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="exple:2"
-                          {...field}
-                          className=""
-                          defaultValue={
-                            !!field.value
-                              ? field.value
-                              : database[0].nbreDeDouche
-                          }
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+            {!!data && (
+              <div className="flex flex-col items-center gap-3">
+                <p>{`Entrez les élements suivant(optionnel) :`}</p>
+                <div className="flex items-center gap-3">
+                  <FormField
+                    control={form.control}
+                    name="nbreDeChambre"
+                    render={({ field }) => {
+                      const nbreDeChambre = data.nbreDeChambre
+                        ? data.nbreDeChambre
+                        : "";
+                      return (
+                        <FormItem>
+                          <FormLabel className="flex items-center">
+                            Nombre de chambre
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="exple:2"
+                              {...field}
+                              className=""
+                              defaultValue={
+                                !!field.value ? field.value : nbreDeChambre
+                              }
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      );
+                    }}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="nbreDeCuisine"
+                    render={({ field }) => {
+                      const nbreDeChambre = data.nbreDeCuisine
+                        ? data.nbreDeCuisine
+                        : "";
+                      return (
+                        <FormItem>
+                          <FormLabel className="flex items-center">
+                            Nombre de cuisine
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="exple:2"
+                              {...field}
+                              className=""
+                              defaultValue={
+                                !!field.value ? field.value : nbreDeChambre
+                              }
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      );
+                    }}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="nbreDeDouche"
+                    render={({ field }) => {
+                      const nbreDeDouche = data.nbreDeDouche
+                        ? data.nbreDeDouche
+                        : "";
+                      return (
+                        <FormItem>
+                          <FormLabel className="flex items-center">
+                            Nombre de douche
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="exple:2"
+                              {...field}
+                              className=""
+                              defaultValue={
+                                !!field.value ? field.value : nbreDeDouche
+                              }
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      );
+                    }}
+                  />
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="flex flex-col items-center gap-3">
               <p>Entrez le prix de votre bien : </p>
@@ -407,7 +404,7 @@ function UpdateFormData() {
                           {...field}
                           className=""
                           defaultValue={
-                            !!field.value ? field.value : database[0].prixDuBien
+                            !!field.value ? field.value : data.prixDuBien
                           }
                         />
                       </FormControl>
@@ -424,9 +421,7 @@ function UpdateFormData() {
                       <FormLabel>devise</FormLabel>
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={
-                          !!field.value ? field.value : database[0].devise
-                        }
+                        defaultValue={!!field.value ? field.value : data.devise}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -454,7 +449,7 @@ function UpdateFormData() {
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={
-                          !!field.value ? field.value : database[0].typeDeVente
+                          !!field.value ? field.value : data.typeDeVente
                         }
                       >
                         <FormControl>
@@ -493,9 +488,7 @@ function UpdateFormData() {
                           placeholder=""
                           {...field}
                           className=""
-                          defaultValue={
-                            !!field.value ? field.value : database[0].tel
-                          }
+                          defaultValue={!!field.value ? field.value : data.tel}
                         />
                       </FormControl>
 
@@ -515,9 +508,7 @@ function UpdateFormData() {
                           {...field}
                           className=""
                           defaultValue={
-                            !!field.value
-                              ? field.value
-                              : database[0].adresseEmail
+                            !!field.value ? field.value : data.adresseEmail
                           }
                         />
                       </FormControl>
@@ -540,7 +531,7 @@ function UpdateFormData() {
                       name="imageOffre"
                       mode="append"
                       form={form}
-                      defaultValue={database[0].imageOffre}
+                      defaultValue={data.imageOffre}
                     />
                   </FormControl>
                   <FormMessage />
