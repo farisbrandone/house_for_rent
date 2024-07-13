@@ -133,7 +133,7 @@ export const FormSchema = z.object({
     .min(3),
   descriptifOffre: z
     .string()
-    .min(100, {
+    .min(30, {
       message: "Le descriptif doit avoir au moins 100 charactères.",
     })
     .max(2000, {

@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { Metadata } from "next";
 import React from "react";
@@ -18,6 +19,9 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
   </div>*/}
       <div className="flex flex-col flex-1 items-center justify-center min-h-screen bg-gradient-to-r from-violet-500 to-fuchsia-500">
         {children}
+      </div>
+      <div>
+        <Footer />
       </div>
     </div>
   );

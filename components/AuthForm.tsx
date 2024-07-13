@@ -1,7 +1,5 @@
 "use client";
 
-"use client";
-
 import { useState, useTransition } from "react";
 import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -29,6 +27,7 @@ import FormSuccess from "./form-success";
 import { login } from "@/actions/login";
 
 const LoginForm = () => {
+  console.log("login");
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
   const urlError =
@@ -55,26 +54,33 @@ const LoginForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    console.log("onsubmit login");
     startTransition(() => {
+      console.log("inside transition");
       try {
         login(values, callbackUrl).then((data) => {
           if (data?.error) {
+            console.log("login error");
             form.reset();
             setError(data.error);
           }
 
           if (data?.success) {
+            console.log("login success");
             form.reset();
             setSuccess(data.success);
           }
 
           if (data?.twoFactor) {
+            console.log("login two factor");
             setShowTwoFactor(true);
           }
         });
       } catch (err) {
+        console.log("login catch error");
         setError(`Something went wrong! Error:${err}`);
       } finally {
+        console.log("come to finaly");
         setShowTwoFactor(false);
         setSuccess("");
         setError("");

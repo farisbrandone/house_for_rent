@@ -116,7 +116,7 @@ const InputFile = React.forwardRef<HTMLInputElement, InputFileProps>(
           className="block text-gray-700 text-sm font-bold mb-2 capitalize cursor-pointer"
           htmlFor={name}
         >
-          {`Insertion des images (maximum 3)`}
+          {`Réinserer les images svp (maximum 3)`}
         </label>
 
         <div {...getRootProps()} className="w-full">

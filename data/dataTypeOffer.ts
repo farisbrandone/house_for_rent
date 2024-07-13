@@ -326,6 +326,26 @@ export const typeOffer = {
   ],
 };
 
+export const typeOfferForm = [
+  "Chambre simple",
+  "Chambre moderne non meublée",
+  "Chambre moderne meublée",
+  "Chambre d'hôtel",
+  "Studio simple",
+  "Studio moderne non meublé",
+  "Studio moderne meublé",
+  "Appartement non meublé",
+  "Appartement meublé",
+  "Maison familiale",
+  "Villa",
+  "Bureaux",
+  "Boutique",
+  "Magasin",
+  "Entrepôt",
+  "Salle de fête",
+  "Terrain",
+];
+
 export const deviseData = ["FCFA/XAF", "USD/$", "EUR/€"];
 
 export const formuleDuPrix = [

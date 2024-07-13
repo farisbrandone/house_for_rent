@@ -10,7 +10,7 @@ const Header = ({ label }: HeaderProps) => {
       <div className="flex items-center justify-center">
         <MdOutlineSecurity className="text-sky-400 text-3xl" />
         <h1 className="text-3xl font-semibold text-primary drop-shadow-md">
-          Auth
+          Mamaisonalouer.com
         </h1>
       </div>
 

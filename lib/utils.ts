@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
+
 import { twMerge } from "tailwind-merge";
 import { z } from "zod";
 
@@ -36,59 +37,86 @@ export interface compressImageProps {
   tabName: string[];
 }
 export async function compressImage(
-  files: any,
+  files: any[],
   maxWidth: any,
   maxHeight: any,
   quality: any
 ): Promise<compressImageProps> {
-  return new Promise((resolve, reject) => {
-    const tab1: string[] = [];
-    const tab2: string[] = [];
-    console.log(files);
+  console.log("niveau1");
+  const tabImages: string[] = [];
+  const tabNames: string[] = [];
+  console.log("niveau2");
+  for (let i = 0; i < files.length; i++) {
+    console.log("niveaui1");
+    let urlImage: string;
+    const name = files[i].name;
 
-    files.forEach((file: any) => {
-      const name = file.name;
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (event) => {
-        const img = new Image();
+    const data = await (function (file: File, name: string): Promise<string[]> {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
 
-        img.src = event.target?.result as string;
-        img.onload = () => {
-          let width = img.width;
-          let height = img.height;
+        reader.onload = (event) => {
+          const img = new Image();
+          console.log("niveaui2");
+          img.src = event.target?.result as string;
+          img.onload = () => {
+            console.log("niveau3");
+            let width = img.width;
+            let height = img.height;
 
-          if (width > height) {
-            if (width > maxWidth) {
-              height *= maxWidth / width;
-              width = maxWidth;
+            if (width > height) {
+              if (width > maxWidth) {
+                height *= maxWidth / width;
+                width = maxWidth;
+              }
+            } else {
+              if (height > maxHeight) {
+                width *= maxHeight / height;
+                height = maxHeight;
+              }
             }
-          } else {
-            if (height > maxHeight) {
-              width *= maxHeight / height;
-              height = maxHeight;
-            }
-          }
 
-          const canvas = document.createElement("canvas");
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext("2d");
-          ctx?.drawImage(img, 0, 0, width, height);
-          const urlImage = canvas.toDataURL("image/jpeg", quality);
-          console.log(urlImage.length);
-
-          tab1.push(urlImage);
-          tab2.push(name);
+            const canvas = document.createElement("canvas");
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext("2d");
+            ctx?.drawImage(img, 0, 0, width, height);
+            urlImage = canvas.toDataURL("image/jpeg", quality);
+            console.log(urlImage.length);
+            console.log("niveaui4");
+            console.log({ urlImage, name });
+            resolve([urlImage, name]);
+          };
         };
-      };
-      reader.onerror = (error) => {
+        reader.onerror = (error) => {
+          reject(error);
+        };
+      });
+    })(files[i], name);
+    tabImages[i] = data[0];
+    tabNames[i] = data[1];
+  }
+  /*reader.onerror = (error) => {
         reject(error);
       };
+     */
+  /* const data = files.map((files: any) => {
+     
+     
+    });
+    console.log(data);
+    const tabImage = data.map((elt: any) => {
+      return elt.urlImage;
+    });
+    const tabName = data.map((elt: any) => {
+      return elt.name;
     });
 
-    resolve({ tabImage: tab1, tabName: tab2 });
-  });
+    console.log({ tabImage, tabName });*/
+  console.log("niveau3");
+  console.log(tabImages, tabNames);
+  return { tabImage: tabImages, tabName: tabNames };
 }
 
 export const generatePagination = (currentPage: number, totalPages: number) => {

@@ -43,12 +43,10 @@ const SeachPage = async ({
   const totalPages = dataset[1];
 
   return (
-    <div>
-      <div>
-        <Suspense fallback={<CardsSkeleton />}>
-          <SearchComponent data={data} totalPages={totalPages} />
-        </Suspense>
-      </div>
+    <div className="lg:w-[1024px] flex items-center justify-center ">
+      <Suspense fallback={<CardsSkeleton />}>
+        <SearchComponent data={data} totalPages={totalPages} />
+      </Suspense>
     </div>
   );
 };

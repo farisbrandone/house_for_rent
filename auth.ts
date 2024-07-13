@@ -4,12 +4,12 @@ import Credentials from "next-auth/providers/credentials";
 import { object, string, z } from "zod";
 import { sql } from "@vercel/postgres";
 import { User } from "./lib/definitions";
-import bcrypt from "bcrypt";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "@/lib/db";
 import { getUserById } from "./data/user";
 import { getTwoFactorConfirmationByUserId } from "./data/two-factor-confirmation";
 import { getAccountByUserId } from "./data/account";
+import { MdToken } from "react-icons/md";
 
 /*async function getUser(email: string): Promise<User | undefined> {
   try {
@@ -68,7 +68,9 @@ export const {
     error: "/auth/error",
   },
   events: {
+    //cequi pourrait ce passer avec email verified ou updating de la date pou une relogin
     async linkAccount({ user }) {
+      console.log("linkaccount");
       await db.user.update({
         where: { id: user.id },
         data: { emailVerified: new Date() },
@@ -77,6 +79,7 @@ export const {
   },
   callbacks: {
     async signIn({ user, account }) {
+      console.log("PARTIE AUTH 4 DANS SIGNIN 4");
       // Allow OAuth without email verification
       if (account?.provider !== "credentials") return true;
 
@@ -84,24 +87,26 @@ export const {
 
       // Prevent sign in without email verification
       if (!existingUser?.emailVerified) return false;
-
-      if (existingUser.isTwoFactorEnabled) {
+      console.log("inside signin3");
+      /* if (existingUser.isTwoFactorEnabled) {
+        console.log("inside signin4");
         const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
           existingUser.id
         );
 
-        if (!twoFactorConfirmation) return false;
-
+      /*if (!twoFactorConfirmation) return false;
+        console.log("inside signin5");
         // Delete two factor confirmation for next sign in
         await db.twoFactorConfirmation.delete({
           where: { id: twoFactorConfirmation.id },
         });
       }
-
+      console.log("inside signin6");*/
       return true;
     },
 
     async session({ token, session }) {
+      console.log("PARTIE SESSION 6");
       if (token.sub && session.user) {
         session.user.id = token.sub;
       }
@@ -121,6 +126,8 @@ export const {
     },
 
     async jwt({ token }) {
+      console.log("PARTIE TOKEN 5");
+
       if (!token.sub) return token;
 
       const existingUser = await getUserById(token.sub);

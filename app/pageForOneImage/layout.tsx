@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { Metadata } from "next";
 import React from "react";
@@ -17,6 +18,9 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
         <Header searchOrNot={false} headerForSign={false} />
       </div>
       <div className="flex items-center justify-center">{children}</div>
+      <div>
+        <Footer />
+      </div>
     </div>
   );
 };

@@ -34,14 +34,20 @@ import {
 import { useSearchParams } from "next/navigation";
 import { getOfferByUserId } from "@/data/offer";
 import { CardsSkeleton } from "./CardsSkeleton";
+import { offerDataParamsWithNull } from "@/actions/createOffer";
+import Spinner from "./spinner";
+import { useIsClient } from "@/hooks/use-is-client";
 
-const CardOneOffer = async () => {
-  const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams);
+const CardOneOffer = ({
+  dataForOneOffer,
+}: {
+  dataForOneOffer: offerDataParamsWithNull | null;
+}) => {
+  const isClient = useIsClient();
+  console.log({ dataForOneOffer });
 
-  const myId = params.get("id")!;
+  if (!isClient) return <Spinner />;
 
-  const dataForOneOffer = await getOfferByUserId(myId);
   if (!dataForOneOffer) {
     return <CardsSkeleton />;
   }
@@ -111,8 +117,8 @@ const CardOneOffer = async () => {
                     )
                   )}
                 </CarouselContent>
-                <CarouselPrevious />
-                <CarouselNext />
+                <CarouselPrevious className="ml-4" />
+                <CarouselNext className="mr-2" />
               </Carousel>
             </div>
 
@@ -186,7 +192,9 @@ const CardOneOffer = async () => {
         <h1 className="text-2xl text-[#003ce4] font-bold">
           Detais sur l&apos;offre :
         </h1>
-        <div className="text-wrap">{dataForOneOffer.descriptifOffre}</div>
+        <div className="text-[#1a1a1a] text-wrap break-words whitespace-break-spaces overflow-hidden">
+          {dataForOneOffer.descriptifOffre}
+        </div>
       </div>
     </div>
   );

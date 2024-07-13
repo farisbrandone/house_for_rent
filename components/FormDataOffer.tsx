@@ -29,6 +29,7 @@ import {
   formuleDuPrix,
   listOfSelectCountry,
   typeOffer,
+  typeOfferForm,
 } from "@/data/dataTypeOffer";
 import { Input } from "./ui/input";
 import InputFile from "./ui/InputFile";
@@ -37,16 +38,18 @@ import { User } from "@/types/next-auth";
 import { useIsClient } from "@/hooks/use-is-client";
 import { FormSchema } from "@/schemas";
 import { mydata } from "@/data/appartment";
-import { createOfferData } from "@/actions/createOffer";
+import { createOfferData, offerDataParams } from "@/actions/createOffer";
 import Spinner from "./spinner";
 import FormError from "./form-error";
 import FormSuccess from "./form-success";
+import { useRouter } from "next/navigation";
 
 interface UserInfoProps {
   user?: User;
 }
 
 function FormDataOffer({ user }: UserInfoProps) {
+  const router = useRouter();
   const userId = user?.id;
   const eltm: React.MutableRefObject<compressImageProps[] | undefined> =
     useRef();
@@ -70,29 +73,49 @@ function FormDataOffer({ user }: UserInfoProps) {
   });
 
   async function onSubmit(datas: z.infer<typeof FormSchema>) {
-    startTransition(async () => {
-      const date = new Date().toISOString().split("T")[0];
-      const myData = {
-        ...datas,
-        dateInset: date,
-        lastUpdate: date,
-        userId: user?.id ? user?.id : "",
-      };
+    try {
+      startTransition(async () => {
+        const date = new Date().toISOString().split("T")[0];
+        const myData = {
+          ...datas,
+          dateInset: date,
+          lastUpdate: date,
+          userId: user?.id ? user?.id : "",
+        };
 
-      const dodo = await compressImage(myData.imageOffre, 380, 260, 0.6);
-      const finalValues = {
-        ...myData,
-        imageOffre: dodo.tabImage,
-        nameImage: dodo.tabName,
-      };
+        console.log(myData.imageOffre);
 
-      const data = await createOfferData(finalValues);
-      if (data.success) setSuccess(data.success);
-      if (data?.error) setError(data.error);
-    });
-    form.reset();
-    setSuccess("");
-    setError("");
+        const dodo = await compressImage(myData.imageOffre!, 380, 260, 0.6);
+        const finalValues: offerDataParams = {
+          ...myData,
+          imageOffre: [...dodo.tabImage],
+          nameImage: [...dodo.tabName],
+        };
+        const t1 = [...dodo.tabImage];
+        const t2 = [...dodo.tabName];
+        console.log(t1, t2);
+        console.log(t1, t2);
+        console.log({ dodo });
+        if (t2.length !== 0 && t1.length !== 0) {
+          console.log(t1[0], t2[0]);
+          console.log("dede");
+          const data = await createOfferData(finalValues, {
+            tabImage: t1,
+            tabName: t2,
+          });
+
+          console.log("kounga", dodo);
+          if (data.success) setSuccess(data.success);
+          if (data?.error) setError(data.error);
+        }
+      });
+    } catch (error) {
+      setError("Something went wrong!");
+    } finally {
+      form.reset();
+      setSuccess("");
+      setError("");
+    }
   }
 
   /*const handleImage: React.ChangeEventHandler<HTMLInputElement> = async (e) => {
@@ -126,10 +149,9 @@ function FormDataOffer({ user }: UserInfoProps) {
     }
   };*/
   if (!isClient) return <Spinner />;
-  useEffect(() => {}, []);
 
   return (
-    <div className="bg-white border-4 rounded-xl border-[#006ce4] p-5 flex flex-col items-center gap-4">
+    <div className="bg-white border-4 rounded-xl border-[#006ce4] p-5 flex flex-col items-center gap-4 shadow-2xl">
       <h1 className="text-wrap text-2xl font-extrabold">
         Insérer les caractéristiques de votre offre
       </h1>
@@ -156,7 +178,7 @@ function FormDataOffer({ user }: UserInfoProps) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {typeOffer.chambre.map((value: string, index: number) => (
+                      {typeOfferForm.map((value: string, index: number) => (
                         <SelectItem value={value} key={index}>
                           {value}
                         </SelectItem>

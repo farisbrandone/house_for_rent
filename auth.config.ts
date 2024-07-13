@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GitHub from "next-auth/providers/github";
@@ -19,16 +19,18 @@ export default {
     }),
     Credentials({
       async authorize(credentials) {
+        console.log("PARTIE credentials 3");
         const validatedFields = LoginSchema.safeParse(credentials);
 
         if (validatedFields.success) {
           const { email, password } = validatedFields.data;
+          console.log({ email, password });
 
           const user = await getUserByEmail(email);
           if (!user || !user.password) return null;
 
           const passwordsMatch = await bcrypt.compare(password, user.password);
-
+          console.log("credentials3");
           if (passwordsMatch) return user;
         }
 

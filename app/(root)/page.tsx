@@ -16,6 +16,7 @@ const Home = async ({
   const currentPage = Number(searchParams?.page) || 1;
   const totalPages = await getTotalOffer();
   const data = await getAllOffer(currentPage);
+
   if (!data || !totalPages) {
     return <CardsSkeleton />;
   }

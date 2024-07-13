@@ -1,3 +1,4 @@
+"use server";
 import { filterQuery } from "@/lib/data";
 import { db } from "@/lib/db";
 import { unstable_noStore as noStore, revalidatePath } from "next/cache";
@@ -17,7 +18,8 @@ export const getAllOffer = async (page: number) => {
 
     return allOfferForUser;
   } catch {
-    return null;
+    throw new Error("Failed to fetch data offer.");
+    //return null;
   }
 };
 export const getTotalOffer = async () => {
@@ -46,6 +48,7 @@ export const getAllOfferByUserId = async (id?: string) => {
 };
 
 export const deleteOfferByUserId = async (id?: string) => {
+  console.log("dounga", { id });
   try {
     const OfferDelete = await db.dataOffer.delete({
       where: { id },
@@ -63,7 +66,7 @@ export const getOfferByUserId = async (id?: string) => {
     });
     return Offer;
   } catch {
-    return null;
+    throw new Error("probleme survenue");
   }
 };
 
@@ -136,6 +139,82 @@ export async function getSearchOffer(query: filterQuery) {
       });
 
       return allOfferForUser;
+    }
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch data offer.");
+  }
+}
+
+export async function getTotalSearchOffer(query: filterQuery) {
+  noStore();
+  const { pays, ville, type_offre, page } = query;
+  const currentPage = !!page ? Number(page) : 1;
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    if (!!pays && !ville && !type_offre) {
+      const allOfferForUser = await db.dataOffer.findMany({
+        where: { paysOffre: pays },
+        skip: offset,
+        take: ITEMS_PER_PAGE,
+      });
+
+      return allOfferForUser.length;
+    } else if (!pays && !!ville && !type_offre) {
+      const allOfferForUser = await db.dataOffer.findMany({
+        where: { villeOffre: ville },
+        skip: offset,
+        take: ITEMS_PER_PAGE,
+      });
+      return allOfferForUser.length;
+    } else if (!pays && !ville && !!type_offre) {
+      const allOfferForUser = await db.dataOffer.findMany({
+        where: { typeOffre: type_offre },
+        skip: offset,
+        take: ITEMS_PER_PAGE,
+      });
+
+      return allOfferForUser.length;
+    } else if (!!pays && !!ville && !type_offre) {
+      const allOfferForUser = await db.dataOffer.findMany({
+        where: { paysOffre: pays, villeOffre: ville },
+        skip: offset,
+        take: ITEMS_PER_PAGE,
+      });
+
+      return allOfferForUser.length;
+    } else if (!pays && !!ville && !!type_offre) {
+      const allOfferForUser = await db.dataOffer.findMany({
+        where: { typeOffre: type_offre, villeOffre: ville },
+        skip: offset,
+        take: ITEMS_PER_PAGE,
+      });
+
+      return allOfferForUser.length;
+    } else if (!!pays && !ville && !!type_offre) {
+      const allOfferForUser = await db.dataOffer.findMany({
+        where: { paysOffre: pays, typeOffre: type_offre },
+        skip: offset,
+        take: ITEMS_PER_PAGE,
+      });
+
+      return allOfferForUser.length;
+    } else if (!!pays && !!ville && !!type_offre) {
+      const allOfferForUser = await db.dataOffer.findMany({
+        where: { paysOffre: pays, villeOffre: ville },
+        skip: offset,
+        take: ITEMS_PER_PAGE,
+      });
+
+      return allOfferForUser.length;
+    } else {
+      const allOfferForUser = await db.dataOffer.findMany({
+        skip: offset,
+        take: ITEMS_PER_PAGE,
+      });
+
+      return allOfferForUser.length;
     }
   } catch (error) {
     console.error("Database Error:", error);

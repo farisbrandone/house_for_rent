@@ -2,6 +2,7 @@ import { SessionProvider } from "next-auth/react";
 
 import { auth } from "@/auth";
 import Navbar from "./_components/navbar";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   title: "Protected Routes",
@@ -20,6 +21,9 @@ export default async function ProtectedLayout({
 
       <div className="flex items-center justify-center mx-4 my-6 lg:mt-20">
         {children}
+      </div>
+      <div>
+        <Footer />
       </div>
     </SessionProvider>
   );

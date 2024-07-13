@@ -34,6 +34,6 @@ export const newVerification = async (token: string) => {
   await db.verificationToken.delete({
     where: { id: existingToken.id },
   });
-
+  console.log("to success");
   return { success: "Account verified!" };
 };

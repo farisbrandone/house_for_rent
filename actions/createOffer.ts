@@ -1,4 +1,7 @@
+"use server";
+
 import { db } from "@/lib/db";
+import { compressImageProps } from "@/lib/utils";
 import { FormSchema } from "@/schemas";
 import * as z from "zod";
 
@@ -47,10 +50,13 @@ export interface offerDataParamsWithNull {
   userId: string;
 }
 
-export const createOfferData = async (values: offerDataParams) => {
+export const createOfferData = async (
+  values: offerDataParams,
+  dodo: compressImageProps
+) => {
   const validatedFields = FormSchema.safeParse(values);
   if (!validatedFields.success) {
-    return { error: "Invalid fields" };
+    return { error: "Présence de champs invalide ou problème de connexion" };
   }
 
   const {
@@ -75,39 +81,49 @@ export const createOfferData = async (values: offerDataParams) => {
     userId,
   } = values;
 
-  await db.dataOffer.create({
-    data: {
-      nomOffre,
-      typeOffre,
-      paysOffre,
-      villeOffre,
-      descriptifOffre,
-      nbreDeChambre,
-      nbreDeDouche,
-      nbreDeCuisine,
-      parking,
-      adresseEmail,
-      prixDuBien,
-      devise,
-      typeDeVente,
-      imageOffre,
-      nameImage,
-      tel,
-      dateInset,
-      lastUpdate,
-      userId,
-    },
-  });
-  return { success: "Successfully registered. Verify your email!" };
+  try {
+    await db.dataOffer.create({
+      data: {
+        nomOffre,
+        typeOffre,
+        paysOffre,
+        villeOffre,
+        descriptifOffre,
+        nbreDeChambre,
+        nbreDeDouche,
+        nbreDeCuisine,
+        parking,
+        adresseEmail,
+        prixDuBien,
+        devise,
+        typeDeVente,
+        imageOffre,
+        nameImage,
+        tel,
+        dateInset,
+        lastUpdate,
+        userId,
+      },
+    });
+
+    return {
+      success:
+        "L'enregistrement des données s'est faite avec success!\nrafaichissez la page et inserer de nouvelle offre si vous en avez",
+    };
+  } catch (error) {
+    return { error: "Présence de champs invalide ou problème de connexion" };
+  }
 };
 
 export const updateOfferData = async (
   values: offerDataParams,
-  offerId: string
+  offerId: string,
+  dodo: compressImageProps
 ) => {
+  console.log("etonde ekoto", { offerId });
   const validatedFields = FormSchema.safeParse(values);
   if (!validatedFields.success || !offerId) {
-    return { error: "Invalid fields or problem of connexion" };
+    return { error: "présence de champ invalide ou problème de connexion" };
   }
 
   const {
@@ -132,29 +148,35 @@ export const updateOfferData = async (
     userId,
   } = values;
 
-  await db.dataOffer.update({
-    where: { id: offerId },
-    data: {
-      nomOffre,
-      typeOffre,
-      paysOffre,
-      villeOffre,
-      descriptifOffre,
-      nbreDeChambre,
-      nbreDeDouche,
-      nbreDeCuisine,
-      parking,
-      adresseEmail,
-      prixDuBien,
-      devise,
-      typeDeVente,
-      imageOffre,
-      nameImage,
-      tel,
-      dateInset,
-      lastUpdate,
-      userId,
-    },
-  });
-  return { success: "Successfully registered. Verify your email!" };
+  try {
+    await db.dataOffer.update({
+      where: { id: offerId },
+      data: {
+        nomOffre,
+        typeOffre,
+        paysOffre,
+        villeOffre,
+        descriptifOffre,
+        nbreDeChambre,
+        nbreDeDouche,
+        nbreDeCuisine,
+        parking,
+        adresseEmail,
+        prixDuBien,
+        devise,
+        typeDeVente,
+        imageOffre,
+        nameImage,
+        tel,
+        dateInset,
+        lastUpdate,
+        userId,
+      },
+    });
+    return {
+      success: "La mise à jour des données s'est faite avec success!",
+    };
+  } catch (error) {
+    return { error: "présence de champ invalide ou problème de connexion" };
+  }
 };

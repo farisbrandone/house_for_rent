@@ -1,7 +1,7 @@
 "use server";
 
 import * as z from "zod";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 import { unstable_update } from "@/auth";
 import { db } from "@/lib/db";

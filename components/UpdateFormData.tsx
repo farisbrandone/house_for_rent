@@ -36,6 +36,7 @@ import {
   formuleDuPrix,
   listOfSelectCountry,
   typeOffer,
+  typeOfferForm,
 } from "@/data/dataTypeOffer";
 import { Input } from "./ui/input";
 import InputFile from "./ui/InputFile";
@@ -54,6 +55,8 @@ import { FormSchema } from "@/schemas";
 import Spinner from "./spinner";
 import { createOfferData } from "@/lib/actions";
 import { useIsClient } from "@/hooks/use-is-client";
+import FormError from "./form-error";
+import FormSuccess from "./form-success";
 
 function UpdateFormData({
   data,
@@ -64,7 +67,6 @@ function UpdateFormData({
 }) {
   const [paysSelect, setPaysSelect] = useState("");
   const offerId = data?.id ? data?.id : "";
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
   const [isPending, startTransition] = useTransition();
@@ -79,29 +81,51 @@ function UpdateFormData({
   });
 
   async function onSubmit(datas: z.infer<typeof FormSchema>) {
-    startTransition(async () => {
-      const date = new Date().toISOString().split("T")[0];
-      const myData = {
-        ...datas,
-        dateInset: date,
-        lastUpdate: date,
-        userId: userId,
-      };
+    console.log({ ville: datas.villeOffre });
+    /* try {
+      startTransition(async () => {
+        const date = new Date().toISOString().split("T")[0];
+        const myData = {
+          ...datas,
+          dateInset: date,
+          lastUpdate: date,
+          userId: userId,
+        };
 
-      const dodo = await compressImage(myData.imageOffre, 380, 260, 0.6);
-      const finalValues = {
-        ...myData,
-        imageOffre: dodo.tabImage,
-        nameImage: dodo.tabName,
-      };
+        const dodo = await compressImage(myData.imageOffre!, 380, 260, 0.6);
+        const finalValues: offerDataParams = {
+          ...myData,
+          imageOffre: [...dodo.tabImage],
+          nameImage: [...dodo.tabName],
+        };
+        const t1 = [...dodo.tabImage];
+        const t2 = [...dodo.tabName];
+        console.log(t1, t2);
+        console.log(t1, t2);
+        console.log({ dodo });
+        if (t2.length !== 0 && t1.length !== 0) {
+          console.log(t1[0], t2[0]);
+          console.log("dede");
+          const data = await updateOfferData(finalValues, offerId, {
+            tabImage: t1,
+            tabName: t2,
+          });
 
-      const data = await updateOfferData(finalValues, offerId);
-      if (data.success) setSuccess(data.success);
-      if (data?.error) setError(data.error);
-    });
-    form.reset();
-    setSuccess("");
-    setError("");
+          console.log("kounga", dodo);
+          if (data.success) setSuccess(data.success);
+          if (data?.error) setError(data.error);
+        }
+        /* const data = await updateOfferData(finalValues, offerId);
+        if (data.success) setSuccess(data.success);
+        if (data?.error) setError(data.error);*/
+    /* });
+    } catch (error) {
+      setError("Something went wrong!");
+    } finally {
+      form.reset();
+      setSuccess("");
+      setError("");
+    }*/
   }
 
   /*const handleImage: React.ChangeEventHandler<HTMLInputElement> = async (e) => {
@@ -160,6 +184,7 @@ function UpdateFormData({
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={!!field.value ? field.value : data.typeOffre}
+                    disabled={isPending}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -167,7 +192,7 @@ function UpdateFormData({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {typeOffer.chambre.map((value: string, index: number) => (
+                      {typeOfferForm.map((value: string, index: number) => (
                         <SelectItem value={value} key={index}>
                           {value}
                         </SelectItem>
@@ -192,6 +217,7 @@ function UpdateFormData({
                       {...field}
                       className="w-full"
                       defaultValue={!!field.value ? field.value : data.nomOffre}
+                      disabled={isPending}
                     />
                   </FormControl>
                   <FormMessage />
@@ -214,6 +240,7 @@ function UpdateFormData({
                       }
                     }
                     defaultValue={!!field.value ? field.value : data.paysOffre}
+                    disabled={isPending}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -249,6 +276,7 @@ function UpdateFormData({
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={!!field.value ? field.value : data.villeOffre}
+                    disabled={isPending}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -291,6 +319,7 @@ function UpdateFormData({
                       defaultValue={
                         !!field.value ? field.value : data.descriptifOffre
                       }
+                      disabled={isPending}
                     />
                   </FormControl>
                   <FormMessage />
@@ -322,6 +351,7 @@ function UpdateFormData({
                               defaultValue={
                                 !!field.value ? field.value : nbreDeChambre
                               }
+                              disabled={isPending}
                             />
                           </FormControl>
                           <FormMessage />
@@ -349,6 +379,7 @@ function UpdateFormData({
                               defaultValue={
                                 !!field.value ? field.value : nbreDeChambre
                               }
+                              disabled={isPending}
                             />
                           </FormControl>
                           <FormMessage />
@@ -376,6 +407,7 @@ function UpdateFormData({
                               defaultValue={
                                 !!field.value ? field.value : nbreDeDouche
                               }
+                              disabled={isPending}
                             />
                           </FormControl>
                           <FormMessage />
@@ -406,6 +438,7 @@ function UpdateFormData({
                           defaultValue={
                             !!field.value ? field.value : data.prixDuBien
                           }
+                          disabled={isPending}
                         />
                       </FormControl>
                       <FormMessage />
@@ -422,6 +455,7 @@ function UpdateFormData({
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={!!field.value ? field.value : data.devise}
+                        disabled={isPending}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -451,6 +485,7 @@ function UpdateFormData({
                         defaultValue={
                           !!field.value ? field.value : data.typeDeVente
                         }
+                        disabled={isPending}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -489,6 +524,7 @@ function UpdateFormData({
                           {...field}
                           className=""
                           defaultValue={!!field.value ? field.value : data.tel}
+                          disabled={isPending}
                         />
                       </FormControl>
 
@@ -510,6 +546,7 @@ function UpdateFormData({
                           defaultValue={
                             !!field.value ? field.value : data.adresseEmail
                           }
+                          disabled={isPending}
                         />
                       </FormControl>
                       <FormMessage />
@@ -538,9 +575,10 @@ function UpdateFormData({
                 </FormItem>
               )}
             />
-
+            {error && <FormError message={error} />}
+            {success && <FormSuccess message={success} />}
             <div className="flex items-center justify-center w-full">
-              <Button type="submit" className=" w-[250px]">
+              <Button type="submit" className=" w-[250px]" disabled={isPending}>
                 Envoyer
               </Button>
             </div>

@@ -12,6 +12,8 @@ import { useEffect } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import SelectMenuOffre from "./SelectMenuOffre";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { logout } from "@/actions/logout";
+import { useSession } from "next-auth/react";
 
 const Header = ({
   searchOrNot,
@@ -40,7 +42,9 @@ const Header = ({
       onExpand();
     }
   }, [matches, onCollapse, onExpand]);
-
+  const { data: session } = useSession();
+  console.log(session);
+  const user = session?.user;
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -60,19 +64,46 @@ const Header = ({
       <header className="flex justify-between w-full px-2">
         <Logo />
 
-        {!collapsed && !headerForSign && (
+        {!collapsed && !headerForSign && !user && (
           <div className="flex flex-row items-center gap-4">
             <Button
               variant="inerte"
-              onClick={() => router.push("/formDataOffer")}
+              onClick={() => router.push("/dashboardPage")}
             >
               Inserer une offre
             </Button>
-            <Button variant="button1" onClick={() => router.push("/sign_up")}>
+            <Button
+              variant="button1"
+              onClick={() => router.push("/auth/register")}
+            >
               S&apos;inscrire
             </Button>
-            <Button variant="button2" onClick={() => router.push("auth/login")}>
+            <Button
+              variant="button2"
+              onClick={() => router.push("/auth/login")}
+            >
               Se connecter
+            </Button>
+          </div>
+        )}
+        {!collapsed && !headerForSign && !!user && (
+          <div className="flex flex-row items-center gap-4">
+            <Button
+              variant="inerte"
+              onClick={() => router.push("/dashboardPage")}
+            >
+              Inserer une offre
+            </Button>
+            <Button
+              variant="button2"
+              onClick={async () => {
+                console.log("logout");
+                await logout();
+                router.push("/");
+                router.refresh();
+              }}
+            >
+              Se deconnecter
             </Button>
           </div>
         )}

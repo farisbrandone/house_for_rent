@@ -1,6 +1,10 @@
+"use server";
+import { unstable_noStore as noStore, revalidatePath } from "next/cache";
+
 import { db } from "@/lib/db";
 
 export const getUserByEmail = async (email: string) => {
+  noStore();
   try {
     const user = await db.user.findUnique({
       where: { email },
@@ -12,6 +16,7 @@ export const getUserByEmail = async (email: string) => {
 };
 
 export const getUserById = async (id?: string) => {
+  noStore();
   try {
     const user = await db.user.findUnique({
       where: { id },
