@@ -12,7 +12,7 @@ import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail";
 
 export const settings = async (values: z.infer<typeof SettingsSchema>) => {
-  const user = await currentUser();
+  /*const user = await currentUser();
 
   if (!user) {
     return { error: "Unauthorized" };
@@ -78,5 +78,5 @@ export const settings = async (values: z.infer<typeof SettingsSchema>) => {
     },
   });
 
-  return { success: "Settings Updated!" };
+  return { success: "Settings Updated!" };*/
 };

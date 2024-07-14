@@ -62,7 +62,7 @@ export default function SettingsPage() {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof SettingsSchema>) => {
+  /*const onSubmit = async (values: z.infer<typeof SettingsSchema>) => {
     try {
       startTransition(async () => {
         const data = await settings(values);
@@ -82,7 +82,7 @@ export default function SettingsPage() {
       setError("");
       setSuccess("");
     }
-  };
+  };*/
 
   if (!isClient) return <Spinner />;
 
@@ -97,7 +97,7 @@ export default function SettingsPage() {
         <Form {...form}>
           <form
             className="space-y-6"
-            onSubmit={form.handleSubmit(onSubmit)}
+            // onSubmit={form.handleSubmit(onSubmit)}
           >
             <div className="space-y-4">
               <FormField
