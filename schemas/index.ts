@@ -1,5 +1,5 @@
 import * as z from "zod";
-import { UserRole } from "@prisma/client";
+//import { UserRole } from "@prisma/client";
 
 interface UserData {
   password?: string;
@@ -7,7 +7,7 @@ interface UserData {
   newPasswordConfirmation?: string;
 }
 
-const passwordRequired = (
+/*const passwordRequired = (
   data: UserData,
   passwordField: keyof UserData,
   newPasswordField: keyof UserData,
@@ -24,9 +24,9 @@ const passwordRequired = (
     (data[passwordField] && !data[newPasswordField]) ||
     (data[newPasswordField] && !data[passwordField])
   );
-};
+};*/
 
-export const SettingsSchema = z
+/*export const SettingsSchema = z
   .object({
     name: z.optional(z.string()),
     isTwoFactorEnabled: z.optional(z.boolean()),
@@ -58,7 +58,7 @@ export const SettingsSchema = z
   .refine((data) => data.newPassword === data.newPasswordConfirmation, {
     message: "Passwords do not match.",
     path: ["newPasswordConfirmation"],
-  });
+  });*/
 
 export const NewPasswordSchema = z
   .object({
