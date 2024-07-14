@@ -1,8 +1,8 @@
 import { databaseProps } from "@/lib/data";
 
-export const database: databaseProps[] = [
+/*export const database: databaseProps[] = [
   {
-    id: 1,
+     id:"1",
     nomOffre: "Appartement Cosy 3 bonapriso",
     typeOffre: "Appartement meublé",
     paysOffre: "Cameroun",
@@ -30,7 +30,7 @@ export const database: databaseProps[] = [
     lastUpdate: "04/07/2021",
   },
   {
-    id: 2,
+     id:"1",
     nomOffre: "Appartement Cosy 3 bonapriso",
     typeOffre: "Chambre moderne meublée",
     paysOffre: "Togo",
@@ -55,7 +55,7 @@ export const database: databaseProps[] = [
     lastUpdate: "04/07/2021",
   },
   {
-    id: 3,
+     id:"1",
     nomOffre: "Appartement Cosy 3 bonapriso",
     typeOffre: "Studio meublée",
     paysOffre: "Cameroun",
@@ -81,7 +81,7 @@ export const database: databaseProps[] = [
     lastUpdate: "04/07/2021",
   },
   {
-    id: 4,
+     id:"1",
     nomOffre: "Appartement Cosy 3 bonapriso",
     typeOffre: "Studio meublée",
     paysOffre: "RDC",
@@ -106,7 +106,7 @@ export const database: databaseProps[] = [
     lastUpdate: "04/07/2021",
   },
   {
-    id: 5,
+     id:"1",
     nomOffre: "Appartement Cosy 3 bonapriso",
     typeOffre: "Terrain",
     paysOffre: "Senegal",
@@ -131,7 +131,7 @@ export const database: databaseProps[] = [
     lastUpdate: "04/07/2021",
   },
   {
-    id: 6,
+     id:"1",
     nomOffre: "Appartement Cosy 3 bonapriso",
     typeOffre: "Boutique",
     paysOffre: "Cameroun",
@@ -156,7 +156,7 @@ export const database: databaseProps[] = [
     lastUpdate: "04/07/2021",
   },
   {
-    id: 7,
+     id:"1",
     nomOffre: "Appartement Cosy 3 bonapriso",
     typeOffre: "Chambre moderne meublée",
     paysOffre: "Cameroun",
@@ -180,7 +180,7 @@ export const database: databaseProps[] = [
     lastUpdate: "04/07/2021",
   },
   {
-    id: 8,
+     id:"1",
     nomOffre: "Appartement Cosy 3 bonapriso",
     typeOffre: "Appartement meublé",
     paysOffre: "Cameroun",
@@ -204,7 +204,7 @@ export const database: databaseProps[] = [
     lastUpdate: "04/07/2021",
   },
   {
-    id: 9,
+     id:"1",
     nomOffre: "Appartement Cosy 3 bonapriso",
     typeOffre: "Appartement meublé",
     paysOffre: "Cameroun",
@@ -228,7 +228,7 @@ export const database: databaseProps[] = [
     lastUpdate: "04/07/2021",
   },
   {
-    id: 10,
+     id:"1",
     nomOffre: "Appartement Cosy 3 bonapriso",
     typeOffre: "Appartement meublé",
     paysOffre: "Cameroun",
@@ -252,7 +252,7 @@ export const database: databaseProps[] = [
     lastUpdate: "04/07/2021",
   },
   {
-    id: 11,
+     id:"1",
     nomOffre: "Appartement Cosy 3 bonapriso",
     typeOffre: "Appartement meublé",
     paysOffre: "Guinée",
@@ -276,30 +276,30 @@ export const database: databaseProps[] = [
     lastUpdate: "04/07/2021",
   },
   {
-    id: 12,
-    nomOffre: "Appartement Cosy 3 bonapriso",
-    typeOffre: "Studio moderne non meublée",
-    paysOffre: "Centrafrique",
-    villeOffre: "Bangui",
-    descriptifOffre:
-      "Doté d'un jacuzzi, l'Appartement Cosy 3 bonapriso est situé à Douala. Vous bénéficierez d'un accès à un balcon et d'un parking privé gratuit.",
-    nbreDeChambre: "2",
-    nbreDeDouche: "2",
-    nbreDeCuisine: "1",
-    parking: true,
-    adresseEmail: "farisbrandone@yahoo.com",
-    prixDuBien: "100000",
-    devise: "FCFA/XAF",
-    typeDeVente: "par mois en location",
-    imageOffre: [
-      "https://pixabay.com/get/g2426b50220598f9f60673025f1745586f562456601dffa108343687a50652546bbe442d3c4c431614d0ba62e1480153792febe62f5bad48b801e92ade942c14d_640.jpg",
-      "https://pixabay.com/get/g3efb2093ec3e13b0e6a1ad40d6dfe20a13e858739cb969fd4768f1463bd1eb677187479d99ec85026d631afe302819aa71b8119e0e23679d1822712938fec2b1_640.jpg",
-    ],
-    tel: "+237655968956",
-    dateInset: "04/07/2021",
-    lastUpdate: "04/07/2021",
-  },
-];
+    id:"1",,
+   nomOffre: "Appartement Cosy 3 bonapriso",
+   typeOffre: "Studio moderne non meublée",
+   paysOffre: "Centrafrique",
+   villeOffre: "Bangui",
+   descriptifOffre:
+     "Doté d'un jacuzzi, l'Appartement Cosy 3 bonapriso est situé à Douala. Vous bénéficierez d'un accès à un balcon et d'un parking privé gratuit.",
+   nbreDeChambre: "2",
+   nbreDeDouche: "2",
+   nbreDeCuisine: "1",
+   parking: true,
+   adresseEmail: "farisbrandone@yahoo.com",
+   prixDuBien: "100000",
+   devise: "FCFA/XAF",
+   typeDeVente: "par mois en location",
+   imageOffre: [
+     "https://pixabay.com/get/g2426b50220598f9f60673025f1745586f562456601dffa108343687a50652546bbe442d3c4c431614d0ba62e1480153792febe62f5bad48b801e92ade942c14d_640.jpg",
+     "https://pixabay.com/get/g3efb2093ec3e13b0e6a1ad40d6dfe20a13e858739cb969fd4768f1463bd1eb677187479d99ec85026d631afe302819aa71b8119e0e23679d1822712938fec2b1_640.jpg",
+   ],
+   tel: "+237655968956",
+   dateInset: "04/07/2021",
+   lastUpdate: "04/07/2021",
+ },
+];*/
 
 export const typeOffer = {
   chambre: [

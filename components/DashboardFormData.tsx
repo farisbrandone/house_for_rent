@@ -22,7 +22,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { database } from "@/data/dataTypeOffer";
+//import { database } from "@/data/dataTypeOffer";
 import { RefreshCcw, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
