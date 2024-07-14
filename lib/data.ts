@@ -1,6 +1,6 @@
-import { database } from "@/data/dataTypeOffer";
-import { sql } from "@vercel/postgres";
-import { unstable_noStore as noStore, revalidatePath } from "next/cache";
+//import { database } from "@/data/dataTypeOffer";
+//import { sql } from "@vercel/postgres";
+//import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 export interface databaseProps {
   id: string;
   nomOffre: string;
@@ -44,7 +44,7 @@ export interface filterQuery {
 
 export type totalDataProps = databaseProps[];
 
-export async function getAllData(id: boolean): Promise<databaseProps[]> {
+/*export async function getAllData(id: boolean): Promise<databaseProps[]> {
   try {
     const data = await new Promise<totalDataProps>((resolve, reject) => {
       if (id) {
@@ -58,9 +58,9 @@ export async function getAllData(id: boolean): Promise<databaseProps[]> {
     console.log(["error found"]);
     return [];
   }
-}
+}*/
 
-export async function getDataWithSearchParams(
+/*export async function getDataWithSearchParams(
   pays?: string | null,
   ville?: string | null,
   offre?: string | null
@@ -394,4 +394,4 @@ export async function deleteData(id: string) {
       message: "Database Error: Failed to Delete Invoice.",
     };
   }
-}
+}*/
