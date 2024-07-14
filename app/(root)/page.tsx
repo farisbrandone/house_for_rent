@@ -1,7 +1,6 @@
 import BodyPage from "@/components/BodyPage";
 import { CardsSkeleton } from "@/components/CardsSkeleton";
 import { getAllOffer, getTotalOffer } from "@/data/offer";
-import { fetchTotalData } from "@/lib/data";
 import React, { Suspense } from "react";
 
 const Home = async ({

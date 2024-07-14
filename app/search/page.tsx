@@ -1,11 +1,7 @@
 import { CardsSkeleton } from "@/components/CardsSkeleton";
 import SearchComponent from "@/components/SearchComponent";
 import { getSearchOffer, getTotalSearchOffer } from "@/data/offer";
-import {
-  fetchFilterTotalData,
-  fetchFilteredDataOffer,
-  getDataWithSearchParams,
-} from "@/lib/data";
+
 import React, { Suspense } from "react";
 
 const SeachPage = async ({

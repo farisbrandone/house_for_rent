@@ -1,7 +1,6 @@
 "use client";
 import React, { Fragment } from "react";
 import Card from "./Card";
-import { fetchDataOffer, getAllData } from "@/lib/data";
 import { PaginationPage } from "./Pagination";
 import { offerDataParamsWithNull } from "@/actions/createOffer";
 import { useIsClient } from "@/hooks/use-is-client";

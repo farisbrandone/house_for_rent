@@ -1,4 +1,3 @@
-import { totalDataProps } from "@/lib/data";
 import React, { Fragment } from "react";
 import Card from "./Card";
 import { PaginationPage } from "./Pagination";
