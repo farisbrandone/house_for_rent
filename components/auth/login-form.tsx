@@ -66,9 +66,9 @@ const LoginForm = () => {
             setSuccess(data.success);
           }
 
-          if (data?.twoFactor) {
+          /* if (data?.twoFactor) {
             setShowTwoFactor(true);
-          }
+          }*/
         });
       } catch (err) {
         setError(`Something went wrong! Error:${err}`);
@@ -90,10 +90,7 @@ const LoginForm = () => {
       showSocial
     >
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-6"
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">
             {showTwoFactor && (
               <FormField
