@@ -40,16 +40,8 @@ import {
 } from "@/data/dataTypeOffer";
 import { Input } from "./ui/input";
 import InputFile from "./ui/InputFile";
-import { compressImage, compressImageProps } from "@/lib/utils";
-import { CircleX, Loader2, Paperclip } from "lucide-react";
-import Image from "next/image";
-import { database } from "@/data/dataTypeOffer";
-import { databaseProps } from "@/lib/data";
-import {
-  offerDataParams,
-  offerDataParamsWithNull,
-  updateOfferData,
-} from "@/actions/createOffer";
+
+import { offerDataParamsWithNull } from "@/actions/createOffer";
 import { CardsSkeleton } from "./CardsSkeleton";
 import { FormSchema } from "@/schemas";
 import Spinner from "./spinner";
