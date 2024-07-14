@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import RoleGate from "@/components/auth/role-gate";
 import FormSuccess from "@/components/form-success";
-import { admin } from "@/actions/admin";
+//import { admin } from "@/actions/admin";
 
 export default function AdminPage() {
   const handleApiRoute = async () => {
@@ -25,7 +25,7 @@ export default function AdminPage() {
     }
   };
 
-  const handleServerAction = async () => {
+  /* const handleServerAction = async () => {
     try {
       const data = await admin();
 
@@ -39,7 +39,7 @@ export default function AdminPage() {
     } catch (error) {
       console.error("An error occurred during the server action:", error);
     }
-  };
+  };*/
 
   return (
     <Card className="w-auto shadow-sm">
@@ -55,10 +55,7 @@ export default function AdminPage() {
 
           <div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-md">
             <p className="text-sm font-medium">Admin-only API Route</p>
-            <Button
-              className=" hover:bg-sky-400"
-              onClick={handleApiRoute}
-            >
+            <Button className=" hover:bg-sky-400" onClick={handleApiRoute}>
               Test it here
             </Button>
           </div>
@@ -67,7 +64,7 @@ export default function AdminPage() {
             <p className="text-sm font-medium">Admin-only Server Action</p>
             <Button
               className=" hover:bg-sky-400"
-              onClick={handleServerAction}
+              //onClick={handleServerAction}
             >
               Test it here
             </Button>

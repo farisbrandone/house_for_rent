@@ -1,6 +1,6 @@
 "use server";
 
-import { currentRole } from "@/lib/auth";
+/*import { currentRole } from "@/lib/auth";
 import * as dd from "@prisma/client";
 
 export const admin = async () => {
@@ -11,4 +11,4 @@ export const admin = async () => {
   }
 
   return { error: "Forbidden Server Action!" };
-};
+};*/
