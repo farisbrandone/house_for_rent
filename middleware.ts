@@ -10,7 +10,7 @@ import {
 
 const { auth } = NextAuth(authConfig);
 
-export default auth((req) => {
+export default auth((req): void | Response | Promise<void | Response> => {
   console.log("PART MIDLEWARE");
   const { nextUrl } = req;
 
@@ -23,7 +23,7 @@ export default auth((req) => {
 
   if (isApiAuthRoute) {
     console.log("PART MIDLEWARE isApiAuthRoute");
-    return null;
+    return;
   }
 
   if (isAuthRoute) {
@@ -34,7 +34,7 @@ export default auth((req) => {
       );
     }
     console.log("PART MIDLEWARE END isAuthRoute NOT isAuthorized");
-    return null;
+    return;
   }
 
   if (!isAuthorized && !isPublicRoute) {
@@ -54,7 +54,7 @@ export default auth((req) => {
     );
   }
   console.log("PART MIDLEWARE END ");
-  return null;
+  return;
 });
 
 // Optionally, don't invoke Middleware on some paths
