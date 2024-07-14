@@ -1,4 +1,3 @@
-import { CardsSkeleton } from "@/components/CardsSkeleton";
 import SearchComponent from "@/components/SearchComponent";
 import { getSearchOffer, getTotalSearchOffer } from "@/data/offer";
 
@@ -39,11 +38,11 @@ const SeachPage = async ({
   const totalPages = dataset[1];
 
   return (
-    <div className="lg:w-[1024px] flex items-center justify-center ">
-      <Suspense fallback={<CardsSkeleton />}>
+    <Suspense>
+      <div className="lg:w-[1024px] flex items-center justify-center ">
         <SearchComponent data={data} totalPages={totalPages} />
-      </Suspense>
-    </div>
+      </div>
+    </Suspense>
   );
 };
 

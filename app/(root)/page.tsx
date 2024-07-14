@@ -20,15 +20,15 @@ const Home = async ({
     return <CardsSkeleton />;
   }
   return (
-    <div className="lg:w-[1024px] flex items-center justify-center ">
-      <Suspense fallback={<CardsSkeleton />}>
+    <Suspense>
+      <div className="lg:w-[1024px] flex items-center justify-center ">
         <BodyPage
           currentPage={currentPage}
           totalPages={totalPages}
           data={data}
         />
-      </Suspense>
-    </div>
+      </div>
+    </Suspense>
   );
 };
 

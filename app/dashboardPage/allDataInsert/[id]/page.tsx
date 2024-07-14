@@ -1,7 +1,6 @@
-import { CardsSkeleton } from "@/components/CardsSkeleton";
 import UpdateFormData from "@/components/UpdateFormData";
 import { getOfferByUserId } from "@/data/offer";
-import React, { Suspense } from "react";
+import React from "react";
 
 const DataForOffer = async ({
   params,
@@ -18,9 +17,7 @@ const DataForOffer = async ({
 
   return (
     <div className="mt-20">
-      <Suspense fallback={<CardsSkeleton />}>
-        <UpdateFormData data={data} userId={userId} />
-      </Suspense>
+      <UpdateFormData data={data} userId={userId} />
     </div>
   );
 };

@@ -1,4 +1,3 @@
-import { CardsSkeleton } from "@/components/CardsSkeleton";
 import DashboardFormData from "@/components/DashboardFormData";
 import { getAllOfferByUserId } from "@/data/offer";
 import React, { Suspense } from "react";
@@ -21,11 +20,11 @@ const DashBordPage = async ({
   }
 
   return (
-    <div className="mt-3">
-      <Suspense fallback={<CardsSkeleton />}>
+    <Suspense>
+      <div className="mt-3">
         <DashboardFormData data={data} id={id} />
-      </Suspense>
-    </div>
+      </div>
+    </Suspense>
   );
 };
 
