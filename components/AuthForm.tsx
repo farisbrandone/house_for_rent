@@ -71,10 +71,10 @@ const LoginForm = () => {
             setSuccess(data.success);
           }
 
-          if (data?.twoFactor) {
+          /* if (data?.twoFactor) {
             console.log("login two factor");
             setShowTwoFactor(true);
-          }
+          }*/
         });
       } catch (err) {
         console.log("login catch error");
