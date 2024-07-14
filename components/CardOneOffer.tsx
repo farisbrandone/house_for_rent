@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { database } from "@/data/dataTypeOffer";
 import Image from "next/image";
 import {
   Bath,
@@ -31,8 +30,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useSearchParams } from "next/navigation";
-import { getOfferByUserId } from "@/data/offer";
 import { CardsSkeleton } from "./CardsSkeleton";
 import { offerDataParamsWithNull } from "@/actions/createOffer";
 import Spinner from "./spinner";
