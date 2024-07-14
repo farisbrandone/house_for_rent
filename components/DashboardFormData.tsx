@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -25,13 +25,8 @@ import {
 import { database } from "@/data/dataTypeOffer";
 import { RefreshCcw, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { databaseProps, deleteData } from "@/lib/data";
 import { useToast } from "@/components/ui/use-toast";
-import { User } from "@prisma/client";
-import {
-  offerDataParams,
-  offerDataParamsWithNull,
-} from "@/actions/createOffer";
+import { offerDataParamsWithNull } from "@/actions/createOffer";
 import { CardsSkeleton } from "./CardsSkeleton";
 import { deleteOfferByUserId } from "@/data/offer";
 
