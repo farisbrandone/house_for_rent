@@ -1,9 +1,10 @@
 "use server";
 
-import { db } from "@/lib/db";
+//import { db } from "@/lib/db";
 import { compressImageProps } from "@/lib/utils";
 import { FormSchema } from "@/schemas";
-import * as z from "zod";
+import { sql } from "@vercel/postgres";
+//import * as z from "zod";
 
 export interface offerDataParams {
   nomOffre: string;
@@ -82,7 +83,7 @@ export const createOfferData = async (
   } = values;
 
   try {
-    await db.dataOffer.create({
+    /* await db.dataOffer.create({
       data: {
         nomOffre,
         typeOffre,
@@ -104,7 +105,19 @@ export const createOfferData = async (
         lastUpdate,
         userId,
       },
-    });
+    });*/
+
+    await sql`
+    INSERT INTO dataOffer (nomOffre,typeOffre,paysOffre, villeOffre,descriptifOffre,nbreDeChambre,nbreDeDouche,nbreDeCuisine,parking,adresseEmail,prixDuBien,devise,typeDeVente,imageOffre,nameImage,tel,dateInset,lastUpdate,userId)
+    VALUES (${nomOffre}, ${typeOffre}, ${paysOffre}, ${villeOffre}, ${descriptifOffre}, ${nbreDeChambre}, ${nbreDeDouche}, ${nbreDeCuisine}, ${parking}, ${adresseEmail}, ${prixDuBien}, ${devise}, ${typeDeVente}, ${JSON.stringify(
+      imageOffre
+    )
+      .replace("[", "{")
+      .replace("]", "}")},${JSON.stringify(nameImage)
+      .replace("[", "{")
+      .replace("]", "}")}, ${tel}, ${dateInset}, ${lastUpdate}, ${userId} )
+    ON CONFLICT (id) DO NOTHING;
+  `;
 
     return {
       success:
@@ -149,7 +162,7 @@ export const updateOfferData = async (
   } = values;
 
   try {
-    await db.dataOffer.update({
+    /* await db.dataOffer.update({
       where: { id: offerId },
       data: {
         nomOffre,
@@ -172,7 +185,20 @@ export const updateOfferData = async (
         lastUpdate,
         userId,
       },
-    });
+    });*/
+
+    await sql`
+    UPDATE dataOffer
+    SET nomOffre=${nomOffre},typeOffre=${typeOffre},paysOffre=${paysOffre}, villeOffre=${villeOffre},descriptifOffre=${descriptifOffre},nbreDeChambre=${nbreDeChambre},nbreDeDouche=${nbreDeDouche},nbreDeCuisine=${nbreDeCuisine},parking=${parking},adresseEmail= ${adresseEmail},prixDuBien=${prixDuBien},devise=${devise},typeDeVente=${typeDeVente},imageOffre=${JSON.stringify(
+      imageOffre
+    )
+      .replace("[", "{")
+      .replace("]", "}")},nameImage=${JSON.stringify(nameImage)
+      .replace("[", "{")
+      .replace("]", "}")} ,tel=${tel},lastUpdate=${lastUpdate},
+    WHERE id = ${offerId}
+  `;
+
     return {
       success: "La mise à jour des données s'est faite avec success!",
     };

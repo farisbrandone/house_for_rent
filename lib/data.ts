@@ -1,5 +1,8 @@
 //import { database } from "@/data/dataTypeOffer";
 //import { sql } from "@vercel/postgres";
+
+//import { sql } from "@vercel/postgres";
+
 //import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 export interface databaseProps {
   id: string;
@@ -146,6 +149,7 @@ export type totalDataProps = databaseProps[];
     return [];
   }
 }
+  
 const ITEMS_PER_PAGE = 10;
 
 export async function fetchTotalData() {
@@ -394,4 +398,5 @@ export async function deleteData(id: string) {
       message: "Database Error: Failed to Delete Invoice.",
     };
   }
-}*/
+}
+*/

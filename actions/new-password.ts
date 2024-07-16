@@ -6,7 +6,8 @@ import bcrypt from "bcryptjs";
 import { NewPasswordSchema } from "@/schemas";
 import { getPasswordResetTokenByToken } from "@/data/password-reset-token";
 import { getUserByEmail } from "@/data/user";
-import { db } from "@/lib/db";
+//import { db } from "@/lib/db";
+import { sql } from "@vercel/postgres";
 
 export const newPassword = async (
   values: z.infer<typeof NewPasswordSchema>,
@@ -44,14 +45,21 @@ export const newPassword = async (
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  await db.user.update({
+  /*await db.user.update({
     where: { id: existingUser.id },
     data: { password: hashedPassword },
   });
 
   await db.passwordResetToken.delete({
     where: { id: existingToken.id },
-  });
+  });*/
+
+  await sql`
+  UPDATE User
+  SET password=${hashedPassword}
+  WHERE id = ${existingUser.id}
+`;
+  await sql`DELETE FROM PasswordResetToken WHERE id = ${existingToken.id}`;
 
   return { success: "Password updated!" };
 };

@@ -1,15 +1,15 @@
 import NextAuth from "next-auth";
 import authConfig from "./auth.config";
-import Credentials from "next-auth/providers/credentials";
-import { object, string, z } from "zod";
+//import Credentials from "next-auth/providers/credentials";
+//import { object, string, z } from "zod";
 import { sql } from "@vercel/postgres";
-import { User } from "./lib/definitions";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { db } from "@/lib/db";
+//import { User } from "./lib/definitions";
+//import { PrismaAdapter } from "@auth/prisma-adapter";
+//import { db } from "@/lib/db";
 import { getUserById } from "./data/user";
-import { getTwoFactorConfirmationByUserId } from "./data/two-factor-confirmation";
+//import { getTwoFactorConfirmationByUserId } from "./data/two-factor-confirmation";
 import { getAccountByUserId } from "./data/account";
-import { MdToken } from "react-icons/md";
+//import { MdToken } from "react-icons/md";
 
 /*async function getUser(email: string): Promise<User | undefined> {
   try {
@@ -71,10 +71,18 @@ export const {
     //cequi pourrait ce passer avec email verified ou updating de la date pou une relogin
     async linkAccount({ user }) {
       console.log("linkaccount");
-      await db.user.update({
+      const date = new Date().toISOString().split("T")[0];
+      /*await db.user.update({
         where: { id: user.id },
         data: { emailVerified: new Date() },
-      });
+      });*/
+
+      await sql`
+    UPDATE User
+    SET emailVerified=${date}
+    )
+    WHERE id = ${user.id}
+  `;
     },
   },
   callbacks: {
@@ -146,7 +154,7 @@ export const {
     },
   },
 
-  adapter: PrismaAdapter(db),
+  /*adapter: PrismaAdapter(db),*/
   session: { strategy: "jwt" },
   ...authConfig,
 });
