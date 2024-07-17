@@ -16,14 +16,9 @@ const DataForOffer = async ({
   const dataForOneOffer = await getOfferByUserId(myId);
 
   return (
-    <Suspense
-      key={myId + dataForOneOffer.nomOffre}
-      fallback={<CardsSkeleton />}
-    >
-      <div className="mt-5 lg:w-[1024px]">
-        <CardOneOffer dataForOneOffer={dataForOneOffer} />
-      </div>
-    </Suspense>
+    <div className="mt-5 lg:w-[1024px]">
+      <CardOneOffer dataForOneOffer={dataForOneOffer} />
+    </div>
   );
 };
 

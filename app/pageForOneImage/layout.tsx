@@ -18,7 +18,6 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
         <Header searchOrNot={false} headerForSign={false} />
       </div>
       <div className="flex items-center justify-center">
-        {" "}
         <Suspense>{children}</Suspense>
       </div>
       <div>
