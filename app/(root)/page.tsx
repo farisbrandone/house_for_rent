@@ -16,7 +16,11 @@ const Home = async ({
     getTotalOffer(),
   ]);
   if (!data || !totalPages) {
-    return <CardsSkeleton />;
+    return (
+      <div className="lg:w-[1024px] flex items-center justify-center ">
+        <CardsSkeleton />
+      </div>
+    );
   }
   return (
     <Suspense key={totalPages + data.length} fallback={<CardsSkeleton />}>
