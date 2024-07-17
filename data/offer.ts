@@ -9,13 +9,16 @@ const ITEMS_PER_PAGE = 10;
 
 export const getAllOffer = async (page: number) => {
   noStore();
-
+  console.log({ page });
   const currentPage = !!page ? page : 1;
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
   try {
     console.log("danga");
-    const user = await sql`SELECT * FROM User`;
-    console.log({ user: user.fields });
+    /* const user = await sql`SELECT * FROM dataOffer
+    JOIN User ON User.id = dataOffer.userId
+    ORDER BY dataOffer.lastUpdate
+    `;
+    console.log({ user: user.fields });*/
     /* const allOfferForUser = await db.dataOffer.findMany({
       skip: offset,
       take: ITEMS_PER_PAGE,
@@ -24,11 +27,10 @@ export const getAllOffer = async (page: number) => {
      ORDER BY dataOffer.lastUpdate DESC*/
     console.log("bounga");
     const allOfferForUser = await sql<offerDataParamsWithNull>`
-      SELECT
-        * FROM dataOffer
+      SELECT * FROM "dataOffer"
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
-
+    console.log(allOfferForUser.rows[0]);
     return allOfferForUser.rows;
   } catch (error) {
     console.log({ error });
@@ -46,7 +48,7 @@ export const getTotalOffer = async () => {
     );
     return totalPages;*/
 
-    const count = await sql`SELECT COUNT(*) FROM dataOffer`;
+    const count = await sql`SELECT COUNT(*) FROM "dataOffer"`;
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
     return totalPages;
   } catch {
@@ -64,7 +66,7 @@ export const getAllOfferByUserId = async (id?: string) => {
 
     const allOfferForUser = await sql<offerDataParamsWithNull>`
     SELECT
-      * FROM dataOffer
+      * FROM "dataOffer"
     WHERE userId=${id}
     ORDER BY dataOffer.lastUpdate DESC
   `;
@@ -84,7 +86,7 @@ export const deleteOfferByUserId = async (id?: string) => {
     return OfferDelete;*/
 
     const OfferDelete =
-      await sql<offerDataParamsWithNull>`DELETE FROM dataOffer WHERE id = ${id}`;
+      await sql<offerDataParamsWithNull>`DELETE FROM "dataOffer" WHERE id = ${id}`;
 
     return OfferDelete.rows[0];
   } catch {
@@ -100,7 +102,7 @@ export const getOfferByUserId = async (id?: string) => {
     });
     return Offer;*/
 
-    const Offer = await sql`SELECT * FROM dataOffer WHERE id=${id}`;
+    const Offer = await sql`SELECT * FROM "dataOffer" WHERE id=${id}`;
 
     return Offer.rows[0] as offerDataParamsWithNull;
   } catch {
@@ -125,7 +127,7 @@ export async function getSearchOffer(query: filterQuery) {
 
       const allOfferForUser = await sql<offerDataParamsWithNull>`
       SELECT
-        * FROM dataOffer
+        * FROM "dataOffer"
       WHERE paysOffre=${pays}
       ORDER BY dataOffer.lastUpdate DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
@@ -141,7 +143,7 @@ export async function getSearchOffer(query: filterQuery) {
 
       const allOfferForUser = await sql<offerDataParamsWithNull>`
       SELECT
-        * FROM dataOffer
+        * FROM "dataOffer"
       WHERE villeOffre=${ville}
       ORDER BY dataOffer.lastUpdate DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
@@ -157,7 +159,7 @@ export async function getSearchOffer(query: filterQuery) {
 
       const allOfferForUser = await sql<offerDataParamsWithNull>`
       SELECT
-        * FROM dataOffer
+        * FROM "dataOffer"
       WHERE typeOffre=${type_offre}
       ORDER BY dataOffer.lastUpdate DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
@@ -173,7 +175,7 @@ export async function getSearchOffer(query: filterQuery) {
 
       const allOfferForUser = await sql<offerDataParamsWithNull>`
       SELECT
-        * FROM dataOffer
+        * FROM "dataOffer"
       WHERE paysOffre=${pays} AND villeOffre=${ville}
       ORDER BY dataOffer.lastUpdate DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
@@ -189,7 +191,7 @@ export async function getSearchOffer(query: filterQuery) {
 
       const allOfferForUser = await sql<offerDataParamsWithNull>`
       SELECT
-        * FROM dataOffer
+        * FROM "dataOffer"
       WHERE typeOffre=${type_offre} AND villeOffre=${ville}
       ORDER BY dataOffer.lastUpdate DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
@@ -205,7 +207,7 @@ export async function getSearchOffer(query: filterQuery) {
 
       const allOfferForUser = await sql<offerDataParamsWithNull>`
       SELECT
-        * FROM dataOffer
+        * FROM "dataOffer"
       WHERE paysOffre=${pays} AND typeOffre=${type_offre}
       ORDER BY dataOffer.lastUpdate DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
@@ -221,7 +223,7 @@ export async function getSearchOffer(query: filterQuery) {
 
       const allOfferForUser = await sql<offerDataParamsWithNull>`
       SELECT
-        * FROM dataOffer
+        * FROM "dataOffer"
       WHERE paysOffre=${pays} AND villeOffre=${ville}
       ORDER BY dataOffer.lastUpdate DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
@@ -236,7 +238,7 @@ export async function getSearchOffer(query: filterQuery) {
 
       const allOfferForUser = await sql<offerDataParamsWithNull>`
       SELECT
-        * FROM dataOffer 
+        * FROM "dataOffer" 
       ORDER BY dataOffer.lastUpdate DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
@@ -264,7 +266,7 @@ export async function getTotalSearchOffer(query: filterQuery) {
       return allOfferForUser.length;*/
 
       const count =
-        await sql`SELECT COUNT(*) FROM dataOffer WHERE paysOffre=${pays} LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
+        await sql`SELECT COUNT(*) FROM "dataOffer" WHERE paysOffre=${pays} LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
       const totalPages = Math.ceil(Number(count.rows[0].count));
       return totalPages;
     } else if (!pays && !!ville && !type_offre) {
@@ -276,7 +278,7 @@ export async function getTotalSearchOffer(query: filterQuery) {
       return allOfferForUser.length;*/
 
       const count =
-        await sql`SELECT COUNT(*) FROM dataOffer WHERE villeOffre=${ville} LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
+        await sql`SELECT COUNT(*) FROM "dataOffer" WHERE villeOffre=${ville} LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
       const totalPages = Math.ceil(Number(count.rows[0].count));
       return totalPages;
     } else if (!pays && !ville && !!type_offre) {
@@ -288,7 +290,7 @@ export async function getTotalSearchOffer(query: filterQuery) {
       return allOfferForUser.length;*/
 
       const count =
-        await sql`SELECT COUNT(*) FROM dataOffer WHERE typeOffre=${type_offre} LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
+        await sql`SELECT COUNT(*) FROM "dataOffer" WHERE typeOffre=${type_offre} LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
       const totalPages = Math.ceil(Number(count.rows[0].count));
       return totalPages;
     } else if (!!pays && !!ville && !type_offre) {
@@ -299,7 +301,7 @@ export async function getTotalSearchOffer(query: filterQuery) {
       });
       return allOfferForUser.length;*/
 
-      const count = await sql`SELECT COUNT(*) FROM dataOffer 
+      const count = await sql`SELECT COUNT(*) FROM "dataOffer" 
         WHERE paysOffre=${pays} AND villeOffre=${ville} 
         LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
       const totalPages = Math.ceil(Number(count.rows[0].count));
@@ -312,7 +314,7 @@ export async function getTotalSearchOffer(query: filterQuery) {
       });
       return allOfferForUser.length;*/
 
-      const count = await sql`SELECT COUNT(*) FROM dataOffer 
+      const count = await sql`SELECT COUNT(*) FROM "dataOffer"
       WHERE typeOffre=${type_offre} AND villeOffre=${ville} 
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
       const totalPages = Math.ceil(Number(count.rows[0].count));
@@ -325,7 +327,7 @@ export async function getTotalSearchOffer(query: filterQuery) {
       });
       return allOfferForUser.length;*/
 
-      const count = await sql`SELECT COUNT(*) FROM dataOffer 
+      const count = await sql`SELECT COUNT(*) FROM "dataOffer" 
       WHERE paysOffre=${pays} AND typeOffre=${type_offre} 
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
       const totalPages = Math.ceil(Number(count.rows[0].count));
@@ -338,7 +340,7 @@ export async function getTotalSearchOffer(query: filterQuery) {
       });
       return allOfferForUser.length;*/
 
-      const count = await sql`SELECT COUNT(*) FROM dataOffer 
+      const count = await sql`SELECT COUNT(*) FROM "dataOffer" 
       WHERE paysOffre=${pays} AND villeOffre=${ville} 
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
       const totalPages = Math.ceil(Number(count.rows[0].count));
@@ -350,7 +352,7 @@ export async function getTotalSearchOffer(query: filterQuery) {
       });
       return allOfferForUser.length;*/
 
-      const count = await sql`SELECT COUNT(*) FROM dataOffer  
+      const count = await sql`SELECT COUNT(*) FROM "dataOffer"  
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
       const totalPages = Math.ceil(Number(count.rows[0].count));
       return totalPages;

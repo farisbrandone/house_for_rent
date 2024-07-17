@@ -25,7 +25,7 @@ export const generateTwoFactorToken = async (email: string) => {
       },
     });*/
 
-    await sql`DELETE FROM TwoFactorToken WHERE id = ${existingToken.id}`;
+    await sql`DELETE FROM "TwoFactorToken" WHERE id = ${existingToken.id}`;
   }
 
   /*const twoFactorToken = await db.twoFactorToken.create({
@@ -37,7 +37,7 @@ export const generateTwoFactorToken = async (email: string) => {
   });
   return twoFactorToken;*/
   const twoFactorToken = await sql`
-  INSERT INTO TwoFactorToken ( email,token,expires,)
+  INSERT INTO "TwoFactorToken" ( email,token,expires,)
   VALUES (${email}, ${token}, ${expires.toISOString().split("T")[0]}, )
   ON CONFLICT (id) DO NOTHING;
 `;
@@ -55,7 +55,7 @@ export const generatePasswordResetToken = async (email: string) => {
     /* await db.passwordResetToken.delete({
       where: { id: existingToken.id },
     });*/
-    await sql`DELETE FROM PasswordResetToken WHERE id = ${existingToken.id}`;
+    await sql`DELETE FROM "PasswordResetToken" WHERE id = ${existingToken.id}`;
   }
 
   /* const passwordResetToken = await db.passwordResetToken.create({
@@ -68,7 +68,7 @@ export const generatePasswordResetToken = async (email: string) => {
   return passwordResetToken;*/
 
   const passwordResetToken = await sql`
-  INSERT INTO PasswordResetToken ( email,token,expires,)
+  INSERT INTO "PasswordResetToken" ( email,token,expires,)
   VALUES (${email}, ${token}, ${expires.toISOString().split("T")[0]}, )
   ON CONFLICT (id) DO NOTHING;
 `;
@@ -88,7 +88,7 @@ export const generateVerificationToken = async (email: string) => {
         id: existingToken.id,
       },
     });*/
-    await sql`DELETE FROM VerificationToken WHERE id = ${existingToken.id}`;
+    await sql`DELETE FROM "VerificationToken" WHERE id = ${existingToken.id}`;
   }
 
   /*const verficationToken = await db.verificationToken.create({
@@ -101,7 +101,7 @@ export const generateVerificationToken = async (email: string) => {
   return verficationToken;*/
 
   const verficationToken = await sql`
-  INSERT INTO VerficationToken ( email,token,expires,)
+  INSERT INTO "VerficationToken" ( email,token,expires,)
   VALUES (${email}, ${token}, ${expires.toISOString().split("T")[0]}, )
   ON CONFLICT (id) DO NOTHING;
 `;

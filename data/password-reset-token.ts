@@ -10,7 +10,7 @@ export const getPasswordResetTokenByToken = async (token: string) => {
     return passwordResetToken;*/
 
     const passwordResetToken =
-      await sql`SELECT * FROM PasswordResetToken WHERE token=${token}`;
+      await sql`SELECT * FROM "PasswordResetToken" WHERE token=${token}`;
 
     return passwordResetToken.rows[0] as typePasswordResetToken;
   } catch {
@@ -26,7 +26,7 @@ export const getPasswordResetTokenByEmail = async (email: string) => {
     return passwordResetToken;*/
 
     const passwordResetToken =
-      await sql`SELECT * FROM PasswordResetToken WHERE email=${email} LIMIT ${1}`;
+      await sql`SELECT * FROM "PasswordResetToken" WHERE email=${email} LIMIT ${1}`;
 
     return passwordResetToken.rows[0] as typePasswordResetToken;
   } catch {

@@ -39,7 +39,7 @@ export async function createOfferData(formDataOffer: databaseProps) {
 
   try {
     const insertedOfferData = await sql`
-    INSERT INTO dataOffer (nomOffre,typeOffre,paysOffre, villeOffre,descriptifOffre,nbreDeChambre,nbreDeDouche,nbreDeCuisine,parking,adresseEmail,prixDuBien,devise,typeDeVente,imageOffre,tel,dateInset,lastUpdate,userId)
+    INSERT INTO "dataOffer" (nomOffre,typeOffre,paysOffre, villeOffre,descriptifOffre,nbreDeChambre,nbreDeDouche,nbreDeCuisine,parking,adresseEmail,prixDuBien,devise,typeDeVente,imageOffre,tel,dateInset,lastUpdate,userId)
     VALUES (${formDataOffer.nomOffre}, ${formDataOffer.typeOffre}, ${
       formDataOffer.paysOffre
     }, ${formDataOffer.villeOffre}, ${formDataOffer.descriptifOffre}, ${
@@ -74,7 +74,7 @@ export async function updateOfferData(
 
   try {
     await sql`
-    UPDATE dataOffer
+    UPDATE "dataOffer"
     SET nomOffre=${formDataOffer.nomOffre},typeOffre=${
       formDataOffer.typeOffre
     },paysOffre=${formDataOffer.paysOffre}, villeOffre=${
@@ -106,12 +106,12 @@ export async function updateOfferData(
 
 export async function deleteOfferData(id: string) {
   try {
-    await sql`DELETE FROM invoices WHERE id = ${id}`;
-    revalidatePath(`/dashboardPage/${id}`);
+    await sql`DELETE FROM "dataOffer" WHERE id = ${id}`;
+    revalidatePath(`/dashboardPage`);
     return { message: "Deleted offer data." };
   } catch (error) {
     return {
-      message: "Database Error: Failed to Delete Invoice.",
+      message: "Database Error: Failed to Delete dataOffer.",
     };
   }
 }

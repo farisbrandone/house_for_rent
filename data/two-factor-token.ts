@@ -10,7 +10,7 @@ export const getTwoFactorTokenByToken = async (token: string) => {
     return twoFactorToken;*/
 
     const twoFactorToken =
-      await sql`SELECT * FROM TwoFactorToken WHERE token=${token}`;
+      await sql`SELECT * FROM "TwoFactorToken" WHERE token=${token}`;
     return twoFactorToken.rows[0] as typeTwoFactorToken;
   } catch {
     return null;
@@ -25,7 +25,7 @@ export const getTwoFactorTokenByEmail = async (email: string) => {
     return twoFactorToken;*/
 
     const twoFactorToken =
-      await sql`SELECT * FROM TwoFactorToken WHERE email=${email} LIMIT ${1}`;
+      await sql`SELECT * FROM "TwoFactorToken" WHERE email=${email} LIMIT ${1}`;
     return twoFactorToken.rows[0] as typeTwoFactorToken;
   } catch {
     return null;

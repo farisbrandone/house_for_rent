@@ -78,7 +78,7 @@ export const {
       });*/
 
       await sql`
-    UPDATE User
+    UPDATE "User"
     SET emailVerified=${date}
     )
     WHERE id = ${user.id}

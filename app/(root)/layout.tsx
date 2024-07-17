@@ -1,3 +1,4 @@
+import { CardsSkeleton } from "@/components/CardsSkeleton";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { Metadata } from "next";
@@ -20,7 +21,8 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
           <Header searchOrNot={true} headerForSign={false} />
         </div>
         <div className="flex items-center justify-center w-full">
-          <Suspense>{children}</Suspense>
+          {/*children*/}
+          <Suspense fallback={<CardsSkeleton />}>{children}</Suspense>
         </div>
         <div>
           <Footer />

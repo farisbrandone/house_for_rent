@@ -11,7 +11,7 @@ export const getTwoFactorConfirmationByUserId = async (userId: string) => {
 
     const twoFactorConfirmation = await sql`
     SELECT
-      * FROM TwoFactorConfirmation
+      * FROM "TwoFactorConfirmation"
     WHERE userId=${userId} 
   `;
     return twoFactorConfirmation.rows[0] as typeTwoFactorConfirmation;

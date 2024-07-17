@@ -16,7 +16,9 @@ export interface bodyPageProps {
 }
 
 const BodyPage = ({ currentPage, totalPages, data }: bodyPageProps) => {
+  console.log("copakabana");
   const isClient = useIsClient();
+  console.log({ bounga: data[0] });
   if (!isClient) return <Spinner />;
   return (
     <div className="w-[95%] flex flex-col items-center gap-4 mt-5 overflow-y-clip">

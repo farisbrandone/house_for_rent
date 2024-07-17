@@ -10,7 +10,7 @@ export const getVerificationTokenByToken = async (token: string) => {
     return verificationToken;*/
 
     const verificationToken =
-      await sql`SELECT * FROM VerificationToken WHERE token=${token}`;
+      await sql`SELECT * FROM "VerificationToken" WHERE token=${token}`;
 
     return verificationToken.rows[0] as typeVerificationToken;
   } catch {
@@ -26,7 +26,7 @@ export const getVerificationTokenByEmail = async (email: string) => {
     return verificationToken;*/
 
     const verificationToken =
-      await sql`SELECT * FROM VerificationToken WHERE email=${email} LIMIT ${1}`;
+      await sql`SELECT * FROM "VerificationToken" WHERE email=${email} LIMIT ${1}`;
 
     return verificationToken.rows[0] as typeVerificationToken;
   } catch {
