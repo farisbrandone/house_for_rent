@@ -2,7 +2,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
-import React from "react";
+import React, { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "MaMaisonALouer.com",
@@ -20,7 +20,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
         <Header searchOrNot={false} headerForSign={true} />
       </div>*/}
         <div className="flex flex-col flex-1 items-center  min-h-screen ">
-          {children}
+          <Suspense>{children}</Suspense>
         </div>
         {/* <div>
         <Footer />

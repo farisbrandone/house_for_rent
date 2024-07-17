@@ -1,7 +1,7 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { Metadata } from "next";
-import React from "react";
+import React, { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "MaMaisonALouer.com",
@@ -17,7 +17,10 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
       <div className="w-full bg-[linear-gradient(40deg,#006ce4,#003b95)] flex items-center justify-center mt-0">
         <Header searchOrNot={false} headerForSign={false} />
       </div>
-      <div className="flex items-center justify-center">{children}</div>
+      <div className="flex items-center justify-center">
+        {" "}
+        <Suspense>{children}</Suspense>
+      </div>
       <div>
         <Footer />
       </div>
