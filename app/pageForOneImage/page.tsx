@@ -22,11 +22,11 @@ const DataForOffer = async ({
     return <CardsSkeleton />;
   }
 
-  return (
-    <div className="mt-5 lg:w-[1024px]">
+  return {
+    /*<div className="mt-5 lg:w-[1024px]">
       <CardOneOffer dataForOneOffer={dataForOneOffer!} />
-    </div>
-  );
+    </div>*/
+  };
 };
 
 export default DataForOffer;
