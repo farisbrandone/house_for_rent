@@ -4,20 +4,19 @@ import { CardsSkeleton } from "@/components/CardsSkeleton";
 import { getOfferByUserId } from "@/data/offer";
 import React, { Suspense } from "react";
 
-const DataForOffer = async ({
-  searchParams,
-}: {
-  searchParams?: {
+const DataForOffer = async ({}: /*searchParams,*/
+{
+  /* searchParams?: {
     id?: string;
-  };
+  };*/
 }) => {
-  const myId = searchParams?.id;
+  // const myId = searchParams?.id;
 
-  const dataForOneOffer = await getOfferByUserId(myId);
+  const dataForOneOffer = await getOfferByUserId("2");
 
-  if (!myId) {
+  /*if (!myId) {
     throw new Error("une ereur est survenu pendant le processus de traitement");
-  }
+  }*/
 
   return (
     <div className="mt-5 lg:w-[1024px]">
