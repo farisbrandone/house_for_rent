@@ -1,7 +1,8 @@
 import CardOneOffer from "@/components/CardOneOffer";
+import { CardsSkeleton } from "@/components/CardsSkeleton";
 
 import { getOfferByUserId } from "@/data/offer";
-import React from "react";
+import React, { Suspense } from "react";
 
 const DataForOffer = async ({
   searchParams,
@@ -15,9 +16,14 @@ const DataForOffer = async ({
   const dataForOneOffer = await getOfferByUserId(myId);
 
   return (
-    <div className="mt-5 lg:w-[1024px]">
-      <CardOneOffer dataForOneOffer={dataForOneOffer} />
-    </div>
+    <Suspense
+      key={myId + dataForOneOffer.nomOffre}
+      fallback={<CardsSkeleton />}
+    >
+      <div className="mt-5 lg:w-[1024px]">
+        <CardOneOffer dataForOneOffer={dataForOneOffer} />
+      </div>
+    </Suspense>
   );
 };
 

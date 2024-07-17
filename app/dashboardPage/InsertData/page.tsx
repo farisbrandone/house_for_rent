@@ -11,11 +11,9 @@ const DataForOffer = () => {
   console.log(session);
   const user = session?.user;
   return (
-    <Suspense>
-      <div className="mt-20">
-        <FormDataOffer user={user} />
-      </div>
-    </Suspense>
+    <div className="mt-20">
+      <FormDataOffer user={user} />
+    </div>
   );
 };
 

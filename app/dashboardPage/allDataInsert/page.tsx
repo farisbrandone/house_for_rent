@@ -20,11 +20,9 @@ const DashBordPage = async ({
   }
 
   return (
-    <Suspense>
-      <div className="mt-3">
-        <DashboardFormData data={data} id={id} />
-      </div>
-    </Suspense>
+    <div className="mt-3">
+      <DashboardFormData data={data} id={id} />
+    </div>
   );
 };
 

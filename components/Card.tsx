@@ -1,7 +1,6 @@
 "use client";
 
 import { offerDataParamsWithNull } from "@/actions/createOffer";
-import { databaseProps } from "@/lib/data";
 import { Heart } from "lucide-react";
 import Image from "next/image";
 import React from "react";
