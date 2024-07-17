@@ -17,7 +17,7 @@ const Card = ({ mycarData }: cardProps) => {
 
   const router = useRouter();
   const goToOnePage = (id: string) => {
-    router.push(`/pageForOneImage?id=${id}`);
+    router.push(`/oneImage?id=${id}`);
   };
   if (!isClient) return <Spinner />;
   return (
