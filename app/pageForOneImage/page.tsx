@@ -15,6 +15,10 @@ const DataForOffer = async ({
 
   const dataForOneOffer = await getOfferByUserId(myId);
 
+  if (!dataForOneOffer) {
+    return <CardsSkeleton />;
+  }
+
   return (
     <div className="mt-5 lg:w-[1024px]">
       <CardOneOffer dataForOneOffer={dataForOneOffer} />
