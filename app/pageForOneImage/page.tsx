@@ -11,7 +11,7 @@ const DataForOffer = async ({
     id?: string;
   };
 }) => {
-  const myId = searchParams?.id;
+  /* const myId = searchParams?.id;
   if (!myId) {
     return <CardsSkeleton />;
   }
@@ -20,11 +20,11 @@ const DataForOffer = async ({
 
   if (!dataForOneOffer) {
     return <CardsSkeleton />;
-  }
+  }*/
 
   return {
     /*<div className="mt-5 lg:w-[1024px]">
-      <CardOneOffer dataForOneOffer={dataForOneOffer!} />
+      <CardOneOffer dataForOneOffer={dataForOneOffer} />
     </div>*/
   };
 };
