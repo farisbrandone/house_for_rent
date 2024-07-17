@@ -12,10 +12,13 @@ const DataForOffer = async ({
   };
 }) => {
   const myId = searchParams?.id;
+  if (!myId) {
+    return <CardsSkeleton />;
+  }
 
   const dataForOneOffer = await getOfferByUserId(myId);
 
-  if (!dataForOneOffer) {
+  if (!dataForOneOffer || !myId) {
     return <CardsSkeleton />;
   }
 
