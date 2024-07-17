@@ -4,7 +4,7 @@
 //import { getOfferByUserId } from "@/data/offer";
 import React from "react";
 
-const DataForOffer = async (
+const page = async (
   /*searchParams,*/
   {
     /* searchParams?: {
@@ -27,4 +27,4 @@ const DataForOffer = async (
   );
 };
 
-export default DataForOffer;
+export default page;
