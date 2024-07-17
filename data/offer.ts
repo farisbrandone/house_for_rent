@@ -13,7 +13,6 @@ export const getAllOffer = async (page: number) => {
   const currentPage = !!page ? page : 1;
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
   try {
-    console.log("danga");
     /* const user = await sql`SELECT * FROM dataOffer
     JOIN User ON User.id = dataOffer.userId
     ORDER BY dataOffer.lastUpdate
@@ -25,12 +24,11 @@ export const getAllOffer = async (page: number) => {
     });
     return allOfferForUser;
      ORDER BY dataOffer.lastUpdate DESC*/
-    console.log("bounga");
+
     const allOfferForUser = await sql<offerDataParamsWithNull>`
       SELECT * FROM "dataOffer"
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
-    console.log(allOfferForUser.rows[0]);
     return allOfferForUser.rows;
   } catch (error) {
     console.log({ error });

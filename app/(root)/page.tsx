@@ -15,7 +15,6 @@ const Home = async ({
     getAllOffer(currentPage),
     getTotalOffer(),
   ]);
-  console.log({ dutu: data[0] });
   if (!data || !totalPages) {
     return <CardsSkeleton />;
   }

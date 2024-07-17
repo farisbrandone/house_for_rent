@@ -6,7 +6,8 @@ import React, { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "MaMaisonALouer.com",
-  description: "Le meilleur site pour la recherche de vos offres immobilières",
+  description:
+    "Studio, chambre et Appartement à louer disponible sur mamaisonalouer.com",
   icons: {
     icon: "/vercel.svg",
   },
