@@ -55,6 +55,7 @@ export const getTotalOffer = async () => {
 };
 
 export const getAllOfferByUserId = async (id?: string) => {
+  noStore();
   try {
     /* const allOfferForUser = await db.dataOffer.findMany({
       where: { userId: id },
@@ -74,6 +75,7 @@ export const getAllOfferByUserId = async (id?: string) => {
 };
 
 export const deleteOfferByUserId = async (id?: string) => {
+  noStore();
   console.log("dounga", { id });
   try {
     /*const OfferDelete = await db.dataOffer.delete({
@@ -91,6 +93,7 @@ export const deleteOfferByUserId = async (id?: string) => {
 };
 
 export const getOfferByUserId = async (id?: string) => {
+  noStore();
   try {
     /*const Offer = await db.dataOffer.findFirst({
       where: { id },
