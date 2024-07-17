@@ -30,7 +30,7 @@ export default auth((req): void | Response | Promise<void | Response> => {
     if (isAuthorized) {
       console.log("PART MIDLEWARE isAuthRoute AND isAuthorized");
       return Response.redirect(
-        "http://localhost:3000" /*new URL(DEFAULT_LOGIN_REDIRECT, nextUrl)*/
+        "https://mamaisonalouer.com" /*new URL(DEFAULT_LOGIN_REDIRECT, nextUrl)*/
       );
     }
     console.log("PART MIDLEWARE END isAuthRoute NOT isAuthorized");
