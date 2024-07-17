@@ -38,7 +38,7 @@ import { useIsClient } from "@/hooks/use-is-client";
 const CardOneOffer = ({
   dataForOneOffer,
 }: {
-  dataForOneOffer: offerDataParamsWithNull | null;
+  dataForOneOffer: offerDataParamsWithNull;
 }) => {
   const isClient = useIsClient();
   console.log({ dataForOneOffer });
