@@ -4,14 +4,7 @@
 //import { getOfferByUserId } from "@/data/offer";
 import React from "react";
 
-const page = async (
-  /*searchParams,*/
-  {
-    /* searchParams?: {
-    id?: string;
-  };*/
-  }
-) => {
+const page = async () => {
   // const myId = searchParams?.id;
 
   //const dataForOneOffer = await getOfferByUserId("2");
@@ -22,6 +15,7 @@ const page = async (
 
   return (
     <div className="mt-5 lg:w-[1024px]">
+      patatoes
       {/*<CardOneOffer dataForOneOffer={dataForOneOffer} />*/}
     </div>
   );
