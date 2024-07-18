@@ -1,7 +1,10 @@
+"use client";
 import React, { Fragment } from "react";
 import Card from "./Card";
 import { PaginationPage } from "./Pagination";
 import { offerDataParamsWithNull } from "@/actions/createOffer";
+import { useIsClient } from "@/hooks/use-is-client";
+import { CardsSkeleton } from "./CardsSkeleton";
 
 interface searchComponentsProps {
   data: offerDataParamsWithNull[];
@@ -9,6 +12,8 @@ interface searchComponentsProps {
 }
 
 const SearchComponent = async ({ data, totalPages }: searchComponentsProps) => {
+  const isClient = useIsClient();
+  if (!isClient) return <CardsSkeleton />;
   return (
     <>
       <div className="w-[95%] flex flex-col items-center gap-4 mt-5 overflow-y-clip">

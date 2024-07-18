@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Error({
@@ -9,6 +10,7 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const router = useRouter();
   useEffect(() => {
     // Optionally log the error to an error reporting service
     console.error(error);
@@ -22,7 +24,10 @@ export default function Error({
           className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-lg text-white transition-colors hover:bg-blue-400 mr-auto ml-auto"
           onClick={
             // Attempt to recover by trying to re-render the invoices route
-            () => reset()
+            () => {
+              reset();
+              router.refresh();
+            }
           }
         >
           Essayez encore

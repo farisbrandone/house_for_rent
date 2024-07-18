@@ -57,6 +57,7 @@ const Header = ({
     const truePathname = pathname === "/" ? "/search" : pathname;
 
     router.push(`${truePathname}?${params.toString()}`);
+    router.refresh();
   };
 
   return (

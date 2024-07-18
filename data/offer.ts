@@ -218,11 +218,11 @@ export async function getSearchOffer(query: filterQuery) {
         take: ITEMS_PER_PAGE,
       });
       return allOfferForUser;*/
-
+      console.log("changa changacougna");
       const allOfferForUser = await sql<offerDataParamsWithNull>`
       SELECT
         * FROM "dataOffer"
-      WHERE "paysOffre"=${pays} AND "villeOffre"=${ville}
+      WHERE "paysOffre"=${pays} AND "villeOffre"=${ville} AND "typeOffre"=${type_offre}
       ORDER BY "lastUpdate" DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
@@ -233,7 +233,7 @@ export async function getSearchOffer(query: filterQuery) {
         take: ITEMS_PER_PAGE,
       });
       return allOfferForUser;*/
-
+      console.log("mounga");
       const allOfferForUser = await sql<offerDataParamsWithNull>`
       SELECT
         * FROM "dataOffer" 
@@ -326,7 +326,7 @@ export async function getTotalSearchOffer(query: filterQuery) {
       return allOfferForUser.length;*/
 
       const count = await sql`SELECT COUNT(*) FROM "dataOffer" 
-      WHERE "paysOffre"=${pays} AND "typeOffre"=${type_offre} 
+       WHERE "paysOffre"=${pays} AND "villeOffre"=${ville} AND "typeOffre"=${type_offre} 
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
       const totalPages = Math.ceil(Number(count.rows[0].count));
       return totalPages;
