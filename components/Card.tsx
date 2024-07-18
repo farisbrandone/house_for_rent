@@ -19,7 +19,7 @@ const Card = ({ mycarData }: cardProps) => {
   const goToOnePage = (id: string) => {
     router.push(`/oneImage?id=${id}`);
   };
-  if (!isClient) return <Spinner />;
+
   return (
     <div
       className=" w-full mt-2 flex items-center justify-center shadow-lg"
