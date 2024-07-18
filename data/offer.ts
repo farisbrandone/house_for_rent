@@ -127,7 +127,7 @@ export async function getSearchOffer(query: filterQuery) {
       SELECT
         * FROM "dataOffer"
       WHERE paysOffre=${pays}
-      ORDER BY dataOffer.lastUpdate DESC
+      ORDER BY lastUpdate DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
       return allOfferForUser.rows;
@@ -143,7 +143,7 @@ export async function getSearchOffer(query: filterQuery) {
       SELECT
         * FROM "dataOffer"
       WHERE villeOffre=${ville}
-      ORDER BY dataOffer.lastUpdate DESC
+      ORDER BY lastUpdate DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
       return allOfferForUser.rows;
@@ -159,7 +159,7 @@ export async function getSearchOffer(query: filterQuery) {
       SELECT
         * FROM "dataOffer"
       WHERE typeOffre=${type_offre}
-      ORDER BY dataOffer.lastUpdate DESC
+      ORDER BY lastUpdate DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
       return allOfferForUser.rows;
@@ -175,7 +175,7 @@ export async function getSearchOffer(query: filterQuery) {
       SELECT
         * FROM "dataOffer"
       WHERE paysOffre=${pays} AND villeOffre=${ville}
-      ORDER BY dataOffer.lastUpdate DESC
+      ORDER BY lastUpdate DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
       return allOfferForUser.rows;
@@ -191,7 +191,7 @@ export async function getSearchOffer(query: filterQuery) {
       SELECT
         * FROM "dataOffer"
       WHERE typeOffre=${type_offre} AND villeOffre=${ville}
-      ORDER BY dataOffer.lastUpdate DESC
+      ORDER BY lastUpdate DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
       return allOfferForUser.rows;
@@ -207,7 +207,7 @@ export async function getSearchOffer(query: filterQuery) {
       SELECT
         * FROM "dataOffer"
       WHERE paysOffre=${pays} AND typeOffre=${type_offre}
-      ORDER BY dataOffer.lastUpdate DESC
+      ORDER BY lastUpdate DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
       return allOfferForUser.rows;
@@ -223,7 +223,7 @@ export async function getSearchOffer(query: filterQuery) {
       SELECT
         * FROM "dataOffer"
       WHERE paysOffre=${pays} AND villeOffre=${ville}
-      ORDER BY dataOffer.lastUpdate DESC
+      ORDER BY lastUpdate DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
       return allOfferForUser.rows;
@@ -237,7 +237,7 @@ export async function getSearchOffer(query: filterQuery) {
       const allOfferForUser = await sql<offerDataParamsWithNull>`
       SELECT
         * FROM "dataOffer" 
-      ORDER BY dataOffer.lastUpdate DESC
+      ORDER BY lastUpdate DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
       return allOfferForUser.rows;
