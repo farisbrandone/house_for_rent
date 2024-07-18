@@ -126,8 +126,8 @@ export async function getSearchOffer(query: filterQuery) {
       const allOfferForUser = await sql<offerDataParamsWithNull>`
       SELECT
         * FROM "dataOffer"
-      WHERE paysOffre=${pays}
-      ORDER BY lastUpdate DESC
+      WHERE "paysOffre"=${pays}
+      ORDER BY "lastUpdate" DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
       return allOfferForUser.rows;
@@ -142,8 +142,8 @@ export async function getSearchOffer(query: filterQuery) {
       const allOfferForUser = await sql<offerDataParamsWithNull>`
       SELECT
         * FROM "dataOffer"
-      WHERE villeOffre=${ville}
-      ORDER BY lastUpdate DESC
+      WHERE "villeOffre"=${ville}
+      ORDER BY "lastUpdate" DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
       return allOfferForUser.rows;
@@ -158,8 +158,8 @@ export async function getSearchOffer(query: filterQuery) {
       const allOfferForUser = await sql<offerDataParamsWithNull>`
       SELECT
         * FROM "dataOffer"
-      WHERE typeOffre=${type_offre}
-      ORDER BY lastUpdate DESC
+      WHERE "typeOffre"=${type_offre}
+      ORDER BY "lastUpdate" DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
       return allOfferForUser.rows;
@@ -174,8 +174,8 @@ export async function getSearchOffer(query: filterQuery) {
       const allOfferForUser = await sql<offerDataParamsWithNull>`
       SELECT
         * FROM "dataOffer"
-      WHERE paysOffre=${pays} AND villeOffre=${ville}
-      ORDER BY lastUpdate DESC
+      WHERE "paysOffre"=${pays} AND "villeOffre"=${ville}
+      ORDER BY "lastUpdate" DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
       return allOfferForUser.rows;
@@ -190,8 +190,8 @@ export async function getSearchOffer(query: filterQuery) {
       const allOfferForUser = await sql<offerDataParamsWithNull>`
       SELECT
         * FROM "dataOffer"
-      WHERE typeOffre=${type_offre} AND villeOffre=${ville}
-      ORDER BY lastUpdate DESC
+      WHERE "typeOffre"=${type_offre} AND "villeOffre"=${ville}
+      ORDER BY "lastUpdate" DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
       return allOfferForUser.rows;
@@ -206,8 +206,8 @@ export async function getSearchOffer(query: filterQuery) {
       const allOfferForUser = await sql<offerDataParamsWithNull>`
       SELECT
         * FROM "dataOffer"
-      WHERE paysOffre=${pays} AND typeOffre=${type_offre}
-      ORDER BY lastUpdate DESC
+      WHERE "paysOffre"=${pays} AND "typeOffre"=${type_offre}
+      ORDER BY "lastUpdate" DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
       return allOfferForUser.rows;
@@ -222,8 +222,8 @@ export async function getSearchOffer(query: filterQuery) {
       const allOfferForUser = await sql<offerDataParamsWithNull>`
       SELECT
         * FROM "dataOffer"
-      WHERE paysOffre=${pays} AND villeOffre=${ville}
-      ORDER BY lastUpdate DESC
+      WHERE "paysOffre"=${pays} AND "villeOffre"=${ville}
+      ORDER BY "lastUpdate" DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
       return allOfferForUser.rows;
@@ -237,7 +237,7 @@ export async function getSearchOffer(query: filterQuery) {
       const allOfferForUser = await sql<offerDataParamsWithNull>`
       SELECT
         * FROM "dataOffer" 
-      ORDER BY lastUpdate DESC
+      ORDER BY "lastUpdate" DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
       return allOfferForUser.rows;
@@ -264,7 +264,7 @@ export async function getTotalSearchOffer(query: filterQuery) {
       return allOfferForUser.length;*/
 
       const count =
-        await sql`SELECT COUNT(*) FROM "dataOffer" WHERE paysOffre=${pays} LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
+        await sql`SELECT COUNT(*) FROM "dataOffer" WHERE "paysOffre"=${pays} LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
       const totalPages = Math.ceil(Number(count.rows[0].count));
       return totalPages;
     } else if (!pays && !!ville && !type_offre) {
@@ -276,7 +276,7 @@ export async function getTotalSearchOffer(query: filterQuery) {
       return allOfferForUser.length;*/
 
       const count =
-        await sql`SELECT COUNT(*) FROM "dataOffer" WHERE villeOffre=${ville} LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
+        await sql`SELECT COUNT(*) FROM "dataOffer" WHERE "villeOffre"=${ville} LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
       const totalPages = Math.ceil(Number(count.rows[0].count));
       return totalPages;
     } else if (!pays && !ville && !!type_offre) {
@@ -288,7 +288,7 @@ export async function getTotalSearchOffer(query: filterQuery) {
       return allOfferForUser.length;*/
 
       const count =
-        await sql`SELECT COUNT(*) FROM "dataOffer" WHERE typeOffre=${type_offre} LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
+        await sql`SELECT COUNT(*) FROM "dataOffer" WHERE "typeOffre"=${type_offre} LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
       const totalPages = Math.ceil(Number(count.rows[0].count));
       return totalPages;
     } else if (!!pays && !!ville && !type_offre) {
@@ -300,7 +300,7 @@ export async function getTotalSearchOffer(query: filterQuery) {
       return allOfferForUser.length;*/
 
       const count = await sql`SELECT COUNT(*) FROM "dataOffer" 
-        WHERE paysOffre=${pays} AND villeOffre=${ville} 
+        WHERE "paysOffre"=${pays} AND "villeOffre"=${ville} 
         LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
       const totalPages = Math.ceil(Number(count.rows[0].count));
       return totalPages;
@@ -313,7 +313,7 @@ export async function getTotalSearchOffer(query: filterQuery) {
       return allOfferForUser.length;*/
 
       const count = await sql`SELECT COUNT(*) FROM "dataOffer"
-      WHERE typeOffre=${type_offre} AND villeOffre=${ville} 
+      WHERE "typeOffre"=${type_offre} AND "villeOffre"=${ville} 
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
       const totalPages = Math.ceil(Number(count.rows[0].count));
       return totalPages;
@@ -326,7 +326,7 @@ export async function getTotalSearchOffer(query: filterQuery) {
       return allOfferForUser.length;*/
 
       const count = await sql`SELECT COUNT(*) FROM "dataOffer" 
-      WHERE paysOffre=${pays} AND typeOffre=${type_offre} 
+      WHERE "paysOffre"=${pays} AND "typeOffre"=${type_offre} 
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
       const totalPages = Math.ceil(Number(count.rows[0].count));
       return totalPages;
@@ -339,7 +339,7 @@ export async function getTotalSearchOffer(query: filterQuery) {
       return allOfferForUser.length;*/
 
       const count = await sql`SELECT COUNT(*) FROM "dataOffer" 
-      WHERE paysOffre=${pays} AND villeOffre=${ville} 
+      WHERE "paysOffre"=${pays} AND "villeOffre"=${ville} 
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
       const totalPages = Math.ceil(Number(count.rows[0].count));
       return totalPages;
