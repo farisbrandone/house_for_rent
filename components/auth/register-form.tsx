@@ -63,7 +63,7 @@ const RegisterForm = () => {
       headerLabel="Register an account to get started!"
       backButtonLabel="Have an account already?"
       backButtonHref="/auth/login"
-      showSocial
+      showSocial={false}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

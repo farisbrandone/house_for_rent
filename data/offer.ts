@@ -9,7 +9,7 @@ const ITEMS_PER_PAGE = 10;
 
 export const getAllOffer = async (page: number) => {
   noStore();
-  console.log({ page });
+
   const currentPage = !!page ? page : 1;
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
   try {
@@ -31,7 +31,7 @@ export const getAllOffer = async (page: number) => {
     `;
     return allOfferForUser.rows;
   } catch (error) {
-    console.log({ error });
+    //console.log({ error });
     throw new Error("erro");
     //return null;
   }
@@ -76,7 +76,7 @@ export const getAllOfferByUserId = async (id?: string) => {
 
 export const deleteOfferByUserId = async (id?: string) => {
   noStore();
-  console.log("dounga", { id });
+
   try {
     /*const OfferDelete = await db.dataOffer.delete({
       where: { id },
@@ -218,7 +218,7 @@ export async function getSearchOffer(query: filterQuery) {
         take: ITEMS_PER_PAGE,
       });
       return allOfferForUser;*/
-      console.log("changa changacougna");
+
       const allOfferForUser = await sql<offerDataParamsWithNull>`
       SELECT
         * FROM "dataOffer"
@@ -233,7 +233,7 @@ export async function getSearchOffer(query: filterQuery) {
         take: ITEMS_PER_PAGE,
       });
       return allOfferForUser;*/
-      console.log("mounga");
+
       const allOfferForUser = await sql<offerDataParamsWithNull>`
       SELECT
         * FROM "dataOffer" 

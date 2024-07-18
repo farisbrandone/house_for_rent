@@ -41,14 +41,18 @@ import {
 import { Input } from "./ui/input";
 import InputFile from "./ui/InputFile";
 
-import { offerDataParamsWithNull } from "@/actions/createOffer";
+import {
+  offerDataParams,
+  offerDataParamsWithNull,
+  updateOfferData,
+} from "@/actions/createOffer";
 import { CardsSkeleton } from "./CardsSkeleton";
 import { FormSchema } from "@/schemas";
 import Spinner from "./spinner";
-import { createOfferData } from "@/lib/actions";
 import { useIsClient } from "@/hooks/use-is-client";
 import FormError from "./form-error";
 import FormSuccess from "./form-success";
+import { compressImage } from "@/lib/utils";
 
 function UpdateFormData({
   data,
@@ -73,13 +77,11 @@ function UpdateFormData({
   });
 
   async function onSubmit(datas: z.infer<typeof FormSchema>) {
-    console.log({ ville: datas.villeOffre });
-    /* try {
+    try {
       startTransition(async () => {
-        const date = new Date().toISOString().split("T")[0];
+        const date = new Date().toISOString();
         const myData = {
           ...datas,
-          dateInset: date,
           lastUpdate: date,
           userId: userId,
         };
@@ -92,32 +94,24 @@ function UpdateFormData({
         };
         const t1 = [...dodo.tabImage];
         const t2 = [...dodo.tabName];
-        console.log(t1, t2);
-        console.log(t1, t2);
-        console.log({ dodo });
-        if (t2.length !== 0 && t1.length !== 0) {
-          console.log(t1[0], t2[0]);
-          console.log("dede");
-          const data = await updateOfferData(finalValues, offerId, {
-            tabImage: t1,
-            tabName: t2,
-          });
 
-          console.log("kounga", dodo);
+        if (t2.length !== 0 && t1.length !== 0) {
+          const data = await updateOfferData(finalValues, offerId);
+
           if (data.success) setSuccess(data.success);
           if (data?.error) setError(data.error);
         }
         /* const data = await updateOfferData(finalValues, offerId);
         if (data.success) setSuccess(data.success);
         if (data?.error) setError(data.error);*/
-    /* });
+      });
     } catch (error) {
       setError("Something went wrong!");
     } finally {
       form.reset();
       setSuccess("");
       setError("");
-    }*/
+    }
   }
 
   /*const handleImage: React.ChangeEventHandler<HTMLInputElement> = async (e) => {

@@ -34,7 +34,7 @@ export async function createOfferData(formDataOffer: databaseProps) {
   // ...
   // Prepare data for insertion into the database
 
-  const date = new Date().toISOString().split("T")[0];
+  const date = new Date().toISOString();
   // Test it out:
 
   try {

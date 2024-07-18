@@ -4,6 +4,7 @@
 import { compressImageProps } from "@/lib/utils";
 import { FormSchema } from "@/schemas";
 import { sql } from "@vercel/postgres";
+import { v4 as uuidv4 } from "uuid";
 //import * as z from "zod";
 
 export interface offerDataParams {
@@ -55,6 +56,7 @@ export const createOfferData = async (
   values: offerDataParams,
   dodo: compressImageProps
 ) => {
+  const myId = uuidv4();
   const validatedFields = FormSchema.safeParse(values);
   if (!validatedFields.success) {
     return { error: "Présence de champs invalide ou problème de connexion" };
@@ -108,8 +110,8 @@ export const createOfferData = async (
     });*/
 
     await sql`
-    INSERT INTO dataOffer (nomOffre,typeOffre,paysOffre, villeOffre,descriptifOffre,nbreDeChambre,nbreDeDouche,nbreDeCuisine,parking,adresseEmail,prixDuBien,devise,typeDeVente,imageOffre,nameImage,tel,dateInset,lastUpdate,userId)
-    VALUES (${nomOffre}, ${typeOffre}, ${paysOffre}, ${villeOffre}, ${descriptifOffre}, ${nbreDeChambre}, ${nbreDeDouche}, ${nbreDeCuisine}, ${parking}, ${adresseEmail}, ${prixDuBien}, ${devise}, ${typeDeVente}, ${JSON.stringify(
+    INSERT INTO "dataOffer" (id,"nomOffre","typeOffre","paysOffre", "villeOffre","descriptifOffre","nbreDeChambre","nbreDeDouche","nbreDeCuisine","parking","adresseEmail","prixDuBien","devise","typeDeVente","imageOffre","nameImage","tel","dateInset","lastUpdate","userId")
+    VALUES (${myId},${nomOffre}, ${typeOffre}, ${paysOffre}, ${villeOffre}, ${descriptifOffre}, ${nbreDeChambre}, ${nbreDeDouche}, ${nbreDeCuisine}, ${parking}, ${adresseEmail}, ${prixDuBien}, ${devise}, ${typeDeVente}, ${JSON.stringify(
       imageOffre
     )
       .replace("[", "{")
@@ -130,8 +132,7 @@ export const createOfferData = async (
 
 export const updateOfferData = async (
   values: offerDataParams,
-  offerId: string,
-  dodo: compressImageProps
+  offerId: string
 ) => {
   console.log("etonde ekoto", { offerId });
   const validatedFields = FormSchema.safeParse(values);
@@ -188,15 +189,15 @@ export const updateOfferData = async (
     });*/
 
     await sql`
-    UPDATE dataOffer
-    SET nomOffre=${nomOffre},typeOffre=${typeOffre},paysOffre=${paysOffre}, villeOffre=${villeOffre},descriptifOffre=${descriptifOffre},nbreDeChambre=${nbreDeChambre},nbreDeDouche=${nbreDeDouche},nbreDeCuisine=${nbreDeCuisine},parking=${parking},adresseEmail= ${adresseEmail},prixDuBien=${prixDuBien},devise=${devise},typeDeVente=${typeDeVente},imageOffre=${JSON.stringify(
+    UPDATE "dataOffer"
+    SET "nomOffre"=${nomOffre},"typeOffre"=${typeOffre},"paysOffre"=${paysOffre}, "villeOffre"=${villeOffre},"descriptifOffre"=${descriptifOffre},"nbreDeChambre"=${nbreDeChambre},"nbreDeDouche"=${nbreDeDouche},"nbreDeCuisine"=${nbreDeCuisine},"parking"=${parking},"adresseEmail"= ${adresseEmail},"prixDuBien"=${prixDuBien},"devise"=${devise},"typeDeVente"=${typeDeVente},"imageOffre"=${JSON.stringify(
       imageOffre
     )
       .replace("[", "{")
-      .replace("]", "}")},nameImage=${JSON.stringify(nameImage)
+      .replace("]", "}")},"nameImage"=${JSON.stringify(nameImage)
       .replace("[", "{")
-      .replace("]", "}")} ,tel=${tel},lastUpdate=${lastUpdate},
-    WHERE id = ${offerId}
+      .replace("]", "}")} ,"tel"=${tel},"lastUpdate"=${lastUpdate},
+    WHERE id = ${offerId} AND "userId"=${userId}
   `;
 
     return {

@@ -28,12 +28,15 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
 
 export const sendVerificationEmail = async (email: string, token: string) => {
   const confirmLink = `${domain}/auth/new-verification?token=${token}`;
-
-  await resend.emails.send({
-    from: "Acme <onboarding@resend.dev>",
-    to: email,
-    subject: "Verify your email.",
-    // TODO: Add a template for this email
-    html: `<p>Click <a href="${confirmLink}">here</a> to verify email.</p>`,
-  });
+  try {
+    await resend.emails.send({
+      from: "Acme <onboarding@resend.dev>",
+      to: email,
+      subject: "Verify your email.",
+      // TODO: Add a template for this email
+      html: `<p>Click <a href="${confirmLink}">here</a> to verify email.</p>`,
+    });
+  } catch (error) {
+    throw new Error("une erreurs est survenue pendant l'envoie d'email");
+  }
 };
