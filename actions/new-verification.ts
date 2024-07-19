@@ -11,9 +11,12 @@ export const newVerification = async (token: string) => {
   if (!existingToken) {
     return { error: "Token does not exist!" };
   }
-
+  console.log({
+    date1: new Date(existingToken.expires).getTime() + 3600 * 1000,
+    date2: new Date().getTime(),
+  });
   const hasExpired = new Date(existingToken.expires) < new Date();
-
+  console.log(hasExpired);
   if (hasExpired) {
     return { error: "Token has expired!" };
   }
@@ -33,10 +36,8 @@ export const newVerification = async (token: string) => {
   });*/
 
   await sql`
-  UPDATE User
-  SET emailVerified=${new Date().toISOString().split("T")[0]},email=${
-    existingToken.email
-  }
+  UPDATE "User"
+  SET "emailVerified"=${new Date().toISOString()},email=${existingToken.email}
   WHERE id = ${existingUser.id}
 `;
 
@@ -44,7 +45,7 @@ export const newVerification = async (token: string) => {
     where: { id: existingToken.id },
   });*/
 
-  await sql`DELETE FROM VerificationToken WHERE id = ${existingToken.id}`;
+  await sql`DELETE FROM "VerificationToken" WHERE id = ${existingToken.id}`;
 
   console.log("to success");
   return { success: "Account verified!" };

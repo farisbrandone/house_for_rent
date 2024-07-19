@@ -27,10 +27,8 @@ const NewVerificationForm = () => {
 
     newVerification(token)
       .then((data) => {
-        setSuccess(data.success);
-        console.log({ success: data.success });
-        setError(data.error);
-        console.log({ error: data.error });
+        if (data.success) setSuccess(data.success);
+        if (data.error) setError(data.error);
       })
       .catch(() => {
         setError("Something went wrong!");

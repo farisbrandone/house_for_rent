@@ -55,7 +55,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     return { success: "Successfully registered. Verify your email!" };
   } catch (error) {
     return {
-      success: "Une erreur est sur venue pendant l'opération, réessayez SVP",
+      error: "Une erreur est sur venue pendant l'opération, réessayez SVP",
     };
     throw new Error("Une erreur est sur venue pendant l'opération");
   }
