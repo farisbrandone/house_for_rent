@@ -82,7 +82,7 @@ const InputFile = React.forwardRef<HTMLInputElement, InputFileProps>(
           }, []);
         }
 
-        newFiles?.length < 4 &&
+        newFiles?.length < 6 &&
           setValue(name, newFiles, { shouldValidate: true });
         form.setValue("imageOffre", newFiles);
         setLoading(false);
@@ -112,10 +112,10 @@ const InputFile = React.forwardRef<HTMLInputElement, InputFileProps>(
     return (
       <div className="cursor-pointer">
         <label
-          className="block text-gray-700 text-sm font-bold mb-2 capitalize cursor-pointer"
+          className="block text-gray-700 text-lg  font-bold mb-2 capitalize cursor-pointer"
           htmlFor={name}
         >
-          {`Réinserer les images svp (maximum 3)`}
+          {`Inserer les images svp (maximum 5)`}
         </label>
 
         <div {...getRootProps()} className="w-full">
@@ -137,9 +137,9 @@ const InputFile = React.forwardRef<HTMLInputElement, InputFileProps>(
             <p className="text-center my-2">
               Drop ou insert tes images ici ...
             </p>
-            {files?.length >= 3 && (
+            {files?.length >= 5 && (
               <p className="text-center my-2 text-red-700">
-                Le maximun de fichier requis est de 3
+                Le maximun de fichier requis est de 5
               </p>
             )}
             {!!files?.length && (

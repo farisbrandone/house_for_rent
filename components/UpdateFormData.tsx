@@ -98,8 +98,9 @@ function UpdateFormData({
         if (t2.length !== 0 && t1.length !== 0) {
           const data = await updateOfferData(finalValues, offerId);
 
-          if (data.success) setSuccess(data.success);
-          if (data?.error) setError(data.error);
+          /*if (data.success) setSuccess(data.success);
+          if (data?.error) setError(data.error);*/
+          form.reset();
         }
         /* const data = await updateOfferData(finalValues, offerId);
         if (data.success) setSuccess(data.success);
@@ -149,6 +150,19 @@ function UpdateFormData({
   if (!data) {
     return <CardsSkeleton />;
   }
+  useEffect(() => {
+    if (data) {
+      Object.entries(data).forEach(([name, value]: any) =>
+        form.setValue(name, value)
+      );
+    }
+    /*if (!!success || !!error) {
+      form.setValue("typeOffre", "");
+      Object.entries(data).forEach(([name, value]: any) =>
+        form.setValue(name, typeof value === "string" ? "" : [])
+      );
+    }*/
+  }, [form.setValue, data]);
 
   return (
     <div className="bg-white border-4 rounded-xl border-[#006ce4] p-5 flex flex-col items-center gap-4">

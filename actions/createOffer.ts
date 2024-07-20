@@ -4,6 +4,8 @@
 import { compressImageProps } from "@/lib/utils";
 import { FormSchema } from "@/schemas";
 import { sql } from "@vercel/postgres";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 //import * as z from "zod";
 
@@ -109,7 +111,7 @@ export const createOfferData = async (
       },
     });*/
 
-    await sql`
+    /* await sql`
     INSERT INTO "dataOffer" (id,"nomOffre","typeOffre","paysOffre", "villeOffre","descriptifOffre","nbreDeChambre","nbreDeDouche","nbreDeCuisine","parking","adresseEmail","prixDuBien","devise","typeDeVente","imageOffre","nameImage","tel","dateInset","lastUpdate","userId")
     VALUES (${myId},${nomOffre}, ${typeOffre}, ${paysOffre}, ${villeOffre}, ${descriptifOffre}, ${nbreDeChambre}, ${nbreDeDouche}, ${nbreDeCuisine}, ${parking}, ${adresseEmail}, ${prixDuBien}, ${devise}, ${typeDeVente}, ${JSON.stringify(
       imageOffre
@@ -119,7 +121,7 @@ export const createOfferData = async (
       .replace("[", "{")
       .replace("]", "}")}, ${tel}, ${dateInset}, ${lastUpdate}, ${userId} )
     ON CONFLICT (id) DO NOTHING;
-  `;
+  `;*/
 
     return {
       success:
@@ -199,10 +201,11 @@ export const updateOfferData = async (
       .replace("]", "}")} ,"tel"=${tel},"lastUpdate"=${lastUpdate},
     WHERE id = ${offerId} AND "userId"=${userId}
   `;
-
-    return {
+    revalidatePath("/dashboardPage"), redirect("/dashboardPage");
+    /* return {
       success: "La mise à jour des données s'est faite avec success!",
-    };
+      
+    };*/
   } catch (error) {
     return { error: "présence de champ invalide ou problème de connexion" };
   }

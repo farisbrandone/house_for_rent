@@ -93,6 +93,7 @@ function FormDataOffer({ user }: UserInfoProps) {
         const t2 = [...dodo.tabName];
 
         if (t2.length !== 0 && t1.length !== 0) {
+          console.log(finalValues);
           const data = await createOfferData(finalValues, {
             tabImage: t1,
             tabName: t2,
@@ -109,9 +110,17 @@ function FormDataOffer({ user }: UserInfoProps) {
       form.reset();
       setSuccess("");
       setError("");
-      router.refresh();
     }
   }
+
+  /*useEffect(() => {
+    if (!!success || !!error) {
+      console.log("doudou");
+      form.reset();
+      router.push("/dashboardPage/InsertData");
+      router.refresh();
+    }
+  }, [success, error, setError, setSuccess]);*/
 
   /*const handleImage: React.ChangeEventHandler<HTMLInputElement> = async (e) => {
     e.preventDefault();
@@ -215,9 +224,10 @@ function FormDataOffer({ user }: UserInfoProps) {
                   <Select
                     disabled={isPending}
                     onValueChange={
-                      field.onChange /*(value) => {
+                      /*field.onChange*/ (value) => {
                         form.setValue("paysOffre", value);
-                        changeValuePays(value); }*/
+                        changeValuePays(value);
+                      }
                     }
                     defaultValue={field.value}
                   >
@@ -265,14 +275,14 @@ function FormDataOffer({ user }: UserInfoProps) {
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Ville - {paysSelect}</SelectLabel>
-                        {!!form.getValues("paysOffre") /*paysSelect*/ &&
-                          cityOfCountry[`${paysSelect}`].map(
-                            (value: string, index: number) => (
-                              <SelectItem value={value} key={index}>
-                                {value}
-                              </SelectItem>
-                            )
-                          )}
+                        {!!(/*form.getValues("paysOffre")*/ paysSelect) &&
+                          cityOfCountry[
+                            `${paysSelect /*form.getValues("paysOffre")*/}`
+                          ].map((value: string, index: number) => (
+                            <SelectItem value={value} key={index}>
+                              {value}
+                            </SelectItem>
+                          ))}
                       </SelectGroup>
                     </SelectContent>
                   </Select>
@@ -406,7 +416,7 @@ function FormDataOffer({ user }: UserInfoProps) {
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="FCFA/XAF" />
+                            <SelectValue placeholder="Select one" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -434,7 +444,7 @@ function FormDataOffer({ user }: UserInfoProps) {
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Par jour en location" />
+                            <SelectValue placeholder="Select one" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
