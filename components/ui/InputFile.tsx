@@ -9,7 +9,6 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import { databaseProps } from "@/lib/data";
 type formProps = UseFormReturn<
   {
     typeOffre: string;

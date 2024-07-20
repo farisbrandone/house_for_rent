@@ -27,6 +27,7 @@ export const getAllOffer = async (page: number) => {
 
     const allOfferForUser = await sql<offerDataParamsWithNull>`
       SELECT * FROM "dataOffer"
+      ORDER BY "lastUpdate" DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
     return allOfferForUser.rows;
@@ -65,8 +66,8 @@ export const getAllOfferByUserId = async (id?: string) => {
     const allOfferForUser = await sql<offerDataParamsWithNull>`
     SELECT
       * FROM "dataOffer"
-    WHERE userId=${id}
-    ORDER BY dataOffer.lastUpdate DESC
+    WHERE "userId"=${id}
+    ORDER BY "lastUpdate" DESC
   `;
     return allOfferForUser.rows;
   } catch {
@@ -264,7 +265,9 @@ export async function getTotalSearchOffer(query: filterQuery) {
       return allOfferForUser.length;*/
 
       const count =
-        await sql`SELECT COUNT(*) FROM "dataOffer" WHERE "paysOffre"=${pays} LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
+        await sql`SELECT COUNT(*) FROM "dataOffer" WHERE "paysOffre"=${pays} 
+        ORDER BY "lastUpdate" DESC 
+        LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
       const totalPages = Math.ceil(Number(count.rows[0].count));
       return totalPages;
     } else if (!pays && !!ville && !type_offre) {
@@ -276,7 +279,9 @@ export async function getTotalSearchOffer(query: filterQuery) {
       return allOfferForUser.length;*/
 
       const count =
-        await sql`SELECT COUNT(*) FROM "dataOffer" WHERE "villeOffre"=${ville} LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
+        await sql`SELECT COUNT(*) FROM "dataOffer" WHERE "villeOffre"=${ville} 
+        ORDER BY "lastUpdate" DESC 
+        LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
       const totalPages = Math.ceil(Number(count.rows[0].count));
       return totalPages;
     } else if (!pays && !ville && !!type_offre) {
@@ -288,7 +293,9 @@ export async function getTotalSearchOffer(query: filterQuery) {
       return allOfferForUser.length;*/
 
       const count =
-        await sql`SELECT COUNT(*) FROM "dataOffer" WHERE "typeOffre"=${type_offre} LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
+        await sql`SELECT COUNT(*) FROM "dataOffer" WHERE "typeOffre"=${type_offre} 
+        ORDER BY "lastUpdate" DESC 
+        LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
       const totalPages = Math.ceil(Number(count.rows[0].count));
       return totalPages;
     } else if (!!pays && !!ville && !type_offre) {
@@ -301,6 +308,7 @@ export async function getTotalSearchOffer(query: filterQuery) {
 
       const count = await sql`SELECT COUNT(*) FROM "dataOffer" 
         WHERE "paysOffre"=${pays} AND "villeOffre"=${ville} 
+        ORDER BY "lastUpdate" DESC
         LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
       const totalPages = Math.ceil(Number(count.rows[0].count));
       return totalPages;
@@ -314,6 +322,7 @@ export async function getTotalSearchOffer(query: filterQuery) {
 
       const count = await sql`SELECT COUNT(*) FROM "dataOffer"
       WHERE "typeOffre"=${type_offre} AND "villeOffre"=${ville} 
+      ORDER BY "lastUpdate" DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
       const totalPages = Math.ceil(Number(count.rows[0].count));
       return totalPages;
@@ -327,6 +336,7 @@ export async function getTotalSearchOffer(query: filterQuery) {
 
       const count = await sql`SELECT COUNT(*) FROM "dataOffer" 
        WHERE "paysOffre"=${pays} AND "villeOffre"=${ville} AND "typeOffre"=${type_offre} 
+       ORDER BY "lastUpdate" DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
       const totalPages = Math.ceil(Number(count.rows[0].count));
       return totalPages;
@@ -340,6 +350,7 @@ export async function getTotalSearchOffer(query: filterQuery) {
 
       const count = await sql`SELECT COUNT(*) FROM "dataOffer" 
       WHERE "paysOffre"=${pays} AND "villeOffre"=${ville} 
+      ORDER BY "lastUpdate" DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
       const totalPages = Math.ceil(Number(count.rows[0].count));
       return totalPages;
@@ -351,6 +362,7 @@ export async function getTotalSearchOffer(query: filterQuery) {
       return allOfferForUser.length;*/
 
       const count = await sql`SELECT COUNT(*) FROM "dataOffer"  
+      ORDER BY "lastUpdate" DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
       const totalPages = Math.ceil(Number(count.rows[0].count));
       return totalPages;

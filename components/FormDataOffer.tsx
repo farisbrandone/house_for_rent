@@ -100,6 +100,7 @@ function FormDataOffer({ user }: UserInfoProps) {
 
           if (data.success) setSuccess(data.success);
           if (data?.error) setError(data.error);
+          form.reset();
         }
       });
     } catch (error) {
@@ -108,6 +109,7 @@ function FormDataOffer({ user }: UserInfoProps) {
       form.reset();
       setSuccess("");
       setError("");
+      router.refresh();
     }
   }
 
@@ -213,10 +215,9 @@ function FormDataOffer({ user }: UserInfoProps) {
                   <Select
                     disabled={isPending}
                     onValueChange={
-                      /*field.onChange*/ (value) => {
+                      field.onChange /*(value) => {
                         form.setValue("paysOffre", value);
-                        changeValuePays(value);
-                      }
+                        changeValuePays(value); }*/
                     }
                     defaultValue={field.value}
                   >
@@ -264,7 +265,7 @@ function FormDataOffer({ user }: UserInfoProps) {
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Ville - {paysSelect}</SelectLabel>
-                        {!!paysSelect &&
+                        {!!form.getValues("paysOffre") /*paysSelect*/ &&
                           cityOfCountry[`${paysSelect}`].map(
                             (value: string, index: number) => (
                               <SelectItem value={value} key={index}>
