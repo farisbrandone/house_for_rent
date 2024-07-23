@@ -86,16 +86,30 @@ function UpdateFormData({
       startTransition(async () => {
         console.log("step2");
         const date = new Date().toISOString();
+
         const myData = {
           ...datas,
           lastUpdate: date,
           userId: userId,
         };
         console.log("step3");
-        if (!!myData.imageOffre && typeof myData.imageOffre[0] === "string") {
-          const data = await updateOfferData(myData, offerId);
+        if (
+          data?.nameImage &&
+          data?.imageOffre &&
+          !!myData.imageOffre &&
+          typeof myData.imageOffre[0] === "string"
+        ) {
+          const myData = {
+            ...datas,
+            lastUpdate: date,
+            userId: userId,
+            imageOffre: data.imageOffre,
+            nameImage: data.nameImage,
+          };
+          const datan = await updateOfferData(myData, offerId);
           return;
         }
+        console.log("step3");
         const dodo = await compressImage(myData.imageOffre!, 380, 260, 0.8);
         const finalValues: offerDataParams = {
           ...myData,

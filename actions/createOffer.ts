@@ -190,37 +190,25 @@ export const updateOfferData = async (
       },
     });*/
     console.log("kirikou");
-    if (!!imageOffre && !!nameImage) {
-      await sql`
+
+    await sql`
       UPDATE "dataOffer"
       SET "nomOffre"=${nomOffre},"typeOffre"=${typeOffre},"paysOffre"=${paysOffre}, "villeOffre"=${villeOffre},"descriptifOffre"=${descriptifOffre},"nbreDeChambre"=${nbreDeChambre},"nbreDeDouche"=${nbreDeDouche},"nbreDeCuisine"=${nbreDeCuisine},"parking"=${parking},"adresseEmail"= ${adresseEmail},"prixDuBien"=${prixDuBien},"devise"=${devise},"typeDeVente"=${typeDeVente},"imageOffre"=${JSON.stringify(
-        imageOffre
-      )
-        .replace("[", "{")
-        .replace("]", "}")},"nameImage"=${JSON.stringify(nameImage)
-        .replace("[", "{")
-        .replace("]", "}")} ,"tel"=${tel},"lastUpdate"=${lastUpdate},
+      imageOffre
+    )
+      .replace("[", "{")
+      .replace("]", "}")},"nameImage"=${JSON.stringify(nameImage)
+      .replace("[", "{")
+      .replace("]", "}")} ,"tel"=${tel},"lastUpdate"=${lastUpdate},
       WHERE id = ${offerId} 
     `;
-      revalidatePath(
+    revalidatePath(
+      "/dashboardPage/allDataInsert?success=La mise à jour des données s'est faite avec success!"
+    ),
+      redirect(
         "/dashboardPage/allDataInsert?success=La mise à jour des données s'est faite avec success!"
-      ),
-        redirect(
-          "/dashboardPage/allDataInsert?success=La mise à jour des données s'est faite avec success!"
-        );
-    } else if (!imageOffre && !nameImage) {
-      await sql`
-      UPDATE "dataOffer"
-      SET "nomOffre"=${nomOffre},"typeOffre"=${typeOffre},"paysOffre"=${paysOffre}, "villeOffre"=${villeOffre},"descriptifOffre"=${descriptifOffre},"nbreDeChambre"=${nbreDeChambre},"nbreDeDouche"=${nbreDeDouche},"nbreDeCuisine"=${nbreDeCuisine},"parking"=${parking},"adresseEmail"= ${adresseEmail},"prixDuBien"=${prixDuBien},"devise"=${devise},"typeDeVente"=${typeDeVente},"tel"=${tel},"lastUpdate"=${lastUpdate},
-      WHERE id = ${offerId} 
-    `;
-      revalidatePath(
-        "/dashboardPage/allDataInsert?success=La mise à jour des données s'est faite avec success!"
-      ),
-        redirect(
-          "/dashboardPage/allDataInsert?success=La mise à jour des données s'est faite avec success!"
-        );
-    }
+      );
+
     /**AND "userId"=${userId} */
     /* return {
       success: "La mise à jour des données s'est faite avec success!",
