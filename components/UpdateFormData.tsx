@@ -110,7 +110,7 @@ function UpdateFormData({
           if (datan.success) {
             console.log("bounga");
             router.push(
-              "/dashboardPage/allDataInsert?success=La mise à jour des données s'est faite avec success!"
+              `/dashboardPage/allDataInsert?id=${userId}&success=La mise à jour des données s'est faite avec success!`
             );
             router.refresh();
             setSuccess(datan.success);
@@ -135,7 +135,7 @@ function UpdateFormData({
           if (data.success) {
             console.log("bounga");
             router.push(
-              "/dashboardPage/allDataInsert?success=La mise à jour des données s'est faite avec success!"
+              `/dashboardPage/allDataInsert?id=${userId}&success=La mise à jour des données s'est faite avec success!`
             );
             router.refresh();
             setSuccess(data.success);
