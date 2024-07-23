@@ -75,7 +75,7 @@ function UpdateFormData({
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
-  console.log("update2");
+  console.log("update2", data);
   async function onSubmit(datas: z.infer<typeof FormSchema>) {
     try {
       startTransition(async () => {
@@ -152,9 +152,11 @@ function UpdateFormData({
   }
   useEffect(() => {
     if (!!data.nomOffre) {
-      Object.entries(data).forEach(([name, value]: any) =>
-        form.setValue(name, value)
-      );
+      console.log("nomOffre", data.nomOffre);
+      Object.entries(data).forEach(([name, value]: any) => {
+        console.log([name, value]);
+        form.setValue(name, value);
+      });
     }
     /*if (!!success || !!error) {
       form.setValue("typeOffre", "");
