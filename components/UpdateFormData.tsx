@@ -92,6 +92,10 @@ function UpdateFormData({
           userId: userId,
         };
         console.log("step3");
+        if (!!myData.imageOffre && typeof myData.imageOffre[0] === "string") {
+          const data = await updateOfferData(myData, offerId);
+          return;
+        }
         const dodo = await compressImage(myData.imageOffre!, 380, 260, 0.8);
         const finalValues: offerDataParams = {
           ...myData,
