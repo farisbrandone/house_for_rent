@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -33,9 +33,11 @@ import { deleteOfferByUserId } from "@/data/offer";
 const DashboardFormData = ({
   data,
   id,
+  success,
 }: {
   data: offerDataParamsWithNull[] | null;
   id: string;
+  success: string | undefined;
 }) => {
   const { toast } = useToast();
   const router = useRouter();
@@ -63,6 +65,16 @@ const DashboardFormData = ({
       router.refresh();
     }
   };
+
+  useEffect(() => {
+    if (success) {
+      toast({
+        description: success,
+      });
+    }
+    router.replace(`/dashboardPage/allDataInsert?id=${id}`);
+    router.refresh();
+  }, []);
 
   return (
     <div>

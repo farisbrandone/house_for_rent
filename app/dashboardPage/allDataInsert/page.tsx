@@ -7,9 +7,11 @@ const DashBordPage = async ({
 }: {
   searchParams?: {
     id?: string;
+    success?: string;
   };
 }) => {
   const id = searchParams?.id;
+  const success = searchParams?.success;
   const data = await getAllOfferByUserId(id);
   console.log({ id });
   if (data) {
@@ -21,7 +23,7 @@ const DashBordPage = async ({
 
   return (
     <div className="mt-3">
-      <DashboardFormData data={data} id={id} />
+      <DashboardFormData data={data} id={id} success={success} />
     </div>
   );
 };

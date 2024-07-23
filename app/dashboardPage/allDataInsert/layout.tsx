@@ -3,7 +3,7 @@ import Header from "@/components/Header";
 import { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 import React, { Suspense } from "react";
-
+import { Toaster } from "@/components/ui/toaster";
 export const metadata: Metadata = {
   title: "MaMaisonALouer.com",
   description: "Le meilleur site pour la recherche de vos offres immobilières",
@@ -26,6 +26,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
         <Footer />
       </div>*/}
       </div>
+      <Toaster />
     </SessionProvider>
   );
 };

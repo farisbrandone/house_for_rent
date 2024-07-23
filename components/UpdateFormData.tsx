@@ -86,7 +86,7 @@ function UpdateFormData({
           userId: userId,
         };
 
-        const dodo = await compressImage(myData.imageOffre!, 380, 260, 0.6);
+        const dodo = await compressImage(myData.imageOffre!, 380, 260, 0.8);
         const finalValues: offerDataParams = {
           ...myData,
           imageOffre: [...dodo.tabImage],

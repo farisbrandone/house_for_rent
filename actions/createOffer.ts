@@ -111,7 +111,7 @@ export const createOfferData = async (
       },
     });*/
 
-    /* await sql`
+    await sql`
     INSERT INTO "dataOffer" (id,"nomOffre","typeOffre","paysOffre", "villeOffre","descriptifOffre","nbreDeChambre","nbreDeDouche","nbreDeCuisine","parking","adresseEmail","prixDuBien","devise","typeDeVente","imageOffre","nameImage","tel","dateInset","lastUpdate","userId")
     VALUES (${myId},${nomOffre}, ${typeOffre}, ${paysOffre}, ${villeOffre}, ${descriptifOffre}, ${nbreDeChambre}, ${nbreDeDouche}, ${nbreDeCuisine}, ${parking}, ${adresseEmail}, ${prixDuBien}, ${devise}, ${typeDeVente}, ${JSON.stringify(
       imageOffre
@@ -121,7 +121,7 @@ export const createOfferData = async (
       .replace("[", "{")
       .replace("]", "}")}, ${tel}, ${dateInset}, ${lastUpdate}, ${userId} )
     ON CONFLICT (id) DO NOTHING;
-  `;*/
+  `;
 
     return {
       success:
@@ -190,18 +190,38 @@ export const updateOfferData = async (
       },
     });*/
 
-    await sql`
-    UPDATE "dataOffer"
-    SET "nomOffre"=${nomOffre},"typeOffre"=${typeOffre},"paysOffre"=${paysOffre}, "villeOffre"=${villeOffre},"descriptifOffre"=${descriptifOffre},"nbreDeChambre"=${nbreDeChambre},"nbreDeDouche"=${nbreDeDouche},"nbreDeCuisine"=${nbreDeCuisine},"parking"=${parking},"adresseEmail"= ${adresseEmail},"prixDuBien"=${prixDuBien},"devise"=${devise},"typeDeVente"=${typeDeVente},"imageOffre"=${JSON.stringify(
-      imageOffre
-    )
-      .replace("[", "{")
-      .replace("]", "}")},"nameImage"=${JSON.stringify(nameImage)
-      .replace("[", "{")
-      .replace("]", "}")} ,"tel"=${tel},"lastUpdate"=${lastUpdate},
-    WHERE id = ${offerId} AND "userId"=${userId}
-  `;
-    revalidatePath("/dashboardPage"), redirect("/dashboardPage");
+    if (!!imageOffre && !!nameImage) {
+      await sql`
+      UPDATE "dataOffer"
+      SET "nomOffre"=${nomOffre},"typeOffre"=${typeOffre},"paysOffre"=${paysOffre}, "villeOffre"=${villeOffre},"descriptifOffre"=${descriptifOffre},"nbreDeChambre"=${nbreDeChambre},"nbreDeDouche"=${nbreDeDouche},"nbreDeCuisine"=${nbreDeCuisine},"parking"=${parking},"adresseEmail"= ${adresseEmail},"prixDuBien"=${prixDuBien},"devise"=${devise},"typeDeVente"=${typeDeVente},"imageOffre"=${JSON.stringify(
+        imageOffre
+      )
+        .replace("[", "{")
+        .replace("]", "}")},"nameImage"=${JSON.stringify(nameImage)
+        .replace("[", "{")
+        .replace("]", "}")} ,"tel"=${tel},"lastUpdate"=${lastUpdate},
+      WHERE id = ${offerId} AND "userId"=${userId}
+    `;
+      revalidatePath(
+        "/dashboardPage/allDataInsert?success=La mise à jour des données s'est faite avec success!"
+      ),
+        redirect(
+          "/dashboardPage/allDataInsert?success=La mise à jour des données s'est faite avec success!"
+        );
+    } else if (!imageOffre && !nameImage) {
+      await sql`
+      UPDATE "dataOffer"
+      SET "nomOffre"=${nomOffre},"typeOffre"=${typeOffre},"paysOffre"=${paysOffre}, "villeOffre"=${villeOffre},"descriptifOffre"=${descriptifOffre},"nbreDeChambre"=${nbreDeChambre},"nbreDeDouche"=${nbreDeDouche},"nbreDeCuisine"=${nbreDeCuisine},"parking"=${parking},"adresseEmail"= ${adresseEmail},"prixDuBien"=${prixDuBien},"devise"=${devise},"typeDeVente"=${typeDeVente},"tel"=${tel},"lastUpdate"=${lastUpdate},
+      WHERE id = ${offerId} AND "userId"=${userId}
+    `;
+      revalidatePath(
+        "/dashboardPage/allDataInsert?success=La mise à jour des données s'est faite avec success!"
+      ),
+        redirect(
+          "/dashboardPage/allDataInsert?success=La mise à jour des données s'est faite avec success!"
+        );
+    }
+
     /* return {
       success: "La mise à jour des données s'est faite avec success!",
       
