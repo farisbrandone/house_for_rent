@@ -204,7 +204,7 @@ export const updateOfferData = async (
       .replace("]", "}")},"nameImage"=${JSON.stringify(nameImage)
       .replace("[", "{")
       .replace("]", "}")} ,"tel"=${tel},"lastUpdate"=${lastUpdate},
-      WHERE id = ${offerId} 
+      WHERE id='${offerId}' 
     `;
     console.log("kirikou2");
     revalidatePath(
