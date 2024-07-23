@@ -120,8 +120,9 @@ function UpdateFormData({
 
         if (t2.length !== 0 && t1.length !== 0) {
           const data = await updateOfferData(finalValues, offerId);
-
+          console.log(data);
           if (data.success) {
+            console.log("bounga");
             router.push(
               "/dashboardPage/allDataInsert?success=La mise à jour des données s'est faite avec success!"
             );
