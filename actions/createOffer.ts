@@ -7,6 +7,8 @@ import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
+import { unstable_noStore as noStore } from "next/cache";
+
 //import * as z from "zod";
 
 export interface offerDataParams {
@@ -58,6 +60,7 @@ export const createOfferData = async (
   values: offerDataParams,
   dodo: compressImageProps
 ) => {
+  noStore();
   const myId = uuidv4();
   const validatedFields = FormSchema.safeParse(values);
   if (!validatedFields.success) {
@@ -136,6 +139,7 @@ export const updateOfferData = async (
   values: offerDataParams,
   offerId: string
 ) => {
+  noStore();
   console.log("etonde ekoto", { offerId });
   const validatedFields = FormSchema.safeParse(values);
   if (!validatedFields.success || !offerId) {
@@ -202,6 +206,7 @@ export const updateOfferData = async (
       .replace("]", "}")} ,"tel"=${tel},"lastUpdate"=${lastUpdate},
       WHERE id = ${offerId} 
     `;
+    console.log("kirikou2");
     revalidatePath(
       "/dashboardPage/allDataInsert?success=La mise à jour des données s'est faite avec success!"
     ),
