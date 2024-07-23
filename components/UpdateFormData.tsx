@@ -151,7 +151,7 @@ function UpdateFormData({
     return <CardsSkeleton />;
   }
   useEffect(() => {
-    if (data) {
+    if (!!data.nomOffre) {
       Object.entries(data).forEach(([name, value]: any) =>
         form.setValue(name, value)
       );
@@ -162,7 +162,7 @@ function UpdateFormData({
         form.setValue(name, typeof value === "string" ? "" : [])
       );
     }*/
-  }, [form.setValue, data]);
+  }, []);
 
   return (
     <div className="bg-white border-4 rounded-xl border-[#006ce4] p-5 flex flex-col items-center gap-4">
