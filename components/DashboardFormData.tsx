@@ -45,13 +45,13 @@ const DashboardFormData = ({
 
   const deleteElement = async (id: string) => {
     setouiDeleteState(true);
-    console.log("delete");
+
     try {
       const message = await deleteOfferByUserId(id);
       toast({
         description: "La suppression s'est effectuées avec success",
       });
-      console.log("after toast");
+
       setouiDeleteState(false);
       router.refresh();
     } catch (error) {
@@ -59,7 +59,6 @@ const DashboardFormData = ({
         description:
           "Une erreur est survenue pendant la suppression. réessayez SVP",
       });
-      console.log("after catch toast");
     } finally {
       setouiDeleteState(false);
       router.refresh();

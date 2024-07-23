@@ -53,6 +53,7 @@ import { useIsClient } from "@/hooks/use-is-client";
 import FormError from "./form-error";
 import FormSuccess from "./form-success";
 import { compressImage } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 function UpdateFormData({
   data,
@@ -67,7 +68,7 @@ function UpdateFormData({
   const [success, setSuccess] = useState<string>("");
   const [isPending, startTransition] = useTransition();
   const isClient = useIsClient();
-
+  const router = useRouter();
   const changeValuePays = (myValue: string) => {
     setPaysSelect(myValue);
   };
@@ -82,9 +83,7 @@ function UpdateFormData({
   }
   async function onSubmit(datas: z.infer<typeof FormSchema>) {
     try {
-      console.log("step1");
       startTransition(async () => {
-        console.log("step2");
         const date = new Date().toISOString();
 
         const myData = {
@@ -92,7 +91,7 @@ function UpdateFormData({
           lastUpdate: date,
           userId: userId,
         };
-        console.log("step3");
+
         if (
           data?.nameImage &&
           data?.imageOffre &&
@@ -109,7 +108,7 @@ function UpdateFormData({
           const datan = await updateOfferData(myData, offerId);
           return;
         }
-        console.log("step3");
+
         const dodo = await compressImage(myData.imageOffre!, 380, 260, 0.8);
         const finalValues: offerDataParams = {
           ...myData,
@@ -118,12 +117,17 @@ function UpdateFormData({
         };
         const t1 = [...dodo.tabImage];
         const t2 = [...dodo.tabName];
-        console.log("step4");
+
         if (t2.length !== 0 && t1.length !== 0) {
-          console.log("step5");
           const data = await updateOfferData(finalValues, offerId);
-          console.log("step6");
-          /*if (data.success) setSuccess(data.success);*/
+
+          if (data.success) {
+            router.push(
+              "/dashboardPage/allDataInsert?success=La mise à jour des données s'est faite avec success!"
+            );
+            router.refresh();
+            setSuccess(data.success);
+          }
           if (data?.error) {
             setError(data.error);
           }

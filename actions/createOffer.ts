@@ -88,7 +88,7 @@ export const createOfferData = async (
     lastUpdate,
     userId,
   } = values;
-  console.log("beginning");
+
   try {
     /* await db.dataOffer.create({
       data: {
@@ -113,7 +113,7 @@ export const createOfferData = async (
         userId,
       },
     });*/
-    console.log("step1");
+
     await sql`
     INSERT INTO "dataOffer" (id,"nomOffre","typeOffre","paysOffre", "villeOffre","descriptifOffre","nbreDeChambre","nbreDeDouche","nbreDeCuisine","parking","adresseEmail","prixDuBien","devise","typeDeVente","imageOffre","nameImage","tel","dateInset","lastUpdate","userId")
     VALUES (${myId},${nomOffre}, ${typeOffre}, ${paysOffre}, ${villeOffre}, ${descriptifOffre}, ${nbreDeChambre}, ${nbreDeDouche}, ${nbreDeCuisine}, ${parking}, ${adresseEmail}, ${prixDuBien}, ${devise}, ${typeDeVente}, ${JSON.stringify(
@@ -125,7 +125,7 @@ export const createOfferData = async (
       .replace("]", "}")}, ${tel}, ${dateInset}, ${lastUpdate}, ${userId} )
     ON CONFLICT (id) DO NOTHING;
   `;
-    console.log("step end");
+
     return {
       success:
         "L'enregistrement des données s'est faite avec success!\nrafaichissez la page et inserer de nouvelle offre si vous en avez",
@@ -140,7 +140,7 @@ export const updateOfferData = async (
   offerId: string
 ) => {
   noStore();
-  console.log("etonde ekoto", { offerId });
+
   const validatedFields = FormSchema.safeParse(values);
   if (!validatedFields.success || !offerId) {
     return { error: "présence de champ invalide ou problème de connexion" };
@@ -193,7 +193,6 @@ export const updateOfferData = async (
         userId,
       },
     });*/
-    console.log("kirikou");
 
     await sql`
       UPDATE "dataOffer"
@@ -206,21 +205,12 @@ export const updateOfferData = async (
       .replace("]", "}")} ,"tel"=${tel},"lastUpdate"=${lastUpdate}
       WHERE id=${offerId}
     `;
-    console.log("kirikou2");
-    revalidatePath(
-      "/dashboardPage/allDataInsert?success=La mise à jour des données s'est faite avec success!"
-    ),
-      redirect(
-        "/dashboardPage/allDataInsert?success=La mise à jour des données s'est faite avec success!"
-      );
 
     /**AND "userId"=${userId} */
-    /* return {
+    return {
       success: "La mise à jour des données s'est faite avec success!",
-      
-    };*/
+    };
   } catch (error) {
-    console.log(error);
     return { error: "présence de champ invalide ou problème de connexion" };
   }
 };
