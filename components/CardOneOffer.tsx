@@ -41,7 +41,6 @@ const CardOneOffer = ({
   dataForOneOffer: offerDataParamsWithNull;
 }) => {
   const isClient = useIsClient();
-  console.log({ dataForOneOffer });
 
   if (!isClient) return <Spinner />;
 

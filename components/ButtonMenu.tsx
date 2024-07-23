@@ -41,7 +41,6 @@ export function ButtonMenu({ value }: buttonMenuProps) {
   const router = useRouter();
   const handleClick = (term: string) => {
     const params = new URLSearchParams(searchParams);
-    console.log("my params is :", params);
 
     params.set("type_offre", term);
     const truePathname = pathname === "/" ? "/search" : pathname;

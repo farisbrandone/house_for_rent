@@ -11,12 +11,9 @@ export const newVerification = async (token: string) => {
   if (!existingToken) {
     return { error: "Token does not exist!" };
   }
-  console.log({
-    date1: new Date(existingToken.expires).getTime() + 3600 * 1000,
-    date2: new Date().getTime(),
-  });
+
   const hasExpired = new Date(existingToken.expires) < new Date();
-  console.log(hasExpired);
+
   if (hasExpired) {
     return { error: "Token has expired!" };
   }
@@ -47,6 +44,5 @@ export const newVerification = async (token: string) => {
 
   await sql`DELETE FROM "VerificationToken" WHERE id = ${existingToken.id}`;
 
-  console.log("to success");
   return { success: "Account verified!" };
 };

@@ -18,7 +18,6 @@ export const login = async (
   values: z.infer<typeof LoginSchema>,
   callbackUrl?: string | null
 ) => {
-  console.log("PARTIE LOGIN1");
   const validatedFields = LoginSchema.safeParse(values);
 
   if (!validatedFields.success) {
@@ -31,12 +30,10 @@ export const login = async (
   const existingUser = await getUserByEmail(email);
 
   if (!existingUser || !existingUser.email || !existingUser.password) {
-    console.log("login server2");
     return { error: "User not registered!" };
   }
 
   if (!existingUser.emailVerified) {
-    console.log("login server3");
     const verificationToken = await generateVerificationToken(
       existingUser.email
     );
@@ -97,14 +94,12 @@ export const login = async (
   }*/
 
   try {
-    console.log("PARTIE DECLENCHEMENT PROCESSUS SIGIN 2");
     await signIn("credentials", {
       email,
       password,
       // redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
     });
   } catch (error) {
-    console.log("login Partie 11 server11");
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":

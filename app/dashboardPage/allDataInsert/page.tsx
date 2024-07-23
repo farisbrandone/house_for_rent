@@ -13,7 +13,7 @@ const DashBordPage = async ({
   const id = searchParams?.id;
   const success = searchParams?.success;
   const data = await getAllOfferByUserId(id);
-  console.log({ id });
+  console.log("inside alldata insert", { id });
   if (data) {
     const at = data[0];
   }

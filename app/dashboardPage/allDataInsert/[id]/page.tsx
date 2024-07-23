@@ -14,7 +14,8 @@ const DataForOffer = async ({
   const id = params.id;
   const data = await getOfferByUserId(id);
   const userId = searchParams?.userId;
-
+  console.log("update1 bbbbbbb!!!!", userId);
+  console.log("daaaaaaaaaaaata", data);
   return (
     <div className="mt-20">
       <UpdateFormData data={data} userId={userId} />

@@ -26,7 +26,7 @@ export async function authenticate(
   }
 }
 
-export async function createOfferData(formDataOffer: databaseProps) {
+/*export async function createOfferData(formDataOffer: databaseProps) {
   console.log(formDataOffer);
 
   // If form validation fails, return errors early. Otherwise, continue.
@@ -63,9 +63,9 @@ export async function createOfferData(formDataOffer: databaseProps) {
 
   revalidatePath("/");
   redirect("/");
-}
+}*/
 
-export async function updateOfferData(
+/*export async function updateOfferData(
   formDataOffer: databaseProps,
   id: string
 ) {
@@ -102,9 +102,9 @@ export async function updateOfferData(
 
   revalidatePath("/dashboardPage");
   redirect("/dashboardPage");
-}
+}*/
 
-export async function deleteOfferData(id: string) {
+/*export async function deleteOfferData(id: string) {
   try {
     await sql`DELETE FROM "dataOffer" WHERE id = ${id}`;
     revalidatePath(`/dashboardPage`);
@@ -114,4 +114,4 @@ export async function deleteOfferData(id: string) {
       message: "Database Error: Failed to Delete dataOffer.",
     };
   }
-}
+}*/

@@ -85,7 +85,7 @@ export const createOfferData = async (
     lastUpdate,
     userId,
   } = values;
-
+  console.log("beginning");
   try {
     /* await db.dataOffer.create({
       data: {
@@ -110,7 +110,7 @@ export const createOfferData = async (
         userId,
       },
     });*/
-
+    console.log("step1");
     await sql`
     INSERT INTO "dataOffer" (id,"nomOffre","typeOffre","paysOffre", "villeOffre","descriptifOffre","nbreDeChambre","nbreDeDouche","nbreDeCuisine","parking","adresseEmail","prixDuBien","devise","typeDeVente","imageOffre","nameImage","tel","dateInset","lastUpdate","userId")
     VALUES (${myId},${nomOffre}, ${typeOffre}, ${paysOffre}, ${villeOffre}, ${descriptifOffre}, ${nbreDeChambre}, ${nbreDeDouche}, ${nbreDeCuisine}, ${parking}, ${adresseEmail}, ${prixDuBien}, ${devise}, ${typeDeVente}, ${JSON.stringify(
@@ -122,7 +122,7 @@ export const createOfferData = async (
       .replace("]", "}")}, ${tel}, ${dateInset}, ${lastUpdate}, ${userId} )
     ON CONFLICT (id) DO NOTHING;
   `;
-
+    console.log("step end");
     return {
       success:
         "L'enregistrement des données s'est faite avec success!\nrafaichissez la page et inserer de nouvelle offre si vous en avez",
@@ -189,7 +189,7 @@ export const updateOfferData = async (
         userId,
       },
     });*/
-
+    console.log("kirikou");
     if (!!imageOffre && !!nameImage) {
       await sql`
       UPDATE "dataOffer"
@@ -200,7 +200,7 @@ export const updateOfferData = async (
         .replace("]", "}")},"nameImage"=${JSON.stringify(nameImage)
         .replace("[", "{")
         .replace("]", "}")} ,"tel"=${tel},"lastUpdate"=${lastUpdate},
-      WHERE id = ${offerId} AND "userId"=${userId}
+      WHERE id = ${offerId} 
     `;
       revalidatePath(
         "/dashboardPage/allDataInsert?success=La mise à jour des données s'est faite avec success!"
@@ -212,7 +212,7 @@ export const updateOfferData = async (
       await sql`
       UPDATE "dataOffer"
       SET "nomOffre"=${nomOffre},"typeOffre"=${typeOffre},"paysOffre"=${paysOffre}, "villeOffre"=${villeOffre},"descriptifOffre"=${descriptifOffre},"nbreDeChambre"=${nbreDeChambre},"nbreDeDouche"=${nbreDeDouche},"nbreDeCuisine"=${nbreDeCuisine},"parking"=${parking},"adresseEmail"= ${adresseEmail},"prixDuBien"=${prixDuBien},"devise"=${devise},"typeDeVente"=${typeDeVente},"tel"=${tel},"lastUpdate"=${lastUpdate},
-      WHERE id = ${offerId} AND "userId"=${userId}
+      WHERE id = ${offerId} 
     `;
       revalidatePath(
         "/dashboardPage/allDataInsert?success=La mise à jour des données s'est faite avec success!"
@@ -221,7 +221,7 @@ export const updateOfferData = async (
           "/dashboardPage/allDataInsert?success=La mise à jour des données s'est faite avec success!"
         );
     }
-
+    /**AND "userId"=${userId} */
     /* return {
       success: "La mise à jour des données s'est faite avec success!",
       

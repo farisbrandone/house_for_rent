@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 const DataForOffer = () => {
   //const user = useCurrentUser();
   const { data: session } = useSession();
-  console.log(session);
+  console.log("insert1");
   const user = session?.user;
   return (
     <div className="mt-20">

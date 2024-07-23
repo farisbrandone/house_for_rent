@@ -42,12 +42,10 @@ export async function compressImage(
   maxHeight: any,
   quality: any
 ): Promise<compressImageProps> {
-  console.log("niveau1");
   const tabImages: string[] = [];
   const tabNames: string[] = [];
-  console.log("niveau2");
+
   for (let i = 0; i < files.length; i++) {
-    console.log("niveaui1");
     let urlImage: string;
     const name = files[i].name;
 

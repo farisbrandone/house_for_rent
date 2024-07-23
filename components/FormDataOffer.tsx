@@ -93,21 +93,21 @@ function FormDataOffer({ user }: UserInfoProps) {
         const t2 = [...dodo.tabName];
 
         if (t2.length !== 0 && t1.length !== 0) {
-          console.log(finalValues);
           const data = await createOfferData(finalValues, {
             tabImage: t1,
             tabName: t2,
           });
 
-          if (data.success) setSuccess(data.success);
+          if (data.success) {
+            setSuccess(data.success);
+            form.reset();
+          }
           if (data?.error) setError(data.error);
-          form.reset();
         }
       });
     } catch (error) {
       setError("Something went wrong!");
     } finally {
-      form.reset();
       setSuccess("");
       setError("");
     }

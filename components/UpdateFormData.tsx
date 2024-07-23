@@ -75,7 +75,7 @@ function UpdateFormData({
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
-
+  console.log("update2");
   async function onSubmit(datas: z.infer<typeof FormSchema>) {
     try {
       startTransition(async () => {
@@ -98,9 +98,10 @@ function UpdateFormData({
         if (t2.length !== 0 && t1.length !== 0) {
           const data = await updateOfferData(finalValues, offerId);
 
-          /*if (data.success) setSuccess(data.success);
-          if (data?.error) setError(data.error);*/
-          form.reset();
+          /*if (data.success) setSuccess(data.success);*/
+          if (data?.error) {
+            setError(data.error);
+          }
         }
         /* const data = await updateOfferData(finalValues, offerId);
         if (data.success) setSuccess(data.success);
@@ -109,7 +110,6 @@ function UpdateFormData({
     } catch (error) {
       setError("Something went wrong!");
     } finally {
-      form.reset();
       setSuccess("");
       setError("");
     }

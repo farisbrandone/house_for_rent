@@ -43,13 +43,12 @@ const Header = ({
     }
   }, [matches, onCollapse, onExpand]);
   const { data: session } = useSession();
-  console.log(session);
+
   const user = session?.user;
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
   const seachClick = () => {
-    console.log({ payss, ville, offre });
     const params = new URLSearchParams(searchParams);
     !!payss && params.set("pays", payss);
     !!ville && params.set("ville", ville);
@@ -98,7 +97,6 @@ const Header = ({
             <Button
               variant="button2"
               onClick={async () => {
-                console.log("logout");
                 await logout();
                 router.push("/");
                 router.refresh();

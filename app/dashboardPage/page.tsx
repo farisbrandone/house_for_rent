@@ -10,7 +10,7 @@ const DataForOffer = () => {
   //const user = useCurrentUser();
   const router = useRouter();
   const { data: session } = useSession();
-  console.log(session);
+
   const user = session?.user;
   return (
     <div className=" flex flex-col items-center justify-center sm:w-[650px] w-[90%]  rounded-lg shadow-black border-4 shadow-xl">
