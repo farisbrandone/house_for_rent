@@ -220,6 +220,7 @@ export const updateOfferData = async (
       
     };*/
   } catch (error) {
+    console.log(error);
     return { error: "présence de champ invalide ou problème de connexion" };
   }
 };
