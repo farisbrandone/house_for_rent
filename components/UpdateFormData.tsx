@@ -75,6 +75,13 @@ function UpdateFormData({
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
+  if (!!data) {
+    console.log("nomOffre", data.nomOffre);
+    Object.entries(data).forEach(([name, value]: any) => {
+      console.log([name, value]);
+      form.setValue(name, value);
+    });
+  }
   console.log({ userId });
   console.log("update2", data);
   async function onSubmit(datas: z.infer<typeof FormSchema>) {
@@ -151,7 +158,7 @@ function UpdateFormData({
   if (!data) {
     return <CardsSkeleton />;
   }
-  useEffect(() => {
+  /*useEffect(() => {
     console.log("nomOffre esssssss", data.nomOffre);
     if (!!data.nomOffre) {
       console.log("nomOffre", data.nomOffre);
@@ -166,7 +173,7 @@ function UpdateFormData({
         form.setValue(name, typeof value === "string" ? "" : [])
       );
     }*/
-  }, []);
+  //}, []);
 
   return (
     <div className="bg-white border-4 rounded-xl border-[#006ce4] p-5 flex flex-col items-center gap-4">
