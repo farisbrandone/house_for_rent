@@ -203,8 +203,8 @@ export const updateOfferData = async (
       .replace("[", "{")
       .replace("]", "}")},"nameImage"=${JSON.stringify(nameImage)
       .replace("[", "{")
-      .replace("]", "}")} ,"tel"=${tel},"lastUpdate"=${lastUpdate},
-      WHERE id='${offerId}' 
+      .replace("]", "}")} ,"tel"=${tel},"lastUpdate"=${lastUpdate}
+      WHERE id=${offerId}
     `;
     console.log("kirikou2");
     revalidatePath(
