@@ -106,7 +106,18 @@ function UpdateFormData({
             nameImage: data.nameImage,
           };
           const datan = await updateOfferData(myData, offerId);
-          return;
+          console.log(datan);
+          if (datan.success) {
+            console.log("bounga");
+            router.push(
+              "/dashboardPage/allDataInsert?success=La mise à jour des données s'est faite avec success!"
+            );
+            router.refresh();
+            setSuccess(datan.success);
+          }
+          if (datan?.error) {
+            setError(datan.error);
+          }
         }
 
         const dodo = await compressImage(myData.imageOffre!, 380, 260, 0.8);
