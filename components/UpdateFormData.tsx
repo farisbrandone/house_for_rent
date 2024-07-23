@@ -76,24 +76,22 @@ function UpdateFormData({
     resolver: zodResolver(FormSchema),
   });
   if (!!data) {
-    console.log("nomOffre", data.nomOffre);
     Object.entries(data).forEach(([name, value]: any) => {
-      console.log([name, value]);
       form.setValue(name, value);
     });
   }
-  console.log({ userId });
-  console.log("update2", data);
   async function onSubmit(datas: z.infer<typeof FormSchema>) {
     try {
+      console.log("step1");
       startTransition(async () => {
+        console.log("step2");
         const date = new Date().toISOString();
         const myData = {
           ...datas,
           lastUpdate: date,
           userId: userId,
         };
-
+        console.log("step3");
         const dodo = await compressImage(myData.imageOffre!, 380, 260, 0.8);
         const finalValues: offerDataParams = {
           ...myData,
@@ -102,10 +100,11 @@ function UpdateFormData({
         };
         const t1 = [...dodo.tabImage];
         const t2 = [...dodo.tabName];
-
+        console.log("step4");
         if (t2.length !== 0 && t1.length !== 0) {
+          console.log("step5");
           const data = await updateOfferData(finalValues, offerId);
-
+          console.log("step6");
           /*if (data.success) setSuccess(data.success);*/
           if (data?.error) {
             setError(data.error);
