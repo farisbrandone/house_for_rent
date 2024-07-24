@@ -128,6 +128,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
         pass: process.env.APP_PASSWORD,
       },
     });
+    console.log("my1");
     var mailoutput = `<!DOCTYPE html>
 <html lang="fr">
   <head>
@@ -186,11 +187,13 @@ export const sendVerificationEmail = async (email: string, token: string) => {
       subject: `Vérification de votre email `,
       html: mailoutput,
     };
-
+    console.log("my2");
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
+        console.log("my3");
         throw new Error("une erreurs est survenue pendant l'envoie d'email");
       } else {
+        console.log("my4");
         console.log({ info });
       }
     });
