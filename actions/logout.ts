@@ -10,6 +10,4 @@ export const logout = async () => {
   // ...
 
   await signOut();
-  revalidatePath("/");
-  redirect("/");
 };
