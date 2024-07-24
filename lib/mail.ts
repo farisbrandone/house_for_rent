@@ -191,7 +191,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
       if (error) {
         throw new Error("une erreurs est survenue pendant l'envoie d'email");
       } else {
-        console.log(info);
+        console.log({ info });
       }
     });
   } catch (error) {
