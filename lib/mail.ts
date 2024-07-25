@@ -106,7 +106,6 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
 
 export const sendVerificationEmail = async (email: string, token: string) => {
   const confirmLink = `${domain}/auth/new-verification?token=${token}`;
-  console.log("data-error");
   /* try {
     const { data, error } = await resend.emails.send({
       from: "Acme <onboarding@resend.dev>",
@@ -129,7 +128,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
         pass: process.env.APP_PASSWORD,
       },
     });
-    console.log("my1");
+    console.log("aaaaaaaaaaaaaaaa");
     var mailoutput = `<!DOCTYPE html>
 <html lang="fr">
   <head>
@@ -184,8 +183,11 @@ export const sendVerificationEmail = async (email: string, token: string) => {
       subject: `Vérification de votre email `,
       html: mailoutput,
     };
-    console.log("my2");
+    console.log("bbbbbbbbbbbbbbbbbbb");
     transporter.sendMail(mailOptions, function (error, info) {
+      console.log({ error });
+      console.log({ info });
+      console.log("ccccccccccccccccc");
       if (error) {
         console.log(error);
         value = "une erreurs est survenue pendant l'envoie d'email";
@@ -196,10 +198,10 @@ export const sendVerificationEmail = async (email: string, token: string) => {
     });
     if (value === "une erreurs est survenue pendant l'envoie d'email") {
       return { error: value };
-    }
-    if (value === "l'email envoyé avec succcess") {
+    } else if (value === "l'email envoyé avec succcess") {
       return { success: value };
     }
+    return { error: "une erreurs est survenue pendant l'envoie d'email" };
   } catch (error) {
     console.log(error);
     return { error: "une erreurs est survenue pendant l'envoie d'email" };
