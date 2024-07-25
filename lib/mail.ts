@@ -124,6 +124,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
     console.log({ process: process.env.APP_PASSWORD });
     var transporter = nodemailer.createTransport({
       service: "gmail",
+      host: "smtp.gmail.com",
       auth: {
         user: "farisbrandone0@gmail.com",
         pass: process.env.APP_PASSWORD,
@@ -185,7 +186,8 @@ export const sendVerificationEmail = async (email: string, token: string) => {
       html: mailoutput,
     };
     console.log("bbbbbbbbbbbbbbbbbbb");
-    transporter.sendMail(mailOptions, function (error, info) {
+    await transporter.sendMail(
+      mailOptions /*, function (error, info) {
       console.log({ error });
       console.log({ info });
       console.log("ccccccccccccccccc");
@@ -196,13 +198,15 @@ export const sendVerificationEmail = async (email: string, token: string) => {
         console.log("my4");
         value = "l'email envoyé avec succcess";
       }
-    });
-    if (value === "une erreurs est survenue pendant l'envoie d'email") {
+    }*/
+    );
+    /* if (value === "une erreurs est survenue pendant l'envoie d'email") {
       return { error: value };
     } else if (value === "l'email envoyé avec succcess") {
       return { success: value };
     }
-    return { error: "une erreurs est survenue pendant l'envoie d'email" };
+    return { error: "une erreurs est survenue pendant l'envoie d'email" };*/
+    return { success: "l'email envoyé avec succcess" };
   } catch (error) {
     console.log(error);
     return { error: "une erreurs est survenue pendant l'envoie d'email" };
