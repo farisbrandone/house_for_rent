@@ -121,6 +121,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
   let value = "";
 
   try {
+    console.log({ process: process.env.APP_PASSWORD });
     var transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
