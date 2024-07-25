@@ -21,10 +21,7 @@ const Card = ({ mycarData }: cardProps) => {
   };
 
   return (
-    <div
-      className=" w-full mt-2 flex items-center justify-center shadow-lg "
-      onClick={() => goToOnePage(mycarData.id)}
-    >
+    <div className=" w-full mt-2 flex items-center justify-center shadow-lg ">
       <div className="flex flex-col items-center gap-2 md:flex-row md:items-center">
         <div className="relative w-[90%]  h-[250px] bg-transparent md:w-[250px] md:h-[200px]">
           <div className="flex items-center justify-center absolute top-1 right-1 rounded-full bg-white brightness-200 w-[25px] h-[25px] p-1">
@@ -52,7 +49,10 @@ const Card = ({ mycarData }: cardProps) => {
           }
         </div>
         <div className="md:h-[200px] flex justify-center items-center max-[768px]:w-full max-[768px]:mb-5">
-          <button className="p-2 flex items-center justify-center bg-[#006ce4] text-white text-sm hover:bg-[#003b95] w-[90%] md:w-[100px] h-[50px] rounded-lg max-[768px]:text-lg">
+          <button
+            onClick={() => goToOnePage(mycarData.id)}
+            className="p-2 flex items-center justify-center bg-[#006ce4] text-white text-sm hover:bg-[#003b95] w-[90%] md:w-[100px] h-[50px] rounded-lg max-[768px]:text-lg"
+          >
             Afficher les détails
           </button>
         </div>
