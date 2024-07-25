@@ -84,20 +84,23 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
       html: mailoutput,
     };
 
-    transporter.sendMail(mailOptions, function (error, info) {
+    await transporter.sendMail(
+      mailOptions /*, function (error, info) {
       if (error) {
         console.log(error);
         value = "une erreurs est survenue pendant l'envoie d'email";
       } else {
         value = "l'email envoyé avec succcess";
       }
-    });
-    if (value === "une erreurs est survenue pendant l'envoie d'email") {
+    }*/
+    );
+    /* if (value === "une erreurs est survenue pendant l'envoie d'email") {
       return { error: value };
     }
     if (value === "l'email envoyé avec succcess") {
       return { success: value };
-    }
+    }*/
+    return { success: "l'email envoyé avec succcess" };
   } catch (error) {
     console.log(error);
     return { error: "une erreurs est survenue pendant l'envoie d'email" };
@@ -118,7 +121,6 @@ export const sendVerificationEmail = async (email: string, token: string) => {
   } catch (error) {
     throw new Error("une erreurs est survenue pendant l'envoie d'email");
   }*/
-  let value = "";
 
   try {
     console.log({ process: process.env.APP_PASSWORD });
@@ -130,7 +132,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
         pass: process.env.APP_PASSWORD,
       },
     });
-    console.log("aaaaaaaaaaaaaaaa");
+
     var mailoutput = `<!DOCTYPE html>
 <html lang="fr">
   <head>
@@ -185,7 +187,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
       subject: `Vérification de votre email `,
       html: mailoutput,
     };
-    console.log("bbbbbbbbbbbbbbbbbbb");
+
     await transporter.sendMail(
       mailOptions /*, function (error, info) {
       console.log({ error });

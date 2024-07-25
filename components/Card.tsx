@@ -22,7 +22,7 @@ const Card = ({ mycarData }: cardProps) => {
 
   return (
     <div
-      className=" w-full mt-2 flex items-center justify-center shadow-lg"
+      className=" w-full mt-2 flex items-center justify-center shadow-lg "
       onClick={() => goToOnePage(mycarData.id)}
     >
       <div className="flex flex-col items-center gap-2 md:flex-row md:items-center">
@@ -46,7 +46,7 @@ const Card = ({ mycarData }: cardProps) => {
             {mycarData.paysOffre}- {mycarData.villeOffre}
           </h6>
           {
-            <div className="text-[#1a1a1a] text-sm text-wrap break-words whitespace-break-spaces overflow-hidden ">
+            <div className="text-[#1a1a1a] text-sm text-wrap break-words whitespace-break-spaces overflow-hidden max-[768px]:max-h-[150px] max-[768px]:overflow-y-hidden">
               {mycarData.descriptifOffre}
             </div>
           }

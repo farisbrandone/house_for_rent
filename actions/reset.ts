@@ -24,13 +24,19 @@ export const reset = async (values: z.infer<typeof ResetSchema>) => {
     }
 
     const passwordResetToken = await generatePasswordResetToken(email);
-    await sendPasswordResetEmail(
+    const data = await sendPasswordResetEmail(
       passwordResetToken.email,
       passwordResetToken.token
     );
-
-    return { success: "Reset password email sent!" };
+    if (data.error) {
+      throw new Error("Une erreur est survenue");
+    }
+    return {
+      success:
+        "L'email de mise à jour à été envoyé, vérifier en rgardant &galement dans les spams!",
+    };
   } catch (error) {
-    throw new Error("Une erreur est survenue");
+    return { error: "Une erreur est survenue" };
+    //throw new Error("Une erreur est survenue");
   }
 };
