@@ -13,7 +13,7 @@ const BackButton = ({ href, label }: BackButtonProps) => {
   return (
     <Button
       variant="link"
-      className="w-full text-muted-foreground"
+      className="w-full text-muted-foreground bg-[#003ce4]"
       size="sm"
       asChild
     >
