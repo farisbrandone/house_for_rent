@@ -24,7 +24,7 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
     // TODO: Add a template for this email
     html: `<p>Click <a href="${resetLink}">here</a> to reset password.</p>`,
   });*/
-
+  let value = "";
   try {
     var transporter = nodemailer.createTransport({
       service: "gmail",
@@ -54,19 +54,12 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
          font-size:30px;
          font-weight:bold;
          color:#006ce4;
-       }
-       .p2{
-          margin-top:-35px;
+        
        }
        .div2{
             font-size:20px;
            text-wrap:wrap;
             margin-top:-25px;
-       }
-       
-       a{
-         color:#006ce4;
-         cursor:pointer; 
        }
      </style>
      
@@ -74,17 +67,16 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
      
       <body>
           <div class="div1">
-          <p>MaMaison</p>
-          <p class="p2">Alouer.com</p>
+          <p>www.mamaisonalouer.com</p>
           </div>
-          
           <div class="div2">
           <p>😄 Le site de référence lorsque vous recherchez des biens immobiliers ou lorsque vous souhaitez exposer au plus grand nombre votre bien immobilier 😄</p>
-         <p>Cliquez ici 👉 <a href="${resetLink} >pour mettre à jour votre mots de passe</a></p>
+         <p>Cliquez ici 👉 <a href="${resetLink}">pour mettre à jour votre mots de passe</a></p>
           </div>
        </body>
        </html>
        `;
+    /*${resetLink}*/
     var mailOptions = {
       from: "farisbrandone0@gmail.com",
       to: email,
@@ -94,13 +86,21 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
 
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
-        throw new Error("une erreurs est survenue pendant l'envoie d'email");
+        console.log(error);
+        value = "une erreurs est survenue pendant l'envoie d'email";
       } else {
-        console.log(info);
+        value = "l'email envoyé avec succcess";
       }
     });
+    if (value === "une erreurs est survenue pendant l'envoie d'email") {
+      return { error: value };
+    }
+    if (value === "l'email envoyé avec succcess") {
+      return { success: value };
+    }
   } catch (error) {
-    throw new Error("une erreurs est survenue pendant l'envoie d'email");
+    console.log(error);
+    return { error: "une erreurs est survenue pendant l'envoie d'email" };
   }
 };
 
@@ -119,6 +119,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
   } catch (error) {
     throw new Error("une erreurs est survenue pendant l'envoie d'email");
   }*/
+  let value = "";
 
   try {
     var transporter = nodemailer.createTransport({
@@ -147,15 +148,12 @@ export const sendVerificationEmail = async (email: string, token: string) => {
          padding:10px;
       }
        .div1{
-         font-size:30px;
+         font-size:20px;
          font-weight:bold;
          color:#006ce4;
        }
-       .p2{
-          margin-top:-35px;
-       }
        .div2{
-            font-size:20px;
+            font-size:15px;
            text-wrap:wrap;
             margin-top:-25px;
        }
@@ -170,13 +168,12 @@ export const sendVerificationEmail = async (email: string, token: string) => {
      
       <body>
           <div class="div1">
-          <p>MaMaison</p>
-          <p class="p2">Alouer.com</p>
+          <p>www.mamaisonalouer.com</p>
           </div>
           
           <div class="div2">
           <p>😄 Le site de référence lorsque vous recherchez des biens immobiliers ou lorsque vous souhaitez exposer au plus grand nombre votre bien immobilier 😄</p>
-         <p>Cliquez ici 👉 <a href="${confirmLink} >pour vérifier votre email</a></p>
+         <p>Cliquez ici 👉 <a href="${confirmLink}">pour vérifier votre email</a></p>
           </div>
        </body>
        </html>
@@ -190,14 +187,21 @@ export const sendVerificationEmail = async (email: string, token: string) => {
     console.log("my2");
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
-        console.log("my3");
-        throw new Error("une erreurs est survenue pendant l'envoie d'email");
+        console.log(error);
+        value = "une erreurs est survenue pendant l'envoie d'email";
       } else {
         console.log("my4");
-        console.log({ info });
+        value = "l'email envoyé avec succcess";
       }
     });
+    if (value === "une erreurs est survenue pendant l'envoie d'email") {
+      return { error: value };
+    }
+    if (value === "l'email envoyé avec succcess") {
+      return { success: value };
+    }
   } catch (error) {
-    throw new Error("une erreurs est survenue pendant l'envoie d'email");
+    console.log(error);
+    return { error: "une erreurs est survenue pendant l'envoie d'email" };
   }
 };

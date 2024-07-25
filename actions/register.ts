@@ -37,22 +37,26 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 
     const verificationToken = await generateVerificationToken(email);
 
-    await sendVerificationEmail(
+    const data = await sendVerificationEmail(
       verificationToken.email,
       verificationToken.token
     );
+    if (data?.error) {
+      throw new Error("Une erreur est sur venue pendant l'opération");
+    }
 
     await sql`
     INSERT INTO "User" (id,name,email,password)
     VALUES (${myId},${name}, ${email}, ${hashedPassword} )
     ON CONFLICT (id) DO NOTHING;
   `;
-
-    return { success: "Successfully registered. Verify your email!" };
+    return {
+      success:
+        "Enregistrement effectué avec success, vérifier votre email. régarder également dans les spams!",
+    };
   } catch (error) {
     return {
       error: "Une erreur est sur venue pendant l'opération, réessayez SVP",
     };
-    throw new Error("Une erreur est sur venue pendant l'opération");
   }
 };

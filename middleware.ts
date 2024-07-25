@@ -25,9 +25,7 @@ export default auth((req): void | Response | Promise<void | Response> => {
 
   if (isAuthRoute) {
     if (isAuthorized) {
-      return Response.redirect(
-        "https://www.mamaisonalouer.com" /*new URL(DEFAULT_LOGIN_REDIRECT, nextUrl)*/
-      );
+      return Response.redirect("https://www.mamaisonalouer.com");
     }
 
     return;
