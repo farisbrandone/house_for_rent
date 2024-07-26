@@ -61,7 +61,7 @@ const Footer = () => {
                     </svg>
                   </span>
                   <span className="text-xl font-bold">
-                    +(237) 6 55 96 89 56
+                    {/*+(237) 6 55 96 89 56*/}farisbrandone@yahoo.com
                   </span>
                 </p>
               </div>
