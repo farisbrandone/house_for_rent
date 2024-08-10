@@ -155,7 +155,7 @@ export async function getSearchOffer(query: filterQuery) {
         take: ITEMS_PER_PAGE,
       });
       return allOfferForUser;*/
-
+      console.log("bouchca");
       const allOfferForUser = await sql<offerDataParamsWithNull>`
       SELECT
         * FROM "dataOffer"
