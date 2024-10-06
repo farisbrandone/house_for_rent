@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 import React, { Suspense } from "react";
+import Script from 'next/script'
 
 export const metadata: Metadata = {
   title: "MaMaisonALouer.com",
@@ -13,11 +14,17 @@ export const metadata: Metadata = {
     icon: "/vercel.svg",
   },
 };
+export const metadata2: Metadata = {
+  title: "google-adsense-account",
+  description:
+   "ca-pub-9175852038588591",
+};
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <SessionProvider>
       <div>
+        
         <div className="w-full bg-[linear-gradient(40deg,#006ce4,#003b95)] flex items-center justify-center mt-0">
           <Header searchOrNot={true} headerForSign={false} />
         </div>
