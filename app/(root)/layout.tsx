@@ -14,17 +14,14 @@ export const metadata: Metadata = {
     icon: "/vercel.svg",
   },
 };
-export const metadata2: Metadata = {
-  title: "google-adsense-account",
-  description:
-   "ca-pub-9175852038588591",
-};
+
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <SessionProvider>
       <div>
-        
+         < Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9175852038588591"
+     crossOrigin="anonymous" strategy="afterInteractive" />
         <div className="w-full bg-[linear-gradient(40deg,#006ce4,#003b95)] flex items-center justify-center mt-0">
           <Header searchOrNot={true} headerForSign={false} />
         </div>
